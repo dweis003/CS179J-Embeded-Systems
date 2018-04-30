@@ -754,8 +754,8 @@ void REC_Init(){
      486:	3a df       	rcall	.-396    	; 0x2fc <generate_random_num>
      488:	90 93 a5 07 	sts	0x07A5, r25	; 0x8007a5 <temp_random+0x1>
      48c:	80 93 a4 07 	sts	0x07A4, r24	; 0x8007a4 <temp_random>
-     490:	07 97       	sbiw	r24, 0x07	; 7
-     492:	39 f4       	brne	.+14     	; 0x4a2 <stepper_controller_Tick+0x4a>
+     490:	02 97       	sbiw	r24, 0x02	; 2
+     492:	3c f0       	brlt	.+14     	; 0x4a2 <stepper_controller_Tick+0x4a>
      494:	81 e0       	ldi	r24, 0x01	; 1
      496:	80 93 a3 07 	sts	0x07A3, r24	; 0x8007a3 <STEPPER_GO>
      49a:	82 e0       	ldi	r24, 0x02	; 2
@@ -1890,7 +1890,7 @@ int main(void)
      de6:	80 e0       	ldi	r24, 0x00	; 0
      de8:	38 da       	rcall	.-2960   	; 0x25a <initUSART>
    //Start Tasks  
-   RecSecPulse(1);
+   RecSecPulse(1); 
      dea:	81 e0       	ldi	r24, 0x01	; 1
      dec:	d4 df       	rcall	.-88     	; 0xd96 <RecSecPulse>
    StartBeamPulse(1);

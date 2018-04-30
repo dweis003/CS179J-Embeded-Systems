@@ -34,7 +34,7 @@ unsigned char received_data = 0x00;
 unsigned char phases[4] = {0x0A, 0x05, 0x06, 0x09};
 unsigned char p_index = 0;
 int numCounter = 0;
-int numPhases = 1024; //number of phases needed to rotate 180 deg
+int numPhases = 120; 
 
 //stepper motor controller FSM variables
 int temp_random = 0;
@@ -215,7 +215,7 @@ void stepper_controller_Tick(){
 		}
 		else{
 			temp_random = generate_random_num();
-			if((temp_random == 7)){ //number generator gives number between 0-9 so 10% chance of turning on stepper
+			if((temp_random >1)){ //number generator gives number between 0-9 so 80% chance of turning on stepper
 				STEPPER_GO = 1; //tell motor FSM to go
 				stepper_controller_state =  Stepper_controller_on;
 			}
@@ -1115,7 +1115,7 @@ int main(void)
    //DDRD = 0xFF; PORTD = 0x00; //used by USART 0
    initUSART(0);//Initialize USART 0
    //Start Tasks  
-   RecSecPulse(1);
+   RecSecPulse(1); 
    StartBeamPulse(1);
    StartMotionPulse(1);
    StartControlPulse(1);
