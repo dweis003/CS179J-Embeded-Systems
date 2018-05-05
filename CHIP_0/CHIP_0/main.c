@@ -597,83 +597,7 @@ void StartAudioPulse(unsigned portBASE_TYPE Priority)
 }
 
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//IR BEAM FSM
-enum BeamState {Beam_off, Beam_on} beam_state;
-
-void Beam_Init(){
-	beam_state = Beam_off;
-}
-
-void Beam_Tick(){
-	//Actions
-	switch(beam_state){
-		case Beam_off:
-		//reset value
-		beam_detected = 0;
-		break;
-		
-		case Beam_on:
-		if((GetBit(~PINA,0) == 1)){
-			beam_detected = 1; //if soemthing crosses path or IR Beam set to 1
-		}
-		else{
-			beam_detected = 0;
-		}
-		
-		break;
-
-		default:
-		//no action
-		break;
-	}
-	//Transitions
-	switch(beam_state){
-		case Beam_off:
-		//if system is on read beam
-		if(ARM_DISARM == 1){
-			beam_state = Beam_on;
-		}
-		//if system is off don't read beam
-		else{
-			beam_state = Beam_off;
-		}
-		break;
-		
-		case Beam_on:
-		//if system is on read beam
-		if(ARM_DISARM == 1){
-			beam_state = Beam_on;
-		}
-		//if system is off don't read beam
-		else{
-			beam_state = Beam_off;
-		}
-		break;
-
-		default:
-		beam_state = Beam_off;
-		break;
-	}
-}
-
-void BEAMSecTask()
-{
-	Beam_Init();
-	for(;;)
-	{
-		Beam_Tick();
-		vTaskDelay(10);
-	}
-}
-
-void StartBeamPulse(unsigned portBASE_TYPE Priority)
-{
-	xTaskCreate(BEAMSecTask, (signed portCHAR *)"BEAMSecTask", configMINIMAL_STACK_SIZE, NULL, Priority, NULL );
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //motion FSM
 //motion_detected
@@ -767,7 +691,7 @@ void StartMotionPulse(unsigned portBASE_TYPE Priority)
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Master Controller FSM
-enum ControlState {controll_off,control_on,Vishal,Vishal_wait,motion_wait_1,motion_wait_2,activate_ouptut} control_state;
+enum ControlState {controll_off,control_on,Vishal,Vishal_wait,motion_wait,activate_ouptut} control_state;
 
 void Control_Init(){
 	control_state = controll_off;
@@ -815,14 +739,7 @@ void Control_Tick(){
 		
 		break;
 		
-		case motion_wait_1:
-			//PORTB = 0x02;
-			PORTB = PORTB & 0x0F; //set bit 7-4 low
-			PORTB = PORTB | 0x20; //set bit 4 high
-			++controll_counter;
-		break;
-		
-		case motion_wait_2:
+		case motion_wait:
 			//PORTB = 0x03;
 			PORTB = PORTB & 0x0F; //set bit 7-4 low
 			PORTB = PORTB | 0x30; //set bit 4,5 high
@@ -867,7 +784,7 @@ void Control_Tick(){
 			}
 			else if(motion_detected == 1){
 				//motion has been detected 
-				control_state =  motion_wait_1;
+				control_state =  motion_wait;
 				//reset counter
 				controll_counter = 0; 
 				//set srand
@@ -908,34 +825,27 @@ void Control_Tick(){
 			}
 		break;
 		
-		case motion_wait_1:
-			if((ARM_DISARM == 0)){
-				control_state = controll_off;
-			}
-			else if((motion_detected == 1) && (beam_detected == 0)){
-				control_state = motion_wait_1;
-			}
-			else if((motion_detected == 1) && (beam_detected == 1)){
-				control_state = motion_wait_2;
-			}
-			else{
-				control_state = controll_off;
-			}
-		
-		break;
-		
-		case motion_wait_2:
+				
+		case motion_wait:
+			//if system is turned off go back to off mode
 			if((ARM_DISARM == 0)){
 				//reset counter
 				controll_counter = 0; 
 				control_state = controll_off;
 			}
+			//if signal from Vishals Project is sent go to wait
+			else if((GetBit(PINA,7) == 1) && peripheral_setting == 1){ //if peripheral signal set and peripheral are used
+				control_state = Vishal;
+				vishal_counter = 0;
+			}
+			//if  delay time turn on outputs
 			else if(controll_counter >= (delay_sec * 1000)){
 				control_state = activate_ouptut; 
 				systems_go = 1; 
 			}
-			else if((motion_detected == 1) || (beam_detected == 1)){
-				control_state = motion_wait_2;
+			//if under and timer and motion still detected stay here
+			else if(motion_detected == 1){
+				control_state = motion_wait;
 			}
 			else{
 				//reset counter
@@ -950,12 +860,12 @@ void Control_Tick(){
 			if(ARM_DISARM == 0){
 				control_state = controll_off;
 			}
-			//if timer is less than 20 secs or motion detected stay on 
+			//if timer is less than 30 secs or motion detected stay on 
 			else if((controll_counter < 20000) || (motion_detected == 1)){
 				control_state = activate_ouptut;
 			}
 			//if timer is over 30 seconds and no motion turn off outputs
-			else if((controll_counter >= 20000) && (motion_detected == 0)){
+			else if((controll_counter >= 30000) && (motion_detected == 0)){
 				//go back to on state
 				control_state = control_on;
 				controll_counter = 0;
@@ -1119,7 +1029,6 @@ int main(void)
    initUSART(0);//Initialize USART 0
    //Start Tasks  
    RecSecPulse(1); 
-   StartBeamPulse(1);
    StartMotionPulse(1);
    StartControlPulse(1);
    
