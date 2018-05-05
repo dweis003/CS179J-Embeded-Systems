@@ -689,125 +689,121 @@ END GROUP
  *(.fini0)
                 0x00002202                _etext = .
 
-.data           0x00800100      0x286 load address 0x00002202
+.data           0x00800100      0x284 load address 0x00002202
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
  .data.bluetooth_arm_disarm
                 0x00800100        0x1 main.o
                 0x00800100                bluetooth_arm_disarm
- .data.dog_head_direction
-                0x00800101        0x1 main.o
-                0x00800101                dog_head_direction
  .data.xNextTaskUnblockTime
-                0x00800102        0x2 tasks.o
+                0x00800101        0x2 tasks.o
  *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800104      0x27c main.o
+                0x00800103      0x27c main.o
                                 0x287 (size before relaxing)
  .rodata.str1.1
-                0x00800380        0x5 tasks.o
+                0x0080037f        0x5 tasks.o
  *(.gnu.linkonce.r*)
-                0x00800386                . = ALIGN (0x2)
- *fill*         0x00800385        0x1 
-                0x00800386                _edata = .
-                0x00800386                PROVIDE (__data_end, .)
+                0x00800384                . = ALIGN (0x2)
+                0x00800384                _edata = .
+                0x00800384                PROVIDE (__data_end, .)
 
-.bss            0x00800386      0x64a
-                0x00800386                PROVIDE (__bss_start, .)
+.bss            0x00800384      0x64a
+                0x00800384                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.xNextFreeByte
-                0x00800386        0x2 heap_1.o
- .bss.xHeap     0x00800388      0x5dc heap_1.o
+                0x00800384        0x2 heap_1.o
+ .bss.xHeap     0x00800386      0x5dc heap_1.o
  .bss.bluetooth_temp
-                0x00800964        0x1 main.o
-                0x00800964                bluetooth_temp
+                0x00800962        0x1 main.o
+                0x00800962                bluetooth_temp
  .bss.peripheral_on_off
-                0x00800965        0x1 main.o
-                0x00800965                peripheral_on_off
+                0x00800963        0x1 main.o
+                0x00800963                peripheral_on_off
  .bss.bark_delay
-                0x00800966        0x1 main.o
-                0x00800966                bark_delay
+                0x00800964        0x1 main.o
+                0x00800964                bark_delay
  .bss.bark_setting
-                0x00800967        0x1 main.o
-                0x00800967                bark_setting
- .bss.counter   0x00800968        0x2 main.o
-                0x00800968                counter
+                0x00800965        0x1 main.o
+                0x00800965                bark_setting
+ .bss.counter   0x00800966        0x2 main.o
+                0x00800966                counter
  .bss.data_to_send
-                0x0080096a        0x1 main.o
-                0x0080096a                data_to_send
+                0x00800968        0x1 main.o
+                0x00800968                data_to_send
  .bss.received_value
-                0x0080096b        0x1 main.o
-                0x0080096b                received_value
- .bss.Button_R  0x0080096c        0x1 main.o
-                0x0080096c                Button_R
- .bss.Button_L  0x0080096d        0x1 main.o
-                0x0080096d                Button_L
- .bss.Button_B  0x0080096e        0x1 main.o
-                0x0080096e                Button_B
- .bss.Button_A  0x0080096f        0x1 main.o
-                0x0080096f                Button_A
+                0x00800969        0x1 main.o
+                0x00800969                received_value
+ .bss.Button_R  0x0080096a        0x1 main.o
+                0x0080096a                Button_R
+ .bss.Button_L  0x0080096b        0x1 main.o
+                0x0080096b                Button_L
+ .bss.Button_B  0x0080096c        0x1 main.o
+                0x0080096c                Button_B
+ .bss.Button_A  0x0080096d        0x1 main.o
+                0x0080096d                Button_A
  .bss.ARM_DISARM
-                0x00800970        0x1 main.o
-                0x00800970                ARM_DISARM
+                0x0080096e        0x1 main.o
+                0x0080096e                ARM_DISARM
  .bss.uxTaskNumber
-                0x00800971        0x1 tasks.o
+                0x0080096f        0x1 tasks.o
  .bss.xNumOfOverflows
-                0x00800972        0x1 tasks.o
+                0x00800970        0x1 tasks.o
  .bss.xMissedYield
-                0x00800973        0x1 tasks.o
+                0x00800971        0x1 tasks.o
  .bss.uxMissedTicks
-                0x00800974        0x1 tasks.o
+                0x00800972        0x1 tasks.o
  .bss.uxSchedulerSuspended
-                0x00800975        0x1 tasks.o
+                0x00800973        0x1 tasks.o
  .bss.xSchedulerRunning
-                0x00800976        0x1 tasks.o
+                0x00800974        0x1 tasks.o
  .bss.uxTopReadyPriority
-                0x00800977        0x1 tasks.o
+                0x00800975        0x1 tasks.o
  .bss.uxTopUsedPriority
-                0x00800978        0x1 tasks.o
+                0x00800976        0x1 tasks.o
  .bss.xTickCount
-                0x00800979        0x2 tasks.o
+                0x00800977        0x2 tasks.o
  .bss.uxCurrentNumberOfTasks
-                0x0080097b        0x1 tasks.o
+                0x00800979        0x1 tasks.o
  .bss.uxTasksDeleted
-                0x0080097c        0x1 tasks.o
+                0x0080097a        0x1 tasks.o
  .bss.xTasksWaitingTermination
-                0x0080097d        0x9 tasks.o
+                0x0080097b        0x9 tasks.o
  .bss.xPendingReadyList
-                0x00800986        0x9 tasks.o
+                0x00800984        0x9 tasks.o
  .bss.pxOverflowDelayedTaskList
-                0x0080098f        0x2 tasks.o
+                0x0080098d        0x2 tasks.o
  .bss.pxDelayedTaskList
-                0x00800991        0x2 tasks.o
+                0x0080098f        0x2 tasks.o
  .bss.xDelayedTaskList2
-                0x00800993        0x9 tasks.o
+                0x00800991        0x9 tasks.o
  .bss.xDelayedTaskList1
-                0x0080099c        0x9 tasks.o
+                0x0080099a        0x9 tasks.o
  .bss.pxReadyTasksLists
-                0x008009a5       0x24 tasks.o
+                0x008009a3       0x24 tasks.o
  .bss.pxCurrentTCB
-                0x008009c9        0x2 tasks.o
-                0x008009c9                pxCurrentTCB
+                0x008009c7        0x2 tasks.o
+                0x008009c7                pxCurrentTCB
  *(COMMON)
- COMMON         0x008009cb        0x5 main.o
-                0x008009cb                rec_state
-                0x008009cc                blue_rec_state
-                0x008009cd                trans_state
-                0x008009ce                menu_state
-                0x008009cf                button_state
-                0x008009d0                PROVIDE (__bss_end, .)
+ COMMON         0x008009c9        0x5 main.o
+                0x008009c9                rec_state
+                0x008009ca                blue_rec_state
+                0x008009cb                trans_state
+                0x008009cc                menu_state
+                0x008009cd                button_state
+                0x008009ce                PROVIDE (__bss_end, .)
                 0x00002202                __data_load_start = LOADADDR (.data)
-                0x00002488                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00002486                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008009d0        0x0
+.noinit         0x008009ce        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008009d0                _end = .
+                0x008009ce                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -896,16 +892,16 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x3c45
+.debug_info     0x00000000     0x3c33
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x792 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51/crtatmega1284.o
  .debug_info    0x00000792      0x1a7 heap_1.o
  .debug_info    0x00000939      0x2c1 list.o
- .debug_info    0x00000bfa     0x1b5d main.o
- .debug_info    0x00002757      0x23e port.o
- .debug_info    0x00002995     0x1156 tasks.o
- .debug_info    0x00003aeb       0xad C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51\libatmega1284.a(eerd_byte.o)
- .debug_info    0x00003b98       0xad C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51\libatmega1284.a(eewr_byte.o)
+ .debug_info    0x00000bfa     0x1b4b main.o
+ .debug_info    0x00002745      0x23e port.o
+ .debug_info    0x00002983     0x1156 tasks.o
+ .debug_info    0x00003ad9       0xad C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51\libatmega1284.a(eerd_byte.o)
+ .debug_info    0x00003b86       0xad C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51\libatmega1284.a(eewr_byte.o)
 
 .debug_abbrev   0x00000000     0x1086
  *(.debug_abbrev)
@@ -937,18 +933,18 @@ END GROUP
  .debug_frame   0x00000420       0x74 port.o
  .debug_frame   0x00000494      0x270 tasks.o
 
-.debug_str      0x00000000     0x1099
+.debug_str      0x00000000     0x1086
  *(.debug_str)
  .debug_str     0x00000000      0x296 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51/crtatmega1284.o
  .debug_str     0x00000296      0x23b heap_1.o
                                 0x274 (size before relaxing)
  .debug_str     0x000004d1      0x137 list.o
                                 0x2dc (size before relaxing)
- .debug_str     0x00000608      0x466 main.o
-                                0x68a (size before relaxing)
- .debug_str     0x00000a6e      0x10a port.o
+ .debug_str     0x00000608      0x453 main.o
+                                0x677 (size before relaxing)
+ .debug_str     0x00000a5b      0x10a port.o
                                 0x2da (size before relaxing)
- .debug_str     0x00000b78      0x521 tasks.o
+ .debug_str     0x00000b65      0x521 tasks.o
                                 0x8d4 (size before relaxing)
 
 .debug_loc      0x00000000     0x1861

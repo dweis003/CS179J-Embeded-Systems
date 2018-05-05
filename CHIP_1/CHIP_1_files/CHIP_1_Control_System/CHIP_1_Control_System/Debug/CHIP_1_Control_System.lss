@@ -3,31 +3,31 @@ CHIP_1_Control_System.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000286  00800100  00002202  00002296  2**0
+  0 .data         00000284  00800100  00002202  00002296  2**0
                   CONTENTS, ALLOC, LOAD, DATA
   1 .text         00002202  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000064a  00800386  00800386  0000251c  2**0
+  2 .bss          0000064a  00800384  00800384  0000251a  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  0000251c  2**0
+  3 .comment      00000030  00000000  00000000  0000251a  2**0
                   CONTENTS, READONLY
   4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000254c  2**2
                   CONTENTS, READONLY
   5 .debug_aranges 00000300  00000000  00000000  00002590  2**3
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00003c45  00000000  00000000  00002890  2**0
+  6 .debug_info   00003c33  00000000  00000000  00002890  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001086  00000000  00000000  000064d5  2**0
+  7 .debug_abbrev 00001086  00000000  00000000  000064c3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00002c91  00000000  00000000  0000755b  2**0
+  8 .debug_line   00002c91  00000000  00000000  00007549  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000704  00000000  00000000  0000a1ec  2**2
+  9 .debug_frame  00000704  00000000  00000000  0000a1dc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00001099  00000000  00000000  0000a8f0  2**0
+ 10 .debug_str    00001086  00000000  00000000  0000a8e0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00001861  00000000  00000000  0000b989  2**0
+ 11 .debug_loc    00001861  00000000  00000000  0000b966  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000002b8  00000000  00000000  0000d1ea  2**0
+ 12 .debug_ranges 000002b8  00000000  00000000  0000d1c7  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -149,13 +149,13 @@ Disassembly of section .text:
       dc:	02 c0       	rjmp	.+4      	; 0xe2 <__do_copy_data+0x14>
       de:	07 90       	elpm	r0, Z+
       e0:	0d 92       	st	X+, r0
-      e2:	a6 38       	cpi	r26, 0x86	; 134
+      e2:	a4 38       	cpi	r26, 0x84	; 132
       e4:	b1 07       	cpc	r27, r17
       e6:	d9 f7       	brne	.-10     	; 0xde <__do_copy_data+0x10>
 
 000000e8 <__do_clear_bss>:
       e8:	29 e0       	ldi	r18, 0x09	; 9
-      ea:	a6 e8       	ldi	r26, 0x86	; 134
+      ea:	a4 e8       	ldi	r26, 0x84	; 132
       ec:	b3 e0       	ldi	r27, 0x03	; 3
       ee:	01 c0       	rjmp	.+2      	; 0xf2 <.do_clear_bss_start>
 
@@ -163,7 +163,7 @@ Disassembly of section .text:
       f0:	1d 92       	st	X+, r1
 
 000000f2 <.do_clear_bss_start>:
-      f2:	a0 3d       	cpi	r26, 0xD0	; 208
+      f2:	ae 3c       	cpi	r26, 0xCE	; 206
       f4:	b2 07       	cpc	r27, r18
       f6:	e1 f7       	brne	.-8      	; 0xf0 <.do_clear_bss_loop>
       f8:	0e 94 ca 0b 	call	0x1794	; 0x1794 <main>
@@ -192,8 +192,8 @@ void *pvPortMalloc( size_t xWantedSize )
 	{
 		/* Check there is enough room left for the allocation. */
 		if( ( ( xNextFreeByte + xWantedSize ) < configTOTAL_HEAP_SIZE ) &&
-     10c:	20 91 86 03 	lds	r18, 0x0386	; 0x800386 <__data_end>
-     110:	30 91 87 03 	lds	r19, 0x0387	; 0x800387 <__data_end+0x1>
+     10c:	20 91 84 03 	lds	r18, 0x0384	; 0x800384 <__data_end>
+     110:	30 91 85 03 	lds	r19, 0x0385	; 0x800385 <__data_end+0x1>
      114:	c9 01       	movw	r24, r18
      116:	8c 0f       	add	r24, r28
      118:	9d 1f       	adc	r25, r29
@@ -210,11 +210,11 @@ void *pvPortMalloc( size_t xWantedSize )
 			block. */
 			pvReturn = &( xHeap.ucHeap[ xNextFreeByte ] );
      128:	e9 01       	movw	r28, r18
-     12a:	c8 57       	subi	r28, 0x78	; 120
+     12a:	ca 57       	subi	r28, 0x7A	; 122
      12c:	dc 4f       	sbci	r29, 0xFC	; 252
 			xNextFreeByte += xWantedSize;			
-     12e:	90 93 87 03 	sts	0x0387, r25	; 0x800387 <__data_end+0x1>
-     132:	80 93 86 03 	sts	0x0386, r24	; 0x800386 <__data_end>
+     12e:	90 93 85 03 	sts	0x0385, r25	; 0x800385 <__data_end+0x1>
+     132:	80 93 84 03 	sts	0x0384, r24	; 0x800384 <__data_end>
      136:	05 c0       	rjmp	.+10     	; 0x142 <pvPortMalloc+0x40>
 static size_t xNextFreeByte = ( size_t ) 0;
 /*-----------------------------------------------------------*/
@@ -732,7 +732,7 @@ void BLUE_REC_Init(){
      3f8:	08 95       	ret
 
 000003fa <BUTTON_Tick>:
-     3fa:	80 91 cf 09 	lds	r24, 0x09CF	; 0x8009cf <button_state>
+     3fa:	80 91 cd 09 	lds	r24, 0x09CD	; 0x8009cd <button_state>
      3fe:	88 23       	and	r24, r24
      400:	21 f0       	breq	.+8      	; 0x40a <__LOCK_REGION_LENGTH__+0xa>
      402:	81 30       	cpi	r24, 0x01	; 1
@@ -758,15 +758,15 @@ void BLUE_REC_Init(){
      42a:	84 fd       	sbrc	r24, 4
      42c:	0f c0       	rjmp	.+30     	; 0x44c <__LOCK_REGION_LENGTH__+0x4c>
      42e:	29 9a       	sbi	0x05, 1	; 5
-     430:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+     430:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
      434:	81 30       	cpi	r24, 0x01	; 1
      436:	19 f4       	brne	.+6      	; 0x43e <__LOCK_REGION_LENGTH__+0x3e>
-     438:	10 92 70 09 	sts	0x0970, r1	; 0x800970 <ARM_DISARM>
+     438:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <ARM_DISARM>
      43c:	03 c0       	rjmp	.+6      	; 0x444 <__LOCK_REGION_LENGTH__+0x44>
      43e:	81 e0       	ldi	r24, 0x01	; 1
-     440:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <ARM_DISARM>
+     440:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <ARM_DISARM>
      444:	81 e0       	ldi	r24, 0x01	; 1
-     446:	80 93 cf 09 	sts	0x09CF, r24	; 0x8009cf <button_state>
+     446:	80 93 cd 09 	sts	0x09CD, r24	; 0x8009cd <button_state>
      44a:	08 95       	ret
      44c:	00 9b       	sbis	0x00, 0	; 0
      44e:	17 c0       	rjmp	.+46     	; 0x47e <__LOCK_REGION_LENGTH__+0x7e>
@@ -788,8 +788,8 @@ void BLUE_REC_Init(){
      46e:	07 c0       	rjmp	.+14     	; 0x47e <__LOCK_REGION_LENGTH__+0x7e>
      470:	29 9a       	sbi	0x05, 1	; 5
      472:	81 e0       	ldi	r24, 0x01	; 1
-     474:	80 93 6f 09 	sts	0x096F, r24	; 0x80096f <Button_A>
-     478:	80 93 cf 09 	sts	0x09CF, r24	; 0x8009cf <button_state>
+     474:	80 93 6d 09 	sts	0x096D, r24	; 0x80096d <Button_A>
+     478:	80 93 cd 09 	sts	0x09CD, r24	; 0x8009cd <button_state>
      47c:	08 95       	ret
      47e:	00 9b       	sbis	0x00, 0	; 0
      480:	17 c0       	rjmp	.+46     	; 0x4b0 <__LOCK_REGION_LENGTH__+0xb0>
@@ -811,8 +811,8 @@ void BLUE_REC_Init(){
      4a0:	07 c0       	rjmp	.+14     	; 0x4b0 <__LOCK_REGION_LENGTH__+0xb0>
      4a2:	29 9a       	sbi	0x05, 1	; 5
      4a4:	81 e0       	ldi	r24, 0x01	; 1
-     4a6:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <Button_B>
-     4aa:	80 93 cf 09 	sts	0x09CF, r24	; 0x8009cf <button_state>
+     4a6:	80 93 6c 09 	sts	0x096C, r24	; 0x80096c <Button_B>
+     4aa:	80 93 cd 09 	sts	0x09CD, r24	; 0x8009cd <button_state>
      4ae:	08 95       	ret
      4b0:	00 9b       	sbis	0x00, 0	; 0
      4b2:	17 c0       	rjmp	.+46     	; 0x4e2 <__LOCK_REGION_LENGTH__+0xe2>
@@ -834,8 +834,8 @@ void BLUE_REC_Init(){
      4d2:	07 c0       	rjmp	.+14     	; 0x4e2 <__LOCK_REGION_LENGTH__+0xe2>
      4d4:	29 9a       	sbi	0x05, 1	; 5
      4d6:	81 e0       	ldi	r24, 0x01	; 1
-     4d8:	80 93 6d 09 	sts	0x096D, r24	; 0x80096d <Button_L>
-     4dc:	80 93 cf 09 	sts	0x09CF, r24	; 0x8009cf <button_state>
+     4d8:	80 93 6b 09 	sts	0x096B, r24	; 0x80096b <Button_L>
+     4dc:	80 93 cd 09 	sts	0x09CD, r24	; 0x8009cd <button_state>
      4e0:	08 95       	ret
      4e2:	00 9b       	sbis	0x00, 0	; 0
      4e4:	33 c0       	rjmp	.+102    	; 0x54c <__LOCK_REGION_LENGTH__+0x14c>
@@ -857,8 +857,8 @@ void BLUE_REC_Init(){
      504:	23 c0       	rjmp	.+70     	; 0x54c <__LOCK_REGION_LENGTH__+0x14c>
      506:	29 9a       	sbi	0x05, 1	; 5
      508:	81 e0       	ldi	r24, 0x01	; 1
-     50a:	80 93 6c 09 	sts	0x096C, r24	; 0x80096c <Button_R>
-     50e:	80 93 cf 09 	sts	0x09CF, r24	; 0x8009cf <button_state>
+     50a:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <Button_R>
+     50e:	80 93 cd 09 	sts	0x09CD, r24	; 0x8009cd <button_state>
      512:	08 95       	ret
      514:	29 98       	cbi	0x05, 1	; 5
      516:	00 9b       	sbis	0x00, 0	; 0
@@ -880,15 +880,15 @@ void BLUE_REC_Init(){
      536:	84 ff       	sbrs	r24, 4
      538:	04 c0       	rjmp	.+8      	; 0x542 <__LOCK_REGION_LENGTH__+0x142>
      53a:	81 e0       	ldi	r24, 0x01	; 1
-     53c:	80 93 cf 09 	sts	0x09CF, r24	; 0x8009cf <button_state>
+     53c:	80 93 cd 09 	sts	0x09CD, r24	; 0x8009cd <button_state>
      540:	08 95       	ret
-     542:	10 92 cf 09 	sts	0x09CF, r1	; 0x8009cf <button_state>
+     542:	10 92 cd 09 	sts	0x09CD, r1	; 0x8009cd <button_state>
      546:	08 95       	ret
-     548:	10 92 cf 09 	sts	0x09CF, r1	; 0x8009cf <button_state>
+     548:	10 92 cd 09 	sts	0x09CD, r1	; 0x8009cd <button_state>
      54c:	08 95       	ret
 
 0000054e <ButtonTask>:
-     54e:	10 92 cf 09 	sts	0x09CF, r1	; 0x8009cf <button_state>
+     54e:	10 92 cd 09 	sts	0x09CD, r1	; 0x8009cd <button_state>
      552:	53 df       	rcall	.-346    	; 0x3fa <BUTTON_Tick>
      554:	8a e0       	ldi	r24, 0x0A	; 10
      556:	90 e0       	ldi	r25, 0x00	; 0
@@ -914,7 +914,7 @@ void BLUE_REC_Init(){
      57c:	30 e0       	ldi	r19, 0x00	; 0
      57e:	45 e5       	ldi	r20, 0x55	; 85
      580:	50 e0       	ldi	r21, 0x00	; 0
-     582:	64 e0       	ldi	r22, 0x04	; 4
+     582:	63 e0       	ldi	r22, 0x03	; 3
      584:	71 e0       	ldi	r23, 0x01	; 1
      586:	87 ea       	ldi	r24, 0xA7	; 167
      588:	92 e0       	ldi	r25, 0x02	; 2
@@ -930,7 +930,7 @@ void BLUE_REC_Init(){
 
 0000059e <Menu_Tick>:
      59e:	cf 93       	push	r28
-     5a0:	20 91 ce 09 	lds	r18, 0x09CE	; 0x8009ce <menu_state>
+     5a0:	20 91 cc 09 	lds	r18, 0x09CC	; 0x8009cc <menu_state>
      5a4:	82 2f       	mov	r24, r18
      5a6:	90 e0       	ldi	r25, 0x00	; 0
      5a8:	fc 01       	movw	r30, r24
@@ -942,77 +942,77 @@ void BLUE_REC_Init(){
      5b4:	ea 5b       	subi	r30, 0xBA	; 186
      5b6:	ff 4f       	sbci	r31, 0xFF	; 255
      5b8:	0c 94 ca 10 	jmp	0x2194	; 0x2194 <__tablejump2__>
-     5bc:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     5c0:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     5bc:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     5c0:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      5c4:	01 96       	adiw	r24, 0x01	; 1
-     5c6:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     5ca:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     5c6:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     5ca:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      5ce:	f6 c0       	rjmp	.+492    	; 0x7bc <Menu_Tick+0x21e>
-     5d0:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     5d4:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     5d0:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     5d4:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      5d8:	01 96       	adiw	r24, 0x01	; 1
-     5da:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     5de:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     5da:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     5de:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      5e2:	6f c1       	rjmp	.+734    	; 0x8c2 <Menu_Tick+0x324>
-     5e4:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     5e8:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     5e4:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     5e8:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      5ec:	01 96       	adiw	r24, 0x01	; 1
-     5ee:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     5f2:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     5ee:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     5f2:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      5f6:	e0 c1       	rjmp	.+960    	; 0x9b8 <Menu_Tick+0x41a>
-     5f8:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     5fc:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     5f8:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     5fc:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      600:	01 96       	adiw	r24, 0x01	; 1
-     602:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     606:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     602:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     606:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      60a:	70 c2       	rjmp	.+1248   	; 0xaec <Menu_Tick+0x54e>
-     60c:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     610:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     60c:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     610:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      614:	01 96       	adiw	r24, 0x01	; 1
-     616:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     61a:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     616:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     61a:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      61e:	e1 c2       	rjmp	.+1474   	; 0xbe2 <Menu_Tick+0x644>
-     620:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     624:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     620:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     624:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      628:	01 96       	adiw	r24, 0x01	; 1
-     62a:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     62e:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     62a:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     62e:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      632:	5a c3       	rjmp	.+1716   	; 0xce8 <Menu_Tick+0x74a>
-     634:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     638:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     634:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     638:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      63c:	01 96       	adiw	r24, 0x01	; 1
-     63e:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     642:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     63e:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     642:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      646:	cb c3       	rjmp	.+1942   	; 0xdde <Menu_Tick+0x840>
-     648:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     64c:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     648:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     64c:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      650:	01 96       	adiw	r24, 0x01	; 1
-     652:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     656:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     652:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     656:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      65a:	3a c4       	rjmp	.+2164   	; 0xed0 <Menu_Tick+0x932>
-     65c:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     660:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     65c:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     660:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      664:	01 96       	adiw	r24, 0x01	; 1
-     666:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     66a:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     666:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     66a:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      66e:	a7 c4       	rjmp	.+2382   	; 0xfbe <Menu_Tick+0xa20>
-     670:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     674:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     670:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     674:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      678:	01 96       	adiw	r24, 0x01	; 1
-     67a:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     67e:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     67a:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     67e:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      682:	23 c5       	rjmp	.+2630   	; 0x10ca <Menu_Tick+0xb2c>
-     684:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     688:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     684:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     688:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      68c:	01 96       	adiw	r24, 0x01	; 1
-     68e:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     692:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     68e:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     692:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      696:	cf c5       	rjmp	.+2974   	; 0x1236 <Menu_Tick+0xc98>
-     698:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     69c:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     698:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     69c:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      6a0:	01 96       	adiw	r24, 0x01	; 1
-     6a2:	90 93 69 09 	sts	0x0969, r25	; 0x800969 <counter+0x1>
-     6a6:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <counter>
+     6a2:	90 93 67 09 	sts	0x0967, r25	; 0x800967 <counter+0x1>
+     6a6:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <counter>
      6aa:	3d c6       	rjmp	.+3194   	; 0x1326 <Menu_Tick+0xd88>
      6ac:	82 2f       	mov	r24, r18
      6ae:	90 e0       	ldi	r25, 0x00	; 0
@@ -1024,59 +1024,59 @@ void BLUE_REC_Init(){
      6ba:	ee 5a       	subi	r30, 0xAE	; 174
      6bc:	ff 4f       	sbci	r31, 0xFF	; 255
      6be:	0c 94 ca 10 	jmp	0x2194	; 0x2194 <__tablejump2__>
-     6c2:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+     6c2:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
      6c6:	81 11       	cpse	r24, r1
      6c8:	17 c0       	rjmp	.+46     	; 0x6f8 <Menu_Tick+0x15a>
-     6ca:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     6ce:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     6d2:	6f e0       	ldi	r22, 0x0F	; 15
+     6ca:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     6ce:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     6d2:	6e e0       	ldi	r22, 0x0E	; 14
      6d4:	71 e0       	ldi	r23, 0x01	; 1
      6d6:	81 e0       	ldi	r24, 0x01	; 1
      6d8:	77 de       	rcall	.-786    	; 0x3c8 <LCD_DisplayString>
      6da:	81 e2       	ldi	r24, 0x21	; 33
      6dc:	55 de       	rcall	.-854    	; 0x388 <LCD_Cursor>
-     6de:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     6e2:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     6e6:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     6ea:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
+     6de:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     6e2:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     6e6:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     6ea:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
      6ee:	15 b8       	out	0x05, r1	; 5
      6f0:	82 e0       	ldi	r24, 0x02	; 2
-     6f2:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     6f2:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      6f6:	98 c6       	rjmp	.+3376   	; 0x1428 <Menu_Tick+0xe8a>
-     6f8:	6d e2       	ldi	r22, 0x2D	; 45
+     6f8:	6c e2       	ldi	r22, 0x2C	; 44
      6fa:	71 e0       	ldi	r23, 0x01	; 1
      6fc:	81 e0       	ldi	r24, 0x01	; 1
      6fe:	64 de       	rcall	.-824    	; 0x3c8 <LCD_DisplayString>
      700:	81 e2       	ldi	r24, 0x21	; 33
      702:	42 de       	rcall	.-892    	; 0x388 <LCD_Cursor>
-     704:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     708:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     70c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     710:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
+     704:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     708:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     70c:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     710:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
      714:	81 e0       	ldi	r24, 0x01	; 1
      716:	85 b9       	out	0x05, r24	; 5
-     718:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     718:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      71c:	85 c6       	rjmp	.+3338   	; 0x1428 <Menu_Tick+0xe8a>
      71e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
      722:	81 11       	cpse	r24, r1
      724:	08 c0       	rjmp	.+16     	; 0x736 <Menu_Tick+0x198>
      726:	82 e0       	ldi	r24, 0x02	; 2
      728:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     72c:	10 92 70 09 	sts	0x0970, r1	; 0x800970 <ARM_DISARM>
-     730:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     72c:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <ARM_DISARM>
+     730:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      734:	79 c6       	rjmp	.+3314   	; 0x1428 <Menu_Tick+0xe8a>
      736:	05 9b       	sbis	0x00, 5	; 0
      738:	09 c0       	rjmp	.+18     	; 0x74c <Menu_Tick+0x1ae>
-     73a:	80 91 65 09 	lds	r24, 0x0965	; 0x800965 <peripheral_on_off>
+     73a:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
      73e:	81 30       	cpi	r24, 0x01	; 1
      740:	29 f4       	brne	.+10     	; 0x74c <Menu_Tick+0x1ae>
-     742:	10 92 70 09 	sts	0x0970, r1	; 0x800970 <ARM_DISARM>
-     746:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     742:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <ARM_DISARM>
+     746:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      74a:	6e c6       	rjmp	.+3292   	; 0x1428 <Menu_Tick+0xe8a>
-     74c:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+     74c:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
      750:	81 11       	cpse	r24, r1
      752:	6a c6       	rjmp	.+3284   	; 0x1428 <Menu_Tick+0xe8a>
-     754:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     754:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      758:	67 c6       	rjmp	.+3278   	; 0x1428 <Menu_Tick+0xe8a>
      75a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
      75e:	81 30       	cpi	r24, 0x01	; 1
@@ -1084,53 +1084,53 @@ void BLUE_REC_Init(){
      762:	82 e0       	ldi	r24, 0x02	; 2
      764:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      768:	81 e0       	ldi	r24, 0x01	; 1
-     76a:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <ARM_DISARM>
-     76e:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     76a:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <ARM_DISARM>
+     76e:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      772:	5a c6       	rjmp	.+3252   	; 0x1428 <Menu_Tick+0xe8a>
-     774:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+     774:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
      778:	81 30       	cpi	r24, 0x01	; 1
      77a:	31 f4       	brne	.+12     	; 0x788 <Menu_Tick+0x1ea>
-     77c:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     77c:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      780:	82 e0       	ldi	r24, 0x02	; 2
      782:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      786:	50 c6       	rjmp	.+3232   	; 0x1428 <Menu_Tick+0xe8a>
-     788:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+     788:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
      78c:	81 30       	cpi	r24, 0x01	; 1
      78e:	09 f0       	breq	.+2      	; 0x792 <Menu_Tick+0x1f4>
      790:	4b c6       	rjmp	.+3222   	; 0x1428 <Menu_Tick+0xe8a>
-     792:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     796:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     79a:	67 e4       	ldi	r22, 0x47	; 71
+     792:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     796:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     79a:	66 e4       	ldi	r22, 0x46	; 70
      79c:	71 e0       	ldi	r23, 0x01	; 1
      79e:	14 de       	rcall	.-984    	; 0x3c8 <LCD_DisplayString>
      7a0:	81 e2       	ldi	r24, 0x21	; 33
      7a2:	f2 dd       	rcall	.-1052   	; 0x388 <LCD_Cursor>
-     7a4:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     7a8:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     7ac:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     7b0:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
+     7a4:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     7a8:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     7ac:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     7b0:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
      7b4:	83 e0       	ldi	r24, 0x03	; 3
-     7b6:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     7b6:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      7ba:	36 c6       	rjmp	.+3180   	; 0x1428 <Menu_Tick+0xe8a>
-     7bc:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     7c0:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     7bc:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     7c0:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      7c4:	84 3f       	cpi	r24, 0xF4	; 244
      7c6:	91 40       	sbci	r25, 0x01	; 1
      7c8:	b0 f0       	brcs	.+44     	; 0x7f6 <Menu_Tick+0x258>
-     7ca:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     7ce:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     7d2:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     7d6:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     7da:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     7de:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     7e2:	6f e0       	ldi	r22, 0x0F	; 15
+     7ca:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     7ce:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     7d2:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     7d6:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     7da:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     7de:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     7e2:	6e e0       	ldi	r22, 0x0E	; 14
      7e4:	71 e0       	ldi	r23, 0x01	; 1
      7e6:	81 e0       	ldi	r24, 0x01	; 1
      7e8:	ef dd       	rcall	.-1058   	; 0x3c8 <LCD_DisplayString>
      7ea:	81 e2       	ldi	r24, 0x21	; 33
      7ec:	cd dd       	rcall	.-1126   	; 0x388 <LCD_Cursor>
      7ee:	82 e0       	ldi	r24, 0x02	; 2
-     7f0:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     7f0:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      7f4:	19 c6       	rjmp	.+3122   	; 0x1428 <Menu_Tick+0xe8a>
      7f6:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
      7fa:	81 30       	cpi	r24, 0x01	; 1
@@ -1138,82 +1138,82 @@ void BLUE_REC_Init(){
      7fe:	82 e0       	ldi	r24, 0x02	; 2
      800:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      804:	81 e0       	ldi	r24, 0x01	; 1
-     806:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <ARM_DISARM>
-     80a:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     806:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <ARM_DISARM>
+     80a:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      80e:	0c c6       	rjmp	.+3096   	; 0x1428 <Menu_Tick+0xe8a>
-     810:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+     810:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
      814:	81 30       	cpi	r24, 0x01	; 1
      816:	31 f4       	brne	.+12     	; 0x824 <Menu_Tick+0x286>
      818:	82 e0       	ldi	r24, 0x02	; 2
      81a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     81e:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     81e:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      822:	02 c6       	rjmp	.+3076   	; 0x1428 <Menu_Tick+0xe8a>
-     824:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+     824:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
      828:	81 30       	cpi	r24, 0x01	; 1
      82a:	a9 f4       	brne	.+42     	; 0x856 <Menu_Tick+0x2b8>
-     82c:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     830:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     834:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     838:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     83c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     840:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     844:	6f e5       	ldi	r22, 0x5F	; 95
+     82c:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     830:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     834:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     838:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     83c:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     840:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     844:	6e e5       	ldi	r22, 0x5E	; 94
      846:	71 e0       	ldi	r23, 0x01	; 1
      848:	bf dd       	rcall	.-1154   	; 0x3c8 <LCD_DisplayString>
      84a:	81 e2       	ldi	r24, 0x21	; 33
      84c:	9d dd       	rcall	.-1222   	; 0x388 <LCD_Cursor>
      84e:	87 e0       	ldi	r24, 0x07	; 7
-     850:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     850:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      854:	e9 c5       	rjmp	.+3026   	; 0x1428 <Menu_Tick+0xe8a>
-     856:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+     856:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
      85a:	81 30       	cpi	r24, 0x01	; 1
      85c:	a9 f4       	brne	.+42     	; 0x888 <Menu_Tick+0x2ea>
-     85e:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     862:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     866:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     86a:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     86e:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     872:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     876:	6f e0       	ldi	r22, 0x0F	; 15
+     85e:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     862:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     866:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     86a:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     86e:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     872:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     876:	6e e0       	ldi	r22, 0x0E	; 14
      878:	71 e0       	ldi	r23, 0x01	; 1
      87a:	a6 dd       	rcall	.-1204   	; 0x3c8 <LCD_DisplayString>
      87c:	81 e2       	ldi	r24, 0x21	; 33
      87e:	84 dd       	rcall	.-1272   	; 0x388 <LCD_Cursor>
      880:	82 e0       	ldi	r24, 0x02	; 2
-     882:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     882:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      886:	d0 c5       	rjmp	.+2976   	; 0x1428 <Menu_Tick+0xe8a>
-     888:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+     888:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
      88c:	81 30       	cpi	r24, 0x01	; 1
      88e:	a9 f4       	brne	.+42     	; 0x8ba <Menu_Tick+0x31c>
-     890:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     894:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     898:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     89c:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     8a0:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     8a4:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     8a8:	67 e7       	ldi	r22, 0x77	; 119
+     890:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     894:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     898:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     89c:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     8a0:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     8a4:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     8a8:	66 e7       	ldi	r22, 0x76	; 118
      8aa:	71 e0       	ldi	r23, 0x01	; 1
      8ac:	8d dd       	rcall	.-1254   	; 0x3c8 <LCD_DisplayString>
      8ae:	81 e2       	ldi	r24, 0x21	; 33
      8b0:	6b dd       	rcall	.-1322   	; 0x388 <LCD_Cursor>
      8b2:	84 e0       	ldi	r24, 0x04	; 4
-     8b4:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     8b4:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      8b8:	b7 c5       	rjmp	.+2926   	; 0x1428 <Menu_Tick+0xe8a>
      8ba:	83 e0       	ldi	r24, 0x03	; 3
-     8bc:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     8bc:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      8c0:	b3 c5       	rjmp	.+2918   	; 0x1428 <Menu_Tick+0xe8a>
-     8c2:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     8c6:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     8c2:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     8c6:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      8ca:	84 3f       	cpi	r24, 0xF4	; 244
      8cc:	91 40       	sbci	r25, 0x01	; 1
      8ce:	c0 f0       	brcs	.+48     	; 0x900 <Menu_Tick+0x362>
-     8d0:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     8d4:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     8d8:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     8dc:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     8e0:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     8e4:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     8e8:	6f e0       	ldi	r22, 0x0F	; 15
+     8d0:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     8d4:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     8d8:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     8dc:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     8e0:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     8e4:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     8e8:	6e e0       	ldi	r22, 0x0E	; 14
      8ea:	71 e0       	ldi	r23, 0x01	; 1
      8ec:	81 e0       	ldi	r24, 0x01	; 1
      8ee:	6c dd       	rcall	.-1320   	; 0x3c8 <LCD_DisplayString>
@@ -1221,40 +1221,40 @@ void BLUE_REC_Init(){
      8f2:	4a dd       	rcall	.-1388   	; 0x388 <LCD_Cursor>
      8f4:	82 e0       	ldi	r24, 0x02	; 2
      8f6:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     8fa:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     8fa:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      8fe:	94 c5       	rjmp	.+2856   	; 0x1428 <Menu_Tick+0xe8a>
-     900:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+     900:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
      904:	81 30       	cpi	r24, 0x01	; 1
      906:	a9 f4       	brne	.+42     	; 0x932 <Menu_Tick+0x394>
-     908:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     90c:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     910:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     914:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     918:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     91c:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     920:	68 e9       	ldi	r22, 0x98	; 152
+     908:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     90c:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     910:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     914:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     918:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     91c:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     920:	67 e9       	ldi	r22, 0x97	; 151
      922:	71 e0       	ldi	r23, 0x01	; 1
      924:	51 dd       	rcall	.-1374   	; 0x3c8 <LCD_DisplayString>
      926:	81 e2       	ldi	r24, 0x21	; 33
      928:	2f dd       	rcall	.-1442   	; 0x388 <LCD_Cursor>
      92a:	85 e0       	ldi	r24, 0x05	; 5
-     92c:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     92c:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      930:	7b c5       	rjmp	.+2806   	; 0x1428 <Menu_Tick+0xe8a>
-     932:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+     932:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
      936:	81 30       	cpi	r24, 0x01	; 1
      938:	f9 f4       	brne	.+62     	; 0x978 <Menu_Tick+0x3da>
-     93a:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <bark_delay>
+     93a:	10 92 64 09 	sts	0x0964, r1	; 0x800964 <bark_delay>
      93e:	60 e0       	ldi	r22, 0x00	; 0
      940:	81 e0       	ldi	r24, 0x01	; 1
      942:	90 e0       	ldi	r25, 0x00	; 0
      944:	0e 94 f1 10 	call	0x21e2	; 0x21e2 <eeprom_write_byte>
-     948:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     94c:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     950:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     954:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     958:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     95c:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     960:	6f e0       	ldi	r22, 0x0F	; 15
+     948:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     94c:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     950:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     954:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     958:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     95c:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     960:	6e e0       	ldi	r22, 0x0E	; 14
      962:	71 e0       	ldi	r23, 0x01	; 1
      964:	81 e0       	ldi	r24, 0x01	; 1
      966:	30 dd       	rcall	.-1440   	; 0x3c8 <LCD_DisplayString>
@@ -1262,18 +1262,18 @@ void BLUE_REC_Init(){
      96a:	0e dd       	rcall	.-1508   	; 0x388 <LCD_Cursor>
      96c:	82 e0       	ldi	r24, 0x02	; 2
      96e:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     972:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     972:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      976:	58 c5       	rjmp	.+2736   	; 0x1428 <Menu_Tick+0xe8a>
-     978:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <Button_B>
+     978:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_B>
      97c:	81 30       	cpi	r24, 0x01	; 1
      97e:	c1 f4       	brne	.+48     	; 0x9b0 <Menu_Tick+0x412>
-     980:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     984:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     988:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     98c:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     990:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     994:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     998:	67 e4       	ldi	r22, 0x47	; 71
+     980:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     984:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     988:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     98c:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     990:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     994:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     998:	66 e4       	ldi	r22, 0x46	; 70
      99a:	71 e0       	ldi	r23, 0x01	; 1
      99c:	15 dd       	rcall	.-1494   	; 0x3c8 <LCD_DisplayString>
      99e:	81 e2       	ldi	r24, 0x21	; 33
@@ -1281,23 +1281,23 @@ void BLUE_REC_Init(){
      9a2:	82 e0       	ldi	r24, 0x02	; 2
      9a4:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      9a8:	83 e0       	ldi	r24, 0x03	; 3
-     9aa:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     9aa:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      9ae:	3c c5       	rjmp	.+2680   	; 0x1428 <Menu_Tick+0xe8a>
      9b0:	84 e0       	ldi	r24, 0x04	; 4
-     9b2:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     9b2:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      9b6:	38 c5       	rjmp	.+2672   	; 0x1428 <Menu_Tick+0xe8a>
-     9b8:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     9bc:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     9b8:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     9bc:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      9c0:	84 3f       	cpi	r24, 0xF4	; 244
      9c2:	91 40       	sbci	r25, 0x01	; 1
      9c4:	c0 f0       	brcs	.+48     	; 0x9f6 <Menu_Tick+0x458>
-     9c6:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     9ca:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     9ce:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     9d2:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     9d6:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     9da:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     9de:	6f e0       	ldi	r22, 0x0F	; 15
+     9c6:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     9ca:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     9ce:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     9d2:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     9d6:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     9da:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     9de:	6e e0       	ldi	r22, 0x0E	; 14
      9e0:	71 e0       	ldi	r23, 0x01	; 1
      9e2:	81 e0       	ldi	r24, 0x01	; 1
      9e4:	f1 dc       	rcall	.-1566   	; 0x3c8 <LCD_DisplayString>
@@ -1305,18 +1305,18 @@ void BLUE_REC_Init(){
      9e8:	cf dc       	rcall	.-1634   	; 0x388 <LCD_Cursor>
      9ea:	82 e0       	ldi	r24, 0x02	; 2
      9ec:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     9f0:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     9f0:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      9f4:	19 c5       	rjmp	.+2610   	; 0x1428 <Menu_Tick+0xe8a>
-     9f6:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+     9f6:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
      9fa:	81 30       	cpi	r24, 0x01	; 1
      9fc:	c1 f4       	brne	.+48     	; 0xa2e <Menu_Tick+0x490>
-     9fe:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     a02:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     a06:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     a0a:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     a0e:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     a12:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     a16:	69 eb       	ldi	r22, 0xB9	; 185
+     9fe:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     a02:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     a06:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     a0a:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     a0e:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     a12:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     a16:	68 eb       	ldi	r22, 0xB8	; 184
      a18:	71 e0       	ldi	r23, 0x01	; 1
      a1a:	d6 dc       	rcall	.-1620   	; 0x3c8 <LCD_DisplayString>
      a1c:	81 e2       	ldi	r24, 0x21	; 33
@@ -1324,18 +1324,18 @@ void BLUE_REC_Init(){
      a20:	82 e0       	ldi	r24, 0x02	; 2
      a22:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      a26:	86 e0       	ldi	r24, 0x06	; 6
-     a28:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     a28:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      a2c:	fd c4       	rjmp	.+2554   	; 0x1428 <Menu_Tick+0xe8a>
-     a2e:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+     a2e:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
      a32:	81 30       	cpi	r24, 0x01	; 1
      a34:	c1 f4       	brne	.+48     	; 0xa66 <Menu_Tick+0x4c8>
-     a36:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     a3a:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     a3e:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     a42:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     a46:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     a4a:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     a4e:	67 e7       	ldi	r22, 0x77	; 119
+     a36:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     a3a:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     a3e:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     a42:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     a46:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     a4a:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     a4e:	66 e7       	ldi	r22, 0x76	; 118
      a50:	71 e0       	ldi	r23, 0x01	; 1
      a52:	ba dc       	rcall	.-1676   	; 0x3c8 <LCD_DisplayString>
      a54:	81 e2       	ldi	r24, 0x21	; 33
@@ -1343,23 +1343,23 @@ void BLUE_REC_Init(){
      a58:	82 e0       	ldi	r24, 0x02	; 2
      a5a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      a5e:	84 e0       	ldi	r24, 0x04	; 4
-     a60:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     a60:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      a64:	e1 c4       	rjmp	.+2498   	; 0x1428 <Menu_Tick+0xe8a>
-     a66:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+     a66:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
      a6a:	81 30       	cpi	r24, 0x01	; 1
      a6c:	f9 f4       	brne	.+62     	; 0xaac <Menu_Tick+0x50e>
-     a6e:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <bark_delay>
+     a6e:	80 93 64 09 	sts	0x0964, r24	; 0x800964 <bark_delay>
      a72:	61 e0       	ldi	r22, 0x01	; 1
      a74:	81 e0       	ldi	r24, 0x01	; 1
      a76:	90 e0       	ldi	r25, 0x00	; 0
      a78:	0e 94 f1 10 	call	0x21e2	; 0x21e2 <eeprom_write_byte>
-     a7c:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     a80:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     a84:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     a88:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     a8c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     a90:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     a94:	6f e0       	ldi	r22, 0x0F	; 15
+     a7c:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     a80:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     a84:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     a88:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     a8c:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     a90:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     a94:	6e e0       	ldi	r22, 0x0E	; 14
      a96:	71 e0       	ldi	r23, 0x01	; 1
      a98:	81 e0       	ldi	r24, 0x01	; 1
      a9a:	96 dc       	rcall	.-1748   	; 0x3c8 <LCD_DisplayString>
@@ -1367,18 +1367,18 @@ void BLUE_REC_Init(){
      a9e:	74 dc       	rcall	.-1816   	; 0x388 <LCD_Cursor>
      aa0:	82 e0       	ldi	r24, 0x02	; 2
      aa2:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     aa6:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     aa6:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      aaa:	be c4       	rjmp	.+2428   	; 0x1428 <Menu_Tick+0xe8a>
-     aac:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <Button_B>
+     aac:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_B>
      ab0:	81 30       	cpi	r24, 0x01	; 1
      ab2:	c1 f4       	brne	.+48     	; 0xae4 <Menu_Tick+0x546>
-     ab4:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     ab8:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     abc:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     ac0:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     ac4:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     ac8:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     acc:	67 e4       	ldi	r22, 0x47	; 71
+     ab4:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     ab8:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     abc:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     ac0:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     ac4:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     ac8:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     acc:	66 e4       	ldi	r22, 0x46	; 70
      ace:	71 e0       	ldi	r23, 0x01	; 1
      ad0:	7b dc       	rcall	.-1802   	; 0x3c8 <LCD_DisplayString>
      ad2:	81 e2       	ldi	r24, 0x21	; 33
@@ -1386,23 +1386,23 @@ void BLUE_REC_Init(){
      ad6:	82 e0       	ldi	r24, 0x02	; 2
      ad8:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      adc:	83 e0       	ldi	r24, 0x03	; 3
-     ade:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     ade:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      ae2:	a2 c4       	rjmp	.+2372   	; 0x1428 <Menu_Tick+0xe8a>
      ae4:	85 e0       	ldi	r24, 0x05	; 5
-     ae6:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     ae6:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      aea:	9e c4       	rjmp	.+2364   	; 0x1428 <Menu_Tick+0xe8a>
-     aec:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     af0:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     aec:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     af0:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      af4:	84 3f       	cpi	r24, 0xF4	; 244
      af6:	91 40       	sbci	r25, 0x01	; 1
      af8:	c0 f0       	brcs	.+48     	; 0xb2a <Menu_Tick+0x58c>
-     afa:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     afe:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     b02:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     b06:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     b0a:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     b0e:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     b12:	6f e0       	ldi	r22, 0x0F	; 15
+     afa:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     afe:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     b02:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     b06:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     b0a:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     b0e:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     b12:	6e e0       	ldi	r22, 0x0E	; 14
      b14:	71 e0       	ldi	r23, 0x01	; 1
      b16:	81 e0       	ldi	r24, 0x01	; 1
      b18:	57 dc       	rcall	.-1874   	; 0x3c8 <LCD_DisplayString>
@@ -1410,59 +1410,59 @@ void BLUE_REC_Init(){
      b1c:	35 dc       	rcall	.-1942   	; 0x388 <LCD_Cursor>
      b1e:	82 e0       	ldi	r24, 0x02	; 2
      b20:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     b24:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     b24:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      b28:	7f c4       	rjmp	.+2302   	; 0x1428 <Menu_Tick+0xe8a>
-     b2a:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+     b2a:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
      b2e:	81 30       	cpi	r24, 0x01	; 1
      b30:	a9 f4       	brne	.+42     	; 0xb5c <Menu_Tick+0x5be>
-     b32:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     b36:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     b3a:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     b3e:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     b42:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     b46:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     b4a:	68 e9       	ldi	r22, 0x98	; 152
+     b32:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     b36:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     b3a:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     b3e:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     b42:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     b46:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     b4a:	67 e9       	ldi	r22, 0x97	; 151
      b4c:	71 e0       	ldi	r23, 0x01	; 1
      b4e:	3c dc       	rcall	.-1928   	; 0x3c8 <LCD_DisplayString>
      b50:	81 e2       	ldi	r24, 0x21	; 33
      b52:	1a dc       	rcall	.-1996   	; 0x388 <LCD_Cursor>
      b54:	85 e0       	ldi	r24, 0x05	; 5
-     b56:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     b56:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      b5a:	66 c4       	rjmp	.+2252   	; 0x1428 <Menu_Tick+0xe8a>
-     b5c:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+     b5c:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
      b60:	81 30       	cpi	r24, 0x01	; 1
      b62:	f9 f4       	brne	.+62     	; 0xba2 <Menu_Tick+0x604>
      b64:	c2 e0       	ldi	r28, 0x02	; 2
-     b66:	c0 93 66 09 	sts	0x0966, r28	; 0x800966 <bark_delay>
+     b66:	c0 93 64 09 	sts	0x0964, r28	; 0x800964 <bark_delay>
      b6a:	62 e0       	ldi	r22, 0x02	; 2
      b6c:	81 e0       	ldi	r24, 0x01	; 1
      b6e:	90 e0       	ldi	r25, 0x00	; 0
      b70:	0e 94 f1 10 	call	0x21e2	; 0x21e2 <eeprom_write_byte>
-     b74:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     b78:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     b7c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     b80:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     b84:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     b88:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     b8c:	6f e0       	ldi	r22, 0x0F	; 15
+     b74:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     b78:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     b7c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     b80:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     b84:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     b88:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     b8c:	6e e0       	ldi	r22, 0x0E	; 14
      b8e:	71 e0       	ldi	r23, 0x01	; 1
      b90:	81 e0       	ldi	r24, 0x01	; 1
      b92:	1a dc       	rcall	.-1996   	; 0x3c8 <LCD_DisplayString>
      b94:	81 e2       	ldi	r24, 0x21	; 33
      b96:	f8 db       	rcall	.-2064   	; 0x388 <LCD_Cursor>
      b98:	c0 93 00 01 	sts	0x0100, r28	; 0x800100 <__data_start>
-     b9c:	c0 93 ce 09 	sts	0x09CE, r28	; 0x8009ce <menu_state>
+     b9c:	c0 93 cc 09 	sts	0x09CC, r28	; 0x8009cc <menu_state>
      ba0:	43 c4       	rjmp	.+2182   	; 0x1428 <Menu_Tick+0xe8a>
-     ba2:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <Button_B>
+     ba2:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_B>
      ba6:	81 30       	cpi	r24, 0x01	; 1
      ba8:	c1 f4       	brne	.+48     	; 0xbda <Menu_Tick+0x63c>
-     baa:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     bae:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     bb2:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     bb6:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     bba:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     bbe:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     bc2:	67 e4       	ldi	r22, 0x47	; 71
+     baa:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     bae:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     bb2:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     bb6:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     bba:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     bbe:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     bc2:	66 e4       	ldi	r22, 0x46	; 70
      bc4:	71 e0       	ldi	r23, 0x01	; 1
      bc6:	00 dc       	rcall	.-2048   	; 0x3c8 <LCD_DisplayString>
      bc8:	81 e2       	ldi	r24, 0x21	; 33
@@ -1470,30 +1470,30 @@ void BLUE_REC_Init(){
      bcc:	82 e0       	ldi	r24, 0x02	; 2
      bce:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      bd2:	83 e0       	ldi	r24, 0x03	; 3
-     bd4:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     bd4:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      bd8:	27 c4       	rjmp	.+2126   	; 0x1428 <Menu_Tick+0xe8a>
      bda:	86 e0       	ldi	r24, 0x06	; 6
-     bdc:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     bdc:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      be0:	23 c4       	rjmp	.+2118   	; 0x1428 <Menu_Tick+0xe8a>
-     be2:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     be6:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     be2:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     be6:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      bea:	84 3f       	cpi	r24, 0xF4	; 244
      bec:	91 40       	sbci	r25, 0x01	; 1
      bee:	b0 f0       	brcs	.+44     	; 0xc1c <Menu_Tick+0x67e>
-     bf0:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     bf4:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     bf8:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     bfc:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     c00:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     c04:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     c08:	6f e0       	ldi	r22, 0x0F	; 15
+     bf0:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     bf4:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     bf8:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     bfc:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     c00:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     c04:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     c08:	6e e0       	ldi	r22, 0x0E	; 14
      c0a:	71 e0       	ldi	r23, 0x01	; 1
      c0c:	81 e0       	ldi	r24, 0x01	; 1
      c0e:	dc db       	rcall	.-2120   	; 0x3c8 <LCD_DisplayString>
      c10:	81 e2       	ldi	r24, 0x21	; 33
      c12:	ba db       	rcall	.-2188   	; 0x388 <LCD_Cursor>
      c14:	82 e0       	ldi	r24, 0x02	; 2
-     c16:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     c16:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      c1a:	06 c4       	rjmp	.+2060   	; 0x1428 <Menu_Tick+0xe8a>
      c1c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
      c20:	81 30       	cpi	r24, 0x01	; 1
@@ -1501,82 +1501,82 @@ void BLUE_REC_Init(){
      c24:	82 e0       	ldi	r24, 0x02	; 2
      c26:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      c2a:	81 e0       	ldi	r24, 0x01	; 1
-     c2c:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <ARM_DISARM>
-     c30:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     c2c:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <ARM_DISARM>
+     c30:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      c34:	f9 c3       	rjmp	.+2034   	; 0x1428 <Menu_Tick+0xe8a>
-     c36:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+     c36:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
      c3a:	81 30       	cpi	r24, 0x01	; 1
      c3c:	31 f4       	brne	.+12     	; 0xc4a <Menu_Tick+0x6ac>
      c3e:	82 e0       	ldi	r24, 0x02	; 2
      c40:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     c44:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     c44:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      c48:	ef c3       	rjmp	.+2014   	; 0x1428 <Menu_Tick+0xe8a>
-     c4a:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+     c4a:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
      c4e:	81 30       	cpi	r24, 0x01	; 1
      c50:	a9 f4       	brne	.+42     	; 0xc7c <Menu_Tick+0x6de>
-     c52:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     c56:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     c5a:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     c5e:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     c62:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     c66:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     c6a:	6a ed       	ldi	r22, 0xDA	; 218
+     c52:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     c56:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     c5a:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     c5e:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     c62:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     c66:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     c6a:	69 ed       	ldi	r22, 0xD9	; 217
      c6c:	71 e0       	ldi	r23, 0x01	; 1
      c6e:	ac db       	rcall	.-2216   	; 0x3c8 <LCD_DisplayString>
      c70:	81 e2       	ldi	r24, 0x21	; 33
      c72:	8a db       	rcall	.-2284   	; 0x388 <LCD_Cursor>
      c74:	8c e0       	ldi	r24, 0x0C	; 12
-     c76:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     c76:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      c7a:	d6 c3       	rjmp	.+1964   	; 0x1428 <Menu_Tick+0xe8a>
-     c7c:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+     c7c:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
      c80:	81 30       	cpi	r24, 0x01	; 1
      c82:	a9 f4       	brne	.+42     	; 0xcae <Menu_Tick+0x710>
-     c84:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     c88:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     c8c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     c90:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     c94:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     c98:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     c9c:	67 e4       	ldi	r22, 0x47	; 71
+     c84:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     c88:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     c8c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     c90:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     c94:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     c98:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     c9c:	66 e4       	ldi	r22, 0x46	; 70
      c9e:	71 e0       	ldi	r23, 0x01	; 1
      ca0:	93 db       	rcall	.-2266   	; 0x3c8 <LCD_DisplayString>
      ca2:	81 e2       	ldi	r24, 0x21	; 33
      ca4:	71 db       	rcall	.-2334   	; 0x388 <LCD_Cursor>
      ca6:	83 e0       	ldi	r24, 0x03	; 3
-     ca8:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     ca8:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      cac:	bd c3       	rjmp	.+1914   	; 0x1428 <Menu_Tick+0xe8a>
-     cae:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+     cae:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
      cb2:	81 30       	cpi	r24, 0x01	; 1
      cb4:	a9 f4       	brne	.+42     	; 0xce0 <Menu_Tick+0x742>
-     cb6:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     cba:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     cbe:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     cc2:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     cc6:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     cca:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     cce:	63 ef       	ldi	r22, 0xF3	; 243
+     cb6:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     cba:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     cbe:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     cc2:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     cc6:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     cca:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     cce:	62 ef       	ldi	r22, 0xF2	; 242
      cd0:	71 e0       	ldi	r23, 0x01	; 1
      cd2:	7a db       	rcall	.-2316   	; 0x3c8 <LCD_DisplayString>
      cd4:	81 e2       	ldi	r24, 0x21	; 33
      cd6:	58 db       	rcall	.-2384   	; 0x388 <LCD_Cursor>
      cd8:	88 e0       	ldi	r24, 0x08	; 8
-     cda:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     cda:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      cde:	a4 c3       	rjmp	.+1864   	; 0x1428 <Menu_Tick+0xe8a>
      ce0:	87 e0       	ldi	r24, 0x07	; 7
-     ce2:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     ce2:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      ce6:	a0 c3       	rjmp	.+1856   	; 0x1428 <Menu_Tick+0xe8a>
-     ce8:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     cec:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     ce8:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     cec:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      cf0:	84 3f       	cpi	r24, 0xF4	; 244
      cf2:	91 40       	sbci	r25, 0x01	; 1
      cf4:	c0 f0       	brcs	.+48     	; 0xd26 <Menu_Tick+0x788>
-     cf6:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     cfa:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     cfe:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     d02:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     d06:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     d0a:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     d0e:	6f e0       	ldi	r22, 0x0F	; 15
+     cf6:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     cfa:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     cfe:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     d02:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     d06:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     d0a:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     d0e:	6e e0       	ldi	r22, 0x0E	; 14
      d10:	71 e0       	ldi	r23, 0x01	; 1
      d12:	81 e0       	ldi	r24, 0x01	; 1
      d14:	59 db       	rcall	.-2382   	; 0x3c8 <LCD_DisplayString>
@@ -1584,23 +1584,23 @@ void BLUE_REC_Init(){
      d18:	37 db       	rcall	.-2450   	; 0x388 <LCD_Cursor>
      d1a:	82 e0       	ldi	r24, 0x02	; 2
      d1c:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     d20:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     d20:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      d24:	81 c3       	rjmp	.+1794   	; 0x1428 <Menu_Tick+0xe8a>
-     d26:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+     d26:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
      d2a:	81 30       	cpi	r24, 0x01	; 1
      d2c:	f9 f4       	brne	.+62     	; 0xd6c <Menu_Tick+0x7ce>
-     d2e:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <bark_setting>
+     d2e:	10 92 65 09 	sts	0x0965, r1	; 0x800965 <bark_setting>
      d32:	60 e0       	ldi	r22, 0x00	; 0
      d34:	80 e0       	ldi	r24, 0x00	; 0
      d36:	90 e0       	ldi	r25, 0x00	; 0
      d38:	0e 94 f1 10 	call	0x21e2	; 0x21e2 <eeprom_write_byte>
-     d3c:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     d40:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     d44:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     d48:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     d4c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     d50:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     d54:	6f e0       	ldi	r22, 0x0F	; 15
+     d3c:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     d40:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     d44:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     d48:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     d4c:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     d50:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     d54:	6e e0       	ldi	r22, 0x0E	; 14
      d56:	71 e0       	ldi	r23, 0x01	; 1
      d58:	81 e0       	ldi	r24, 0x01	; 1
      d5a:	36 db       	rcall	.-2452   	; 0x3c8 <LCD_DisplayString>
@@ -1608,18 +1608,18 @@ void BLUE_REC_Init(){
      d5e:	14 db       	rcall	.-2520   	; 0x388 <LCD_Cursor>
      d60:	82 e0       	ldi	r24, 0x02	; 2
      d62:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     d66:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     d66:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      d6a:	5e c3       	rjmp	.+1724   	; 0x1428 <Menu_Tick+0xe8a>
-     d6c:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <Button_B>
+     d6c:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_B>
      d70:	81 30       	cpi	r24, 0x01	; 1
      d72:	c1 f4       	brne	.+48     	; 0xda4 <Menu_Tick+0x806>
-     d74:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     d78:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     d7c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     d80:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     d84:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     d88:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     d8c:	6f e5       	ldi	r22, 0x5F	; 95
+     d74:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     d78:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     d7c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     d80:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     d84:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     d88:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     d8c:	6e e5       	ldi	r22, 0x5E	; 94
      d8e:	71 e0       	ldi	r23, 0x01	; 1
      d90:	1b db       	rcall	.-2506   	; 0x3c8 <LCD_DisplayString>
      d92:	81 e2       	ldi	r24, 0x21	; 33
@@ -1627,40 +1627,40 @@ void BLUE_REC_Init(){
      d96:	82 e0       	ldi	r24, 0x02	; 2
      d98:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      d9c:	87 e0       	ldi	r24, 0x07	; 7
-     d9e:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     d9e:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      da2:	42 c3       	rjmp	.+1668   	; 0x1428 <Menu_Tick+0xe8a>
-     da4:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+     da4:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
      da8:	81 30       	cpi	r24, 0x01	; 1
      daa:	a9 f4       	brne	.+42     	; 0xdd6 <Menu_Tick+0x838>
-     dac:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     db0:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     db4:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     db8:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     dbc:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     dc0:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     dc4:	60 e1       	ldi	r22, 0x10	; 16
+     dac:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     db0:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     db4:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     db8:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     dbc:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     dc0:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     dc4:	6f e0       	ldi	r22, 0x0F	; 15
      dc6:	72 e0       	ldi	r23, 0x02	; 2
      dc8:	ff da       	rcall	.-2562   	; 0x3c8 <LCD_DisplayString>
      dca:	81 e2       	ldi	r24, 0x21	; 33
      dcc:	dd da       	rcall	.-2630   	; 0x388 <LCD_Cursor>
      dce:	89 e0       	ldi	r24, 0x09	; 9
-     dd0:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     dd0:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      dd4:	29 c3       	rjmp	.+1618   	; 0x1428 <Menu_Tick+0xe8a>
      dd6:	88 e0       	ldi	r24, 0x08	; 8
-     dd8:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     dd8:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      ddc:	25 c3       	rjmp	.+1610   	; 0x1428 <Menu_Tick+0xe8a>
-     dde:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     de2:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     dde:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     de2:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      de6:	84 3f       	cpi	r24, 0xF4	; 244
      de8:	91 40       	sbci	r25, 0x01	; 1
      dea:	c0 f0       	brcs	.+48     	; 0xe1c <Menu_Tick+0x87e>
-     dec:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     df0:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     df4:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     df8:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     dfc:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     e00:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     e04:	6f e0       	ldi	r22, 0x0F	; 15
+     dec:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     df0:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     df4:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     df8:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     dfc:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     e00:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     e04:	6e e0       	ldi	r22, 0x0E	; 14
      e06:	71 e0       	ldi	r23, 0x01	; 1
      e08:	81 e0       	ldi	r24, 0x01	; 1
      e0a:	de da       	rcall	.-2628   	; 0x3c8 <LCD_DisplayString>
@@ -1668,23 +1668,23 @@ void BLUE_REC_Init(){
      e0e:	bc da       	rcall	.-2696   	; 0x388 <LCD_Cursor>
      e10:	82 e0       	ldi	r24, 0x02	; 2
      e12:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     e16:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     e16:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      e1a:	06 c3       	rjmp	.+1548   	; 0x1428 <Menu_Tick+0xe8a>
-     e1c:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+     e1c:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
      e20:	81 30       	cpi	r24, 0x01	; 1
      e22:	f9 f4       	brne	.+62     	; 0xe62 <Menu_Tick+0x8c4>
-     e24:	80 93 67 09 	sts	0x0967, r24	; 0x800967 <bark_setting>
+     e24:	80 93 65 09 	sts	0x0965, r24	; 0x800965 <bark_setting>
      e28:	61 e0       	ldi	r22, 0x01	; 1
      e2a:	80 e0       	ldi	r24, 0x00	; 0
      e2c:	90 e0       	ldi	r25, 0x00	; 0
      e2e:	0e 94 f1 10 	call	0x21e2	; 0x21e2 <eeprom_write_byte>
-     e32:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     e36:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     e3a:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     e3e:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     e42:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     e46:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     e4a:	6f e0       	ldi	r22, 0x0F	; 15
+     e32:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     e36:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     e3a:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     e3e:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     e42:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     e46:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     e4a:	6e e0       	ldi	r22, 0x0E	; 14
      e4c:	71 e0       	ldi	r23, 0x01	; 1
      e4e:	81 e0       	ldi	r24, 0x01	; 1
      e50:	bb da       	rcall	.-2698   	; 0x3c8 <LCD_DisplayString>
@@ -1692,18 +1692,18 @@ void BLUE_REC_Init(){
      e54:	99 da       	rcall	.-2766   	; 0x388 <LCD_Cursor>
      e56:	82 e0       	ldi	r24, 0x02	; 2
      e58:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     e5c:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     e5c:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      e60:	e3 c2       	rjmp	.+1478   	; 0x1428 <Menu_Tick+0xe8a>
-     e62:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <Button_B>
+     e62:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_B>
      e66:	81 30       	cpi	r24, 0x01	; 1
      e68:	c1 f4       	brne	.+48     	; 0xe9a <Menu_Tick+0x8fc>
-     e6a:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     e6e:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     e72:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     e76:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     e7a:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     e7e:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     e82:	6f e5       	ldi	r22, 0x5F	; 95
+     e6a:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     e6e:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     e72:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     e76:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     e7a:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     e7e:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     e82:	6e e5       	ldi	r22, 0x5E	; 94
      e84:	71 e0       	ldi	r23, 0x01	; 1
      e86:	a0 da       	rcall	.-2752   	; 0x3c8 <LCD_DisplayString>
      e88:	81 e2       	ldi	r24, 0x21	; 33
@@ -1711,39 +1711,39 @@ void BLUE_REC_Init(){
      e8c:	82 e0       	ldi	r24, 0x02	; 2
      e8e:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      e92:	87 e0       	ldi	r24, 0x07	; 7
-     e94:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     e94:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      e98:	c7 c2       	rjmp	.+1422   	; 0x1428 <Menu_Tick+0xe8a>
-     e9a:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+     e9a:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
      e9e:	81 30       	cpi	r24, 0x01	; 1
      ea0:	99 f4       	brne	.+38     	; 0xec8 <Menu_Tick+0x92a>
-     ea2:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     ea6:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     eaa:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     eae:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     eb2:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     eb6:	63 ef       	ldi	r22, 0xF3	; 243
+     ea2:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     ea6:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     eaa:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     eae:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     eb2:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     eb6:	62 ef       	ldi	r22, 0xF2	; 242
      eb8:	71 e0       	ldi	r23, 0x01	; 1
      eba:	86 da       	rcall	.-2804   	; 0x3c8 <LCD_DisplayString>
      ebc:	81 e2       	ldi	r24, 0x21	; 33
      ebe:	64 da       	rcall	.-2872   	; 0x388 <LCD_Cursor>
      ec0:	88 e0       	ldi	r24, 0x08	; 8
-     ec2:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     ec2:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      ec6:	b0 c2       	rjmp	.+1376   	; 0x1428 <Menu_Tick+0xe8a>
      ec8:	89 e0       	ldi	r24, 0x09	; 9
-     eca:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     eca:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      ece:	ac c2       	rjmp	.+1368   	; 0x1428 <Menu_Tick+0xe8a>
-     ed0:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     ed4:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     ed0:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     ed4:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      ed8:	84 3f       	cpi	r24, 0xF4	; 244
      eda:	91 40       	sbci	r25, 0x01	; 1
      edc:	c0 f0       	brcs	.+48     	; 0xf0e <Menu_Tick+0x970>
-     ede:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     ee2:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     ee6:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     eea:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     eee:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     ef2:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     ef6:	6f e0       	ldi	r22, 0x0F	; 15
+     ede:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     ee2:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     ee6:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     eea:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     eee:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     ef2:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     ef6:	6e e0       	ldi	r22, 0x0E	; 14
      ef8:	71 e0       	ldi	r23, 0x01	; 1
      efa:	81 e0       	ldi	r24, 0x01	; 1
      efc:	65 da       	rcall	.-2870   	; 0x3c8 <LCD_DisplayString>
@@ -1751,7 +1751,7 @@ void BLUE_REC_Init(){
      f00:	43 da       	rcall	.-2938   	; 0x388 <LCD_Cursor>
      f02:	82 e0       	ldi	r24, 0x02	; 2
      f04:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     f08:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     f08:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      f0c:	8d c2       	rjmp	.+1306   	; 0x1428 <Menu_Tick+0xe8a>
      f0e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
      f12:	81 30       	cpi	r24, 0x01	; 1
@@ -1759,75 +1759,75 @@ void BLUE_REC_Init(){
      f16:	82 e0       	ldi	r24, 0x02	; 2
      f18:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
      f1c:	81 e0       	ldi	r24, 0x01	; 1
-     f1e:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <ARM_DISARM>
-     f22:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     f1e:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <ARM_DISARM>
+     f22:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      f26:	80 c2       	rjmp	.+1280   	; 0x1428 <Menu_Tick+0xe8a>
-     f28:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+     f28:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
      f2c:	81 30       	cpi	r24, 0x01	; 1
      f2e:	31 f4       	brne	.+12     	; 0xf3c <Menu_Tick+0x99e>
      f30:	82 e0       	ldi	r24, 0x02	; 2
      f32:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     f36:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+     f36:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
      f3a:	76 c2       	rjmp	.+1260   	; 0x1428 <Menu_Tick+0xe8a>
-     f3c:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+     f3c:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
      f40:	81 30       	cpi	r24, 0x01	; 1
      f42:	a9 f4       	brne	.+42     	; 0xf6e <Menu_Tick+0x9d0>
-     f44:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     f48:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     f4c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     f50:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     f54:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     f58:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     f5c:	6a ed       	ldi	r22, 0xDA	; 218
+     f44:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     f48:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     f4c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     f50:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     f54:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     f58:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     f5c:	69 ed       	ldi	r22, 0xD9	; 217
      f5e:	71 e0       	ldi	r23, 0x01	; 1
      f60:	33 da       	rcall	.-2970   	; 0x3c8 <LCD_DisplayString>
      f62:	81 e2       	ldi	r24, 0x21	; 33
      f64:	11 da       	rcall	.-3038   	; 0x388 <LCD_Cursor>
      f66:	8c e0       	ldi	r24, 0x0C	; 12
-     f68:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     f68:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      f6c:	5d c2       	rjmp	.+1210   	; 0x1428 <Menu_Tick+0xe8a>
-     f6e:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+     f6e:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
      f72:	81 30       	cpi	r24, 0x01	; 1
      f74:	01 f5       	brne	.+64     	; 0xfb6 <Menu_Tick+0xa18>
-     f76:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     f7a:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     f7e:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     f82:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     f86:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     f8a:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     f8e:	80 91 65 09 	lds	r24, 0x0965	; 0x800965 <peripheral_on_off>
+     f76:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     f7a:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     f7e:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     f82:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     f86:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     f8a:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     f8e:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
      f92:	81 30       	cpi	r24, 0x01	; 1
      f94:	31 f4       	brne	.+12     	; 0xfa2 <Menu_Tick+0xa04>
-     f96:	6d e2       	ldi	r22, 0x2D	; 45
+     f96:	6c e2       	ldi	r22, 0x2C	; 44
      f98:	72 e0       	ldi	r23, 0x02	; 2
      f9a:	16 da       	rcall	.-3028   	; 0x3c8 <LCD_DisplayString>
      f9c:	81 e2       	ldi	r24, 0x21	; 33
      f9e:	f4 d9       	rcall	.-3096   	; 0x388 <LCD_Cursor>
      fa0:	06 c0       	rjmp	.+12     	; 0xfae <Menu_Tick+0xa10>
-     fa2:	66 e4       	ldi	r22, 0x46	; 70
+     fa2:	65 e4       	ldi	r22, 0x45	; 69
      fa4:	72 e0       	ldi	r23, 0x02	; 2
      fa6:	81 e0       	ldi	r24, 0x01	; 1
      fa8:	0f da       	rcall	.-3042   	; 0x3c8 <LCD_DisplayString>
      faa:	81 e2       	ldi	r24, 0x21	; 33
      fac:	ed d9       	rcall	.-3110   	; 0x388 <LCD_Cursor>
      fae:	8b e0       	ldi	r24, 0x0B	; 11
-     fb0:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     fb0:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      fb4:	39 c2       	rjmp	.+1138   	; 0x1428 <Menu_Tick+0xe8a>
      fb6:	8a e0       	ldi	r24, 0x0A	; 10
-     fb8:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     fb8:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      fbc:	35 c2       	rjmp	.+1130   	; 0x1428 <Menu_Tick+0xe8a>
-     fbe:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-     fc2:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+     fbe:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+     fc2:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
      fc6:	84 3f       	cpi	r24, 0xF4	; 244
      fc8:	91 40       	sbci	r25, 0x01	; 1
      fca:	c0 f0       	brcs	.+48     	; 0xffc <Menu_Tick+0xa5e>
-     fcc:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-     fd0:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-     fd4:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-     fd8:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-     fdc:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-     fe0:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-     fe4:	6f e0       	ldi	r22, 0x0F	; 15
+     fcc:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+     fd0:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+     fd4:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+     fd8:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+     fdc:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+     fe0:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+     fe4:	6e e0       	ldi	r22, 0x0E	; 14
      fe6:	71 e0       	ldi	r23, 0x01	; 1
      fe8:	81 e0       	ldi	r24, 0x01	; 1
      fea:	ee d9       	rcall	.-3108   	; 0x3c8 <LCD_DisplayString>
@@ -1835,7 +1835,7 @@ void BLUE_REC_Init(){
      fee:	cc d9       	rcall	.-3176   	; 0x388 <LCD_Cursor>
      ff0:	82 e0       	ldi	r24, 0x02	; 2
      ff2:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-     ff6:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+     ff6:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
      ffa:	16 c2       	rjmp	.+1068   	; 0x1428 <Menu_Tick+0xe8a>
      ffc:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
     1000:	81 30       	cpi	r24, 0x01	; 1
@@ -1843,33 +1843,33 @@ void BLUE_REC_Init(){
     1004:	82 e0       	ldi	r24, 0x02	; 2
     1006:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
     100a:	81 e0       	ldi	r24, 0x01	; 1
-    100c:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <ARM_DISARM>
-    1010:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+    100c:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <ARM_DISARM>
+    1010:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
     1014:	09 c2       	rjmp	.+1042   	; 0x1428 <Menu_Tick+0xe8a>
-    1016:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+    1016:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
     101a:	81 30       	cpi	r24, 0x01	; 1
     101c:	31 f4       	brne	.+12     	; 0x102a <Menu_Tick+0xa8c>
     101e:	82 e0       	ldi	r24, 0x02	; 2
     1020:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-    1024:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+    1024:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
     1028:	ff c1       	rjmp	.+1022   	; 0x1428 <Menu_Tick+0xe8a>
-    102a:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+    102a:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
     102e:	81 30       	cpi	r24, 0x01	; 1
     1030:	09 f0       	breq	.+2      	; 0x1034 <Menu_Tick+0xa96>
     1032:	47 c0       	rjmp	.+142    	; 0x10c2 <Menu_Tick+0xb24>
-    1034:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    1038:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    103c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1040:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    1044:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    1048:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    104c:	80 91 67 09 	lds	r24, 0x0967	; 0x800967 <bark_setting>
+    1034:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    1038:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    103c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1040:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    1044:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    1048:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    104c:	80 91 65 09 	lds	r24, 0x0965	; 0x800965 <bark_setting>
     1050:	81 11       	cpse	r24, r1
     1052:	1a c0       	rjmp	.+52     	; 0x1088 <Menu_Tick+0xaea>
-    1054:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    1054:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     1058:	81 11       	cpse	r24, r1
     105a:	07 c0       	rjmp	.+14     	; 0x106a <Menu_Tick+0xacc>
-    105c:	63 e6       	ldi	r22, 0x63	; 99
+    105c:	62 e6       	ldi	r22, 0x62	; 98
     105e:	72 e0       	ldi	r23, 0x02	; 2
     1060:	81 e0       	ldi	r24, 0x01	; 1
     1062:	b2 d9       	rcall	.-3228   	; 0x3c8 <LCD_DisplayString>
@@ -1878,23 +1878,23 @@ void BLUE_REC_Init(){
     1068:	28 c0       	rjmp	.+80     	; 0x10ba <Menu_Tick+0xb1c>
     106a:	81 30       	cpi	r24, 0x01	; 1
     106c:	31 f4       	brne	.+12     	; 0x107a <Menu_Tick+0xadc>
-    106e:	60 e8       	ldi	r22, 0x80	; 128
+    106e:	6f e7       	ldi	r22, 0x7F	; 127
     1070:	72 e0       	ldi	r23, 0x02	; 2
     1072:	aa d9       	rcall	.-3244   	; 0x3c8 <LCD_DisplayString>
     1074:	81 e2       	ldi	r24, 0x21	; 33
     1076:	88 d9       	rcall	.-3312   	; 0x388 <LCD_Cursor>
     1078:	20 c0       	rjmp	.+64     	; 0x10ba <Menu_Tick+0xb1c>
-    107a:	6d e9       	ldi	r22, 0x9D	; 157
+    107a:	6c e9       	ldi	r22, 0x9C	; 156
     107c:	72 e0       	ldi	r23, 0x02	; 2
     107e:	81 e0       	ldi	r24, 0x01	; 1
     1080:	a3 d9       	rcall	.-3258   	; 0x3c8 <LCD_DisplayString>
     1082:	81 e2       	ldi	r24, 0x21	; 33
     1084:	81 d9       	rcall	.-3326   	; 0x388 <LCD_Cursor>
     1086:	19 c0       	rjmp	.+50     	; 0x10ba <Menu_Tick+0xb1c>
-    1088:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    1088:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     108c:	81 11       	cpse	r24, r1
     108e:	07 c0       	rjmp	.+14     	; 0x109e <Menu_Tick+0xb00>
-    1090:	6a eb       	ldi	r22, 0xBA	; 186
+    1090:	69 eb       	ldi	r22, 0xB9	; 185
     1092:	72 e0       	ldi	r23, 0x02	; 2
     1094:	81 e0       	ldi	r24, 0x01	; 1
     1096:	98 d9       	rcall	.-3280   	; 0x3c8 <LCD_DisplayString>
@@ -1903,43 +1903,43 @@ void BLUE_REC_Init(){
     109c:	0e c0       	rjmp	.+28     	; 0x10ba <Menu_Tick+0xb1c>
     109e:	81 30       	cpi	r24, 0x01	; 1
     10a0:	31 f4       	brne	.+12     	; 0x10ae <Menu_Tick+0xb10>
-    10a2:	67 ed       	ldi	r22, 0xD7	; 215
+    10a2:	66 ed       	ldi	r22, 0xD6	; 214
     10a4:	72 e0       	ldi	r23, 0x02	; 2
     10a6:	90 d9       	rcall	.-3296   	; 0x3c8 <LCD_DisplayString>
     10a8:	81 e2       	ldi	r24, 0x21	; 33
     10aa:	6e d9       	rcall	.-3364   	; 0x388 <LCD_Cursor>
     10ac:	06 c0       	rjmp	.+12     	; 0x10ba <Menu_Tick+0xb1c>
-    10ae:	64 ef       	ldi	r22, 0xF4	; 244
+    10ae:	63 ef       	ldi	r22, 0xF3	; 243
     10b0:	72 e0       	ldi	r23, 0x02	; 2
     10b2:	81 e0       	ldi	r24, 0x01	; 1
     10b4:	89 d9       	rcall	.-3310   	; 0x3c8 <LCD_DisplayString>
     10b6:	81 e2       	ldi	r24, 0x21	; 33
     10b8:	67 d9       	rcall	.-3378   	; 0x388 <LCD_Cursor>
     10ba:	8a e0       	ldi	r24, 0x0A	; 10
-    10bc:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    10bc:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     10c0:	b3 c1       	rjmp	.+870    	; 0x1428 <Menu_Tick+0xe8a>
     10c2:	8b e0       	ldi	r24, 0x0B	; 11
-    10c4:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    10c4:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     10c8:	af c1       	rjmp	.+862    	; 0x1428 <Menu_Tick+0xe8a>
-    10ca:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-    10ce:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+    10ca:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+    10ce:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
     10d2:	84 3f       	cpi	r24, 0xF4	; 244
     10d4:	91 40       	sbci	r25, 0x01	; 1
     10d6:	b0 f0       	brcs	.+44     	; 0x1104 <Menu_Tick+0xb66>
-    10d8:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    10dc:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    10e0:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    10e4:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    10e8:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    10ec:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    10f0:	6f e0       	ldi	r22, 0x0F	; 15
+    10d8:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    10dc:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    10e0:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    10e4:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    10e8:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    10ec:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    10f0:	6e e0       	ldi	r22, 0x0E	; 14
     10f2:	71 e0       	ldi	r23, 0x01	; 1
     10f4:	81 e0       	ldi	r24, 0x01	; 1
     10f6:	68 d9       	rcall	.-3376   	; 0x3c8 <LCD_DisplayString>
     10f8:	81 e2       	ldi	r24, 0x21	; 33
     10fa:	46 d9       	rcall	.-3444   	; 0x388 <LCD_Cursor>
     10fc:	82 e0       	ldi	r24, 0x02	; 2
-    10fe:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    10fe:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     1102:	92 c1       	rjmp	.+804    	; 0x1428 <Menu_Tick+0xe8a>
     1104:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
     1108:	81 30       	cpi	r24, 0x01	; 1
@@ -1947,33 +1947,33 @@ void BLUE_REC_Init(){
     110c:	82 e0       	ldi	r24, 0x02	; 2
     110e:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
     1112:	81 e0       	ldi	r24, 0x01	; 1
-    1114:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <ARM_DISARM>
-    1118:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+    1114:	80 93 6e 09 	sts	0x096E, r24	; 0x80096e <ARM_DISARM>
+    1118:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
     111c:	85 c1       	rjmp	.+778    	; 0x1428 <Menu_Tick+0xe8a>
-    111e:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+    111e:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
     1122:	81 30       	cpi	r24, 0x01	; 1
     1124:	31 f4       	brne	.+12     	; 0x1132 <Menu_Tick+0xb94>
     1126:	82 e0       	ldi	r24, 0x02	; 2
     1128:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-    112c:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+    112c:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
     1130:	7b c1       	rjmp	.+758    	; 0x1428 <Menu_Tick+0xe8a>
-    1132:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+    1132:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
     1136:	81 30       	cpi	r24, 0x01	; 1
     1138:	09 f0       	breq	.+2      	; 0x113c <Menu_Tick+0xb9e>
     113a:	47 c0       	rjmp	.+142    	; 0x11ca <Menu_Tick+0xc2c>
-    113c:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    1140:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    1144:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1148:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    114c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    1150:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    1154:	80 91 67 09 	lds	r24, 0x0967	; 0x800967 <bark_setting>
+    113c:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    1140:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    1144:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1148:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    114c:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    1150:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    1154:	80 91 65 09 	lds	r24, 0x0965	; 0x800965 <bark_setting>
     1158:	81 11       	cpse	r24, r1
     115a:	1a c0       	rjmp	.+52     	; 0x1190 <Menu_Tick+0xbf2>
-    115c:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    115c:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     1160:	81 11       	cpse	r24, r1
     1162:	07 c0       	rjmp	.+14     	; 0x1172 <Menu_Tick+0xbd4>
-    1164:	63 e6       	ldi	r22, 0x63	; 99
+    1164:	62 e6       	ldi	r22, 0x62	; 98
     1166:	72 e0       	ldi	r23, 0x02	; 2
     1168:	81 e0       	ldi	r24, 0x01	; 1
     116a:	2e d9       	rcall	.-3492   	; 0x3c8 <LCD_DisplayString>
@@ -1982,23 +1982,23 @@ void BLUE_REC_Init(){
     1170:	28 c0       	rjmp	.+80     	; 0x11c2 <Menu_Tick+0xc24>
     1172:	81 30       	cpi	r24, 0x01	; 1
     1174:	31 f4       	brne	.+12     	; 0x1182 <Menu_Tick+0xbe4>
-    1176:	60 e8       	ldi	r22, 0x80	; 128
+    1176:	6f e7       	ldi	r22, 0x7F	; 127
     1178:	72 e0       	ldi	r23, 0x02	; 2
     117a:	26 d9       	rcall	.-3508   	; 0x3c8 <LCD_DisplayString>
     117c:	81 e2       	ldi	r24, 0x21	; 33
     117e:	04 d9       	rcall	.-3576   	; 0x388 <LCD_Cursor>
     1180:	20 c0       	rjmp	.+64     	; 0x11c2 <Menu_Tick+0xc24>
-    1182:	6d e9       	ldi	r22, 0x9D	; 157
+    1182:	6c e9       	ldi	r22, 0x9C	; 156
     1184:	72 e0       	ldi	r23, 0x02	; 2
     1186:	81 e0       	ldi	r24, 0x01	; 1
     1188:	1f d9       	rcall	.-3522   	; 0x3c8 <LCD_DisplayString>
     118a:	81 e2       	ldi	r24, 0x21	; 33
     118c:	fd d8       	rcall	.-3590   	; 0x388 <LCD_Cursor>
     118e:	19 c0       	rjmp	.+50     	; 0x11c2 <Menu_Tick+0xc24>
-    1190:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    1190:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     1194:	81 11       	cpse	r24, r1
     1196:	07 c0       	rjmp	.+14     	; 0x11a6 <Menu_Tick+0xc08>
-    1198:	6a eb       	ldi	r22, 0xBA	; 186
+    1198:	69 eb       	ldi	r22, 0xB9	; 185
     119a:	72 e0       	ldi	r23, 0x02	; 2
     119c:	81 e0       	ldi	r24, 0x01	; 1
     119e:	14 d9       	rcall	.-3544   	; 0x3c8 <LCD_DisplayString>
@@ -2007,70 +2007,70 @@ void BLUE_REC_Init(){
     11a4:	0e c0       	rjmp	.+28     	; 0x11c2 <Menu_Tick+0xc24>
     11a6:	81 30       	cpi	r24, 0x01	; 1
     11a8:	31 f4       	brne	.+12     	; 0x11b6 <Menu_Tick+0xc18>
-    11aa:	67 ed       	ldi	r22, 0xD7	; 215
+    11aa:	66 ed       	ldi	r22, 0xD6	; 214
     11ac:	72 e0       	ldi	r23, 0x02	; 2
     11ae:	0c d9       	rcall	.-3560   	; 0x3c8 <LCD_DisplayString>
     11b0:	81 e2       	ldi	r24, 0x21	; 33
     11b2:	ea d8       	rcall	.-3628   	; 0x388 <LCD_Cursor>
     11b4:	06 c0       	rjmp	.+12     	; 0x11c2 <Menu_Tick+0xc24>
-    11b6:	64 ef       	ldi	r22, 0xF4	; 244
+    11b6:	63 ef       	ldi	r22, 0xF3	; 243
     11b8:	72 e0       	ldi	r23, 0x02	; 2
     11ba:	81 e0       	ldi	r24, 0x01	; 1
     11bc:	05 d9       	rcall	.-3574   	; 0x3c8 <LCD_DisplayString>
     11be:	81 e2       	ldi	r24, 0x21	; 33
     11c0:	e3 d8       	rcall	.-3642   	; 0x388 <LCD_Cursor>
     11c2:	8a e0       	ldi	r24, 0x0A	; 10
-    11c4:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    11c4:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     11c8:	2f c1       	rjmp	.+606    	; 0x1428 <Menu_Tick+0xe8a>
-    11ca:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+    11ca:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
     11ce:	81 30       	cpi	r24, 0x01	; 1
     11d0:	a9 f4       	brne	.+42     	; 0x11fc <Menu_Tick+0xc5e>
-    11d2:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    11d6:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    11da:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    11de:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    11e2:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    11e6:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    11ea:	6f e5       	ldi	r22, 0x5F	; 95
+    11d2:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    11d6:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    11da:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    11de:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    11e2:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    11e6:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    11ea:	6e e5       	ldi	r22, 0x5E	; 94
     11ec:	71 e0       	ldi	r23, 0x01	; 1
     11ee:	ec d8       	rcall	.-3624   	; 0x3c8 <LCD_DisplayString>
     11f0:	81 e2       	ldi	r24, 0x21	; 33
     11f2:	ca d8       	rcall	.-3692   	; 0x388 <LCD_Cursor>
     11f4:	87 e0       	ldi	r24, 0x07	; 7
-    11f6:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    11f6:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     11fa:	16 c1       	rjmp	.+556    	; 0x1428 <Menu_Tick+0xe8a>
-    11fc:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+    11fc:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
     1200:	81 30       	cpi	r24, 0x01	; 1
     1202:	a9 f4       	brne	.+42     	; 0x122e <Menu_Tick+0xc90>
-    1204:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    1208:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    120c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1210:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    1214:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    1218:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    121c:	61 e1       	ldi	r22, 0x11	; 17
+    1204:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    1208:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    120c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1210:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    1214:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    1218:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    121c:	60 e1       	ldi	r22, 0x10	; 16
     121e:	73 e0       	ldi	r23, 0x03	; 3
     1220:	d3 d8       	rcall	.-3674   	; 0x3c8 <LCD_DisplayString>
     1222:	81 e2       	ldi	r24, 0x21	; 33
     1224:	b1 d8       	rcall	.-3742   	; 0x388 <LCD_Cursor>
     1226:	8d e0       	ldi	r24, 0x0D	; 13
-    1228:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    1228:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     122c:	fd c0       	rjmp	.+506    	; 0x1428 <Menu_Tick+0xe8a>
     122e:	8c e0       	ldi	r24, 0x0C	; 12
-    1230:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    1230:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     1234:	f9 c0       	rjmp	.+498    	; 0x1428 <Menu_Tick+0xe8a>
-    1236:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-    123a:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+    1236:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+    123a:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
     123e:	84 3f       	cpi	r24, 0xF4	; 244
     1240:	91 40       	sbci	r25, 0x01	; 1
     1242:	c0 f0       	brcs	.+48     	; 0x1274 <Menu_Tick+0xcd6>
-    1244:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    1248:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    124c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1250:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    1254:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    1258:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    125c:	6f e0       	ldi	r22, 0x0F	; 15
+    1244:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    1248:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    124c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1250:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    1254:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    1258:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    125c:	6e e0       	ldi	r22, 0x0E	; 14
     125e:	71 e0       	ldi	r23, 0x01	; 1
     1260:	81 e0       	ldi	r24, 0x01	; 1
     1262:	b2 d8       	rcall	.-3740   	; 0x3c8 <LCD_DisplayString>
@@ -2078,23 +2078,23 @@ void BLUE_REC_Init(){
     1266:	90 d8       	rcall	.-3808   	; 0x388 <LCD_Cursor>
     1268:	82 e0       	ldi	r24, 0x02	; 2
     126a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-    126e:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    126e:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     1272:	da c0       	rjmp	.+436    	; 0x1428 <Menu_Tick+0xe8a>
-    1274:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+    1274:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
     1278:	81 30       	cpi	r24, 0x01	; 1
     127a:	f1 f4       	brne	.+60     	; 0x12b8 <Menu_Tick+0xd1a>
-    127c:	80 93 65 09 	sts	0x0965, r24	; 0x800965 <peripheral_on_off>
+    127c:	80 93 63 09 	sts	0x0963, r24	; 0x800963 <peripheral_on_off>
     1280:	61 e0       	ldi	r22, 0x01	; 1
     1282:	82 e0       	ldi	r24, 0x02	; 2
     1284:	90 e0       	ldi	r25, 0x00	; 0
     1286:	ad d7       	rcall	.+3930   	; 0x21e2 <eeprom_write_byte>
-    1288:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    128c:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    1290:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1294:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    1298:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    129c:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    12a0:	6f e0       	ldi	r22, 0x0F	; 15
+    1288:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    128c:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    1290:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1294:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    1298:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    129c:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    12a0:	6e e0       	ldi	r22, 0x0E	; 14
     12a2:	71 e0       	ldi	r23, 0x01	; 1
     12a4:	81 e0       	ldi	r24, 0x01	; 1
     12a6:	90 d8       	rcall	.-3808   	; 0x3c8 <LCD_DisplayString>
@@ -2102,18 +2102,18 @@ void BLUE_REC_Init(){
     12aa:	6e d8       	rcall	.-3876   	; 0x388 <LCD_Cursor>
     12ac:	82 e0       	ldi	r24, 0x02	; 2
     12ae:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-    12b2:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    12b2:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     12b6:	b8 c0       	rjmp	.+368    	; 0x1428 <Menu_Tick+0xe8a>
-    12b8:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <Button_B>
+    12b8:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_B>
     12bc:	81 30       	cpi	r24, 0x01	; 1
     12be:	c1 f4       	brne	.+48     	; 0x12f0 <Menu_Tick+0xd52>
-    12c0:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    12c4:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    12c8:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    12cc:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    12d0:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    12d4:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    12d8:	6a ed       	ldi	r22, 0xDA	; 218
+    12c0:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    12c4:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    12c8:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    12cc:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    12d0:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    12d4:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    12d8:	69 ed       	ldi	r22, 0xD9	; 217
     12da:	71 e0       	ldi	r23, 0x01	; 1
     12dc:	75 d8       	rcall	.-3862   	; 0x3c8 <LCD_DisplayString>
     12de:	81 e2       	ldi	r24, 0x21	; 33
@@ -2121,39 +2121,39 @@ void BLUE_REC_Init(){
     12e2:	82 e0       	ldi	r24, 0x02	; 2
     12e4:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
     12e8:	8c e0       	ldi	r24, 0x0C	; 12
-    12ea:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    12ea:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     12ee:	9c c0       	rjmp	.+312    	; 0x1428 <Menu_Tick+0xe8a>
-    12f0:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_R>
+    12f0:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <Button_R>
     12f4:	81 30       	cpi	r24, 0x01	; 1
     12f6:	99 f4       	brne	.+38     	; 0x131e <Menu_Tick+0xd80>
-    12f8:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    12fc:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    1300:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1304:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    1308:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    130c:	62 e3       	ldi	r22, 0x32	; 50
+    12f8:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    12fc:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    1300:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1304:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    1308:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    130c:	61 e3       	ldi	r22, 0x31	; 49
     130e:	73 e0       	ldi	r23, 0x03	; 3
     1310:	5b d8       	rcall	.-3914   	; 0x3c8 <LCD_DisplayString>
     1312:	81 e2       	ldi	r24, 0x21	; 33
     1314:	39 d8       	rcall	.-3982   	; 0x388 <LCD_Cursor>
     1316:	8e e0       	ldi	r24, 0x0E	; 14
-    1318:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    1318:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     131c:	85 c0       	rjmp	.+266    	; 0x1428 <Menu_Tick+0xe8a>
     131e:	8d e0       	ldi	r24, 0x0D	; 13
-    1320:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    1320:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     1324:	81 c0       	rjmp	.+258    	; 0x1428 <Menu_Tick+0xe8a>
-    1326:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <counter>
-    132a:	90 91 69 09 	lds	r25, 0x0969	; 0x800969 <counter+0x1>
+    1326:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <counter>
+    132a:	90 91 67 09 	lds	r25, 0x0967	; 0x800967 <counter+0x1>
     132e:	84 3f       	cpi	r24, 0xF4	; 244
     1330:	91 40       	sbci	r25, 0x01	; 1
     1332:	c0 f0       	brcs	.+48     	; 0x1364 <Menu_Tick+0xdc6>
-    1334:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    1338:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    133c:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1340:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    1344:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    1348:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    134c:	6f e0       	ldi	r22, 0x0F	; 15
+    1334:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    1338:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    133c:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1340:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    1344:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    1348:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    134c:	6e e0       	ldi	r22, 0x0E	; 14
     134e:	71 e0       	ldi	r23, 0x01	; 1
     1350:	81 e0       	ldi	r24, 0x01	; 1
     1352:	3a d8       	rcall	.-3980   	; 0x3c8 <LCD_DisplayString>
@@ -2161,23 +2161,23 @@ void BLUE_REC_Init(){
     1356:	18 d8       	rcall	.-4048   	; 0x388 <LCD_Cursor>
     1358:	82 e0       	ldi	r24, 0x02	; 2
     135a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-    135e:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    135e:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     1362:	62 c0       	rjmp	.+196    	; 0x1428 <Menu_Tick+0xe8a>
-    1364:	80 91 6f 09 	lds	r24, 0x096F	; 0x80096f <Button_A>
+    1364:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_A>
     1368:	81 30       	cpi	r24, 0x01	; 1
     136a:	f9 f4       	brne	.+62     	; 0x13aa <Menu_Tick+0xe0c>
-    136c:	10 92 65 09 	sts	0x0965, r1	; 0x800965 <peripheral_on_off>
+    136c:	10 92 63 09 	sts	0x0963, r1	; 0x800963 <peripheral_on_off>
     1370:	60 e0       	ldi	r22, 0x00	; 0
     1372:	82 e0       	ldi	r24, 0x02	; 2
     1374:	90 e0       	ldi	r25, 0x00	; 0
     1376:	35 d7       	rcall	.+3690   	; 0x21e2 <eeprom_write_byte>
-    1378:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    137c:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    1380:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    1384:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    1388:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    138c:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    1390:	6f e0       	ldi	r22, 0x0F	; 15
+    1378:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    137c:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    1380:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    1384:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    1388:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    138c:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    1390:	6e e0       	ldi	r22, 0x0E	; 14
     1392:	71 e0       	ldi	r23, 0x01	; 1
     1394:	81 e0       	ldi	r24, 0x01	; 1
     1396:	18 d8       	rcall	.-4048   	; 0x3c8 <LCD_DisplayString>
@@ -2185,18 +2185,18 @@ void BLUE_REC_Init(){
     139a:	0e 94 c4 01 	call	0x388	; 0x388 <LCD_Cursor>
     139e:	82 e0       	ldi	r24, 0x02	; 2
     13a0:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-    13a4:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    13a4:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     13a8:	3f c0       	rjmp	.+126    	; 0x1428 <Menu_Tick+0xe8a>
-    13aa:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <Button_B>
+    13aa:	80 91 6c 09 	lds	r24, 0x096C	; 0x80096c <Button_B>
     13ae:	81 30       	cpi	r24, 0x01	; 1
     13b0:	d1 f4       	brne	.+52     	; 0x13e6 <Menu_Tick+0xe48>
-    13b2:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    13b6:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    13ba:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    13be:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    13c2:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    13c6:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    13ca:	6a ed       	ldi	r22, 0xDA	; 218
+    13b2:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    13b6:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    13ba:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    13be:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    13c2:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    13c6:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    13ca:	69 ed       	ldi	r22, 0xD9	; 217
     13cc:	71 e0       	ldi	r23, 0x01	; 1
     13ce:	0e 94 e4 01 	call	0x3c8	; 0x3c8 <LCD_DisplayString>
     13d2:	81 e2       	ldi	r24, 0x21	; 33
@@ -2204,34 +2204,34 @@ void BLUE_REC_Init(){
     13d8:	82 e0       	ldi	r24, 0x02	; 2
     13da:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
     13de:	8c e0       	ldi	r24, 0x0C	; 12
-    13e0:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    13e0:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     13e4:	21 c0       	rjmp	.+66     	; 0x1428 <Menu_Tick+0xe8a>
-    13e6:	80 91 6d 09 	lds	r24, 0x096D	; 0x80096d <Button_L>
+    13e6:	80 91 6b 09 	lds	r24, 0x096B	; 0x80096b <Button_L>
     13ea:	81 30       	cpi	r24, 0x01	; 1
     13ec:	b9 f4       	brne	.+46     	; 0x141c <Menu_Tick+0xe7e>
-    13ee:	10 92 69 09 	sts	0x0969, r1	; 0x800969 <counter+0x1>
-    13f2:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <counter>
-    13f6:	10 92 6f 09 	sts	0x096F, r1	; 0x80096f <Button_A>
-    13fa:	10 92 6e 09 	sts	0x096E, r1	; 0x80096e <Button_B>
-    13fe:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_L>
-    1402:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_R>
-    1406:	61 e1       	ldi	r22, 0x11	; 17
+    13ee:	10 92 67 09 	sts	0x0967, r1	; 0x800967 <counter+0x1>
+    13f2:	10 92 66 09 	sts	0x0966, r1	; 0x800966 <counter>
+    13f6:	10 92 6d 09 	sts	0x096D, r1	; 0x80096d <Button_A>
+    13fa:	10 92 6c 09 	sts	0x096C, r1	; 0x80096c <Button_B>
+    13fe:	10 92 6b 09 	sts	0x096B, r1	; 0x80096b <Button_L>
+    1402:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <Button_R>
+    1406:	60 e1       	ldi	r22, 0x10	; 16
     1408:	73 e0       	ldi	r23, 0x03	; 3
     140a:	0e 94 e4 01 	call	0x3c8	; 0x3c8 <LCD_DisplayString>
     140e:	81 e2       	ldi	r24, 0x21	; 33
     1410:	0e 94 c4 01 	call	0x388	; 0x388 <LCD_Cursor>
     1414:	8d e0       	ldi	r24, 0x0D	; 13
-    1416:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    1416:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     141a:	06 c0       	rjmp	.+12     	; 0x1428 <Menu_Tick+0xe8a>
     141c:	8e e0       	ldi	r24, 0x0E	; 14
-    141e:	80 93 ce 09 	sts	0x09CE, r24	; 0x8009ce <menu_state>
+    141e:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <menu_state>
     1422:	02 c0       	rjmp	.+4      	; 0x1428 <Menu_Tick+0xe8a>
-    1424:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+    1424:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
     1428:	cf 91       	pop	r28
     142a:	08 95       	ret
 
 0000142c <MENUSecTask>:
-    142c:	10 92 ce 09 	sts	0x09CE, r1	; 0x8009ce <menu_state>
+    142c:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <menu_state>
     1430:	b6 d8       	rcall	.-3732   	; 0x59e <Menu_Tick>
     1432:	8a e0       	ldi	r24, 0x0A	; 10
     1434:	90 e0       	ldi	r25, 0x00	; 0
@@ -2257,7 +2257,7 @@ void BLUE_REC_Init(){
     1458:	30 e0       	ldi	r19, 0x00	; 0
     145a:	45 e5       	ldi	r20, 0x55	; 85
     145c:	50 e0       	ldi	r21, 0x00	; 0
-    145e:	63 e5       	ldi	r22, 0x53	; 83
+    145e:	62 e5       	ldi	r22, 0x52	; 82
     1460:	73 e0       	ldi	r23, 0x03	; 3
     1462:	86 e1       	ldi	r24, 0x16	; 22
     1464:	9a e0       	ldi	r25, 0x0A	; 10
@@ -2272,153 +2272,153 @@ void BLUE_REC_Init(){
     1476:	08 95       	ret
 
 00001478 <Trans_Tick>:
-    1478:	80 91 cd 09 	lds	r24, 0x09CD	; 0x8009cd <trans_state>
+    1478:	80 91 cb 09 	lds	r24, 0x09CB	; 0x8009cb <trans_state>
     147c:	88 23       	and	r24, r24
     147e:	21 f0       	breq	.+8      	; 0x1488 <Trans_Tick+0x10>
     1480:	81 30       	cpi	r24, 0x01	; 1
     1482:	09 f4       	brne	.+2      	; 0x1486 <Trans_Tick+0xe>
     1484:	b4 c0       	rjmp	.+360    	; 0x15ee <Trans_Tick+0x176>
     1486:	b8 c0       	rjmp	.+368    	; 0x15f8 <Trans_Tick+0x180>
-    1488:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <ARM_DISARM>
+    1488:	80 91 6e 09 	lds	r24, 0x096E	; 0x80096e <ARM_DISARM>
     148c:	81 11       	cpse	r24, r1
     148e:	57 c0       	rjmp	.+174    	; 0x153e <Trans_Tick+0xc6>
-    1490:	80 91 67 09 	lds	r24, 0x0967	; 0x800967 <bark_setting>
+    1490:	80 91 65 09 	lds	r24, 0x0965	; 0x800965 <bark_setting>
     1494:	81 11       	cpse	r24, r1
     1496:	29 c0       	rjmp	.+82     	; 0x14ea <Trans_Tick+0x72>
-    1498:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    1498:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     149c:	81 11       	cpse	r24, r1
     149e:	0b c0       	rjmp	.+22     	; 0x14b6 <Trans_Tick+0x3e>
-    14a0:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    14a0:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     14a4:	81 11       	cpse	r24, r1
     14a6:	03 c0       	rjmp	.+6      	; 0x14ae <Trans_Tick+0x36>
-    14a8:	10 92 6a 09 	sts	0x096A, r1	; 0x80096a <data_to_send>
+    14a8:	10 92 68 09 	sts	0x0968, r1	; 0x800968 <data_to_send>
     14ac:	ac c0       	rjmp	.+344    	; 0x1606 <Trans_Tick+0x18e>
     14ae:	80 e1       	ldi	r24, 0x10	; 16
-    14b0:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    14b0:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     14b4:	a8 c0       	rjmp	.+336    	; 0x1606 <Trans_Tick+0x18e>
     14b6:	81 30       	cpi	r24, 0x01	; 1
     14b8:	61 f4       	brne	.+24     	; 0x14d2 <Trans_Tick+0x5a>
-    14ba:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    14ba:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     14be:	81 11       	cpse	r24, r1
     14c0:	04 c0       	rjmp	.+8      	; 0x14ca <Trans_Tick+0x52>
     14c2:	82 e0       	ldi	r24, 0x02	; 2
-    14c4:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    14c4:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     14c8:	9e c0       	rjmp	.+316    	; 0x1606 <Trans_Tick+0x18e>
     14ca:	82 e1       	ldi	r24, 0x12	; 18
-    14cc:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    14cc:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     14d0:	9a c0       	rjmp	.+308    	; 0x1606 <Trans_Tick+0x18e>
-    14d2:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    14d2:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     14d6:	81 11       	cpse	r24, r1
     14d8:	04 c0       	rjmp	.+8      	; 0x14e2 <Trans_Tick+0x6a>
     14da:	84 e0       	ldi	r24, 0x04	; 4
-    14dc:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    14dc:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     14e0:	92 c0       	rjmp	.+292    	; 0x1606 <Trans_Tick+0x18e>
     14e2:	84 e1       	ldi	r24, 0x14	; 20
-    14e4:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    14e4:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     14e8:	8e c0       	rjmp	.+284    	; 0x1606 <Trans_Tick+0x18e>
-    14ea:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    14ea:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     14ee:	81 11       	cpse	r24, r1
     14f0:	0c c0       	rjmp	.+24     	; 0x150a <Trans_Tick+0x92>
-    14f2:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    14f2:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     14f6:	81 11       	cpse	r24, r1
     14f8:	04 c0       	rjmp	.+8      	; 0x1502 <Trans_Tick+0x8a>
     14fa:	88 e0       	ldi	r24, 0x08	; 8
-    14fc:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    14fc:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1500:	82 c0       	rjmp	.+260    	; 0x1606 <Trans_Tick+0x18e>
     1502:	88 e1       	ldi	r24, 0x18	; 24
-    1504:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1504:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1508:	7e c0       	rjmp	.+252    	; 0x1606 <Trans_Tick+0x18e>
     150a:	81 30       	cpi	r24, 0x01	; 1
     150c:	61 f4       	brne	.+24     	; 0x1526 <Trans_Tick+0xae>
-    150e:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    150e:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     1512:	81 11       	cpse	r24, r1
     1514:	04 c0       	rjmp	.+8      	; 0x151e <Trans_Tick+0xa6>
     1516:	8a e0       	ldi	r24, 0x0A	; 10
-    1518:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1518:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     151c:	74 c0       	rjmp	.+232    	; 0x1606 <Trans_Tick+0x18e>
     151e:	8a e1       	ldi	r24, 0x1A	; 26
-    1520:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1520:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1524:	70 c0       	rjmp	.+224    	; 0x1606 <Trans_Tick+0x18e>
-    1526:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    1526:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     152a:	81 11       	cpse	r24, r1
     152c:	04 c0       	rjmp	.+8      	; 0x1536 <Trans_Tick+0xbe>
     152e:	8c e0       	ldi	r24, 0x0C	; 12
-    1530:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1530:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1534:	68 c0       	rjmp	.+208    	; 0x1606 <Trans_Tick+0x18e>
     1536:	8c e1       	ldi	r24, 0x1C	; 28
-    1538:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1538:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     153c:	64 c0       	rjmp	.+200    	; 0x1606 <Trans_Tick+0x18e>
-    153e:	80 91 67 09 	lds	r24, 0x0967	; 0x800967 <bark_setting>
+    153e:	80 91 65 09 	lds	r24, 0x0965	; 0x800965 <bark_setting>
     1542:	81 11       	cpse	r24, r1
     1544:	2a c0       	rjmp	.+84     	; 0x159a <Trans_Tick+0x122>
-    1546:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    1546:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     154a:	81 11       	cpse	r24, r1
     154c:	0c c0       	rjmp	.+24     	; 0x1566 <Trans_Tick+0xee>
-    154e:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    154e:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     1552:	81 11       	cpse	r24, r1
     1554:	04 c0       	rjmp	.+8      	; 0x155e <Trans_Tick+0xe6>
     1556:	81 e0       	ldi	r24, 0x01	; 1
-    1558:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1558:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     155c:	54 c0       	rjmp	.+168    	; 0x1606 <Trans_Tick+0x18e>
     155e:	81 e8       	ldi	r24, 0x81	; 129
-    1560:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1560:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1564:	50 c0       	rjmp	.+160    	; 0x1606 <Trans_Tick+0x18e>
     1566:	81 30       	cpi	r24, 0x01	; 1
     1568:	61 f4       	brne	.+24     	; 0x1582 <Trans_Tick+0x10a>
-    156a:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    156a:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     156e:	81 11       	cpse	r24, r1
     1570:	04 c0       	rjmp	.+8      	; 0x157a <Trans_Tick+0x102>
     1572:	83 e0       	ldi	r24, 0x03	; 3
-    1574:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1574:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1578:	46 c0       	rjmp	.+140    	; 0x1606 <Trans_Tick+0x18e>
     157a:	83 e8       	ldi	r24, 0x83	; 131
-    157c:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    157c:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1580:	42 c0       	rjmp	.+132    	; 0x1606 <Trans_Tick+0x18e>
-    1582:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    1582:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     1586:	81 11       	cpse	r24, r1
     1588:	04 c0       	rjmp	.+8      	; 0x1592 <Trans_Tick+0x11a>
     158a:	85 e0       	ldi	r24, 0x05	; 5
-    158c:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    158c:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1590:	3a c0       	rjmp	.+116    	; 0x1606 <Trans_Tick+0x18e>
     1592:	85 e8       	ldi	r24, 0x85	; 133
-    1594:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    1594:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     1598:	36 c0       	rjmp	.+108    	; 0x1606 <Trans_Tick+0x18e>
-    159a:	80 91 66 09 	lds	r24, 0x0966	; 0x800966 <bark_delay>
+    159a:	80 91 64 09 	lds	r24, 0x0964	; 0x800964 <bark_delay>
     159e:	81 11       	cpse	r24, r1
     15a0:	0c c0       	rjmp	.+24     	; 0x15ba <Trans_Tick+0x142>
-    15a2:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    15a2:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     15a6:	81 11       	cpse	r24, r1
     15a8:	04 c0       	rjmp	.+8      	; 0x15b2 <Trans_Tick+0x13a>
     15aa:	89 e0       	ldi	r24, 0x09	; 9
-    15ac:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    15ac:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     15b0:	2a c0       	rjmp	.+84     	; 0x1606 <Trans_Tick+0x18e>
     15b2:	89 e8       	ldi	r24, 0x89	; 137
-    15b4:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    15b4:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     15b8:	26 c0       	rjmp	.+76     	; 0x1606 <Trans_Tick+0x18e>
     15ba:	81 30       	cpi	r24, 0x01	; 1
     15bc:	61 f4       	brne	.+24     	; 0x15d6 <Trans_Tick+0x15e>
-    15be:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    15be:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     15c2:	81 11       	cpse	r24, r1
     15c4:	04 c0       	rjmp	.+8      	; 0x15ce <Trans_Tick+0x156>
     15c6:	8b e0       	ldi	r24, 0x0B	; 11
-    15c8:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    15c8:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     15cc:	1c c0       	rjmp	.+56     	; 0x1606 <Trans_Tick+0x18e>
     15ce:	8b e8       	ldi	r24, 0x8B	; 139
-    15d0:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    15d0:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     15d4:	18 c0       	rjmp	.+48     	; 0x1606 <Trans_Tick+0x18e>
-    15d6:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <dog_head_direction>
+    15d6:	80 91 63 09 	lds	r24, 0x0963	; 0x800963 <peripheral_on_off>
     15da:	81 11       	cpse	r24, r1
     15dc:	04 c0       	rjmp	.+8      	; 0x15e6 <Trans_Tick+0x16e>
     15de:	8d e0       	ldi	r24, 0x0D	; 13
-    15e0:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    15e0:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     15e4:	10 c0       	rjmp	.+32     	; 0x1606 <Trans_Tick+0x18e>
     15e6:	8d e8       	ldi	r24, 0x8D	; 141
-    15e8:	80 93 6a 09 	sts	0x096A, r24	; 0x80096a <data_to_send>
+    15e8:	80 93 68 09 	sts	0x0968, r24	; 0x800968 <data_to_send>
     15ec:	0c c0       	rjmp	.+24     	; 0x1606 <Trans_Tick+0x18e>
     15ee:	60 e0       	ldi	r22, 0x00	; 0
-    15f0:	80 91 6a 09 	lds	r24, 0x096A	; 0x80096a <data_to_send>
+    15f0:	80 91 68 09 	lds	r24, 0x0968	; 0x800968 <data_to_send>
     15f4:	0e 94 81 01 	call	0x302	; 0x302 <USART_Send>
-    15f8:	80 91 cd 09 	lds	r24, 0x09CD	; 0x8009cd <trans_state>
+    15f8:	80 91 cb 09 	lds	r24, 0x09CB	; 0x8009cb <trans_state>
     15fc:	88 23       	and	r24, r24
     15fe:	19 f0       	breq	.+6      	; 0x1606 <Trans_Tick+0x18e>
     1600:	81 30       	cpi	r24, 0x01	; 1
@@ -2428,18 +2428,18 @@ void BLUE_REC_Init(){
     160a:	85 ff       	sbrs	r24, 5
     160c:	0d c0       	rjmp	.+26     	; 0x1628 <Trans_Tick+0x1b0>
     160e:	81 e0       	ldi	r24, 0x01	; 1
-    1610:	80 93 cd 09 	sts	0x09CD, r24	; 0x8009cd <trans_state>
+    1610:	80 93 cb 09 	sts	0x09CB, r24	; 0x8009cb <trans_state>
     1614:	08 95       	ret
     1616:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
     161a:	86 ff       	sbrs	r24, 6
     161c:	05 c0       	rjmp	.+10     	; 0x1628 <Trans_Tick+0x1b0>
-    161e:	10 92 cd 09 	sts	0x09CD, r1	; 0x8009cd <trans_state>
+    161e:	10 92 cb 09 	sts	0x09CB, r1	; 0x8009cb <trans_state>
     1622:	08 95       	ret
-    1624:	10 92 cd 09 	sts	0x09CD, r1	; 0x8009cd <trans_state>
+    1624:	10 92 cb 09 	sts	0x09CB, r1	; 0x8009cb <trans_state>
     1628:	08 95       	ret
 
 0000162a <TransSecTask>:
-    162a:	10 92 cd 09 	sts	0x09CD, r1	; 0x8009cd <trans_state>
+    162a:	10 92 cb 09 	sts	0x09CB, r1	; 0x8009cb <trans_state>
     162e:	24 df       	rcall	.-440    	; 0x1478 <Trans_Tick>
     1630:	8a e0       	ldi	r24, 0x0A	; 10
     1632:	90 e0       	ldi	r25, 0x00	; 0
@@ -2465,7 +2465,7 @@ void BLUE_REC_Init(){
     1656:	30 e0       	ldi	r19, 0x00	; 0
     1658:	45 e5       	ldi	r20, 0x55	; 85
     165a:	50 e0       	ldi	r21, 0x00	; 0
-    165c:	6f e5       	ldi	r22, 0x5F	; 95
+    165c:	6e e5       	ldi	r22, 0x5E	; 94
     165e:	73 e0       	ldi	r23, 0x03	; 3
     1660:	85 e1       	ldi	r24, 0x15	; 21
     1662:	9b e0       	ldi	r25, 0x0B	; 11
@@ -2480,28 +2480,28 @@ void BLUE_REC_Init(){
     1674:	08 95       	ret
 
 00001676 <Rec_Tick>:
-    1676:	80 91 cb 09 	lds	r24, 0x09CB	; 0x8009cb <rec_state>
+    1676:	80 91 c9 09 	lds	r24, 0x09C9	; 0x8009c9 <rec_state>
     167a:	81 30       	cpi	r24, 0x01	; 1
     167c:	41 f4       	brne	.+16     	; 0x168e <Rec_Tick+0x18>
     167e:	80 e0       	ldi	r24, 0x00	; 0
     1680:	0e 94 93 01 	call	0x326	; 0x326 <USART_Receive>
-    1684:	80 93 6b 09 	sts	0x096B, r24	; 0x80096b <received_value>
+    1684:	80 93 69 09 	sts	0x0969, r24	; 0x800969 <received_value>
     1688:	80 e0       	ldi	r24, 0x00	; 0
     168a:	0e 94 64 01 	call	0x2c8	; 0x2c8 <USART_Flush>
-    168e:	80 91 cb 09 	lds	r24, 0x09CB	; 0x8009cb <rec_state>
+    168e:	80 91 c9 09 	lds	r24, 0x09C9	; 0x8009c9 <rec_state>
     1692:	88 23       	and	r24, r24
     1694:	19 f0       	breq	.+6      	; 0x169c <Rec_Tick+0x26>
-    1696:	10 92 cb 09 	sts	0x09CB, r1	; 0x8009cb <rec_state>
+    1696:	10 92 c9 09 	sts	0x09C9, r1	; 0x8009c9 <rec_state>
     169a:	08 95       	ret
     169c:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
     16a0:	88 23       	and	r24, r24
     16a2:	1c f4       	brge	.+6      	; 0x16aa <Rec_Tick+0x34>
     16a4:	81 e0       	ldi	r24, 0x01	; 1
-    16a6:	80 93 cb 09 	sts	0x09CB, r24	; 0x8009cb <rec_state>
+    16a6:	80 93 c9 09 	sts	0x09C9, r24	; 0x8009c9 <rec_state>
     16aa:	08 95       	ret
 
 000016ac <RecSecTask>:
-    16ac:	10 92 cb 09 	sts	0x09CB, r1	; 0x8009cb <rec_state>
+    16ac:	10 92 c9 09 	sts	0x09C9, r1	; 0x8009c9 <rec_state>
     16b0:	e2 df       	rcall	.-60     	; 0x1676 <Rec_Tick>
     16b2:	8a e0       	ldi	r24, 0x0A	; 10
     16b4:	90 e0       	ldi	r25, 0x00	; 0
@@ -2527,7 +2527,7 @@ void BLUE_REC_Init(){
     16d8:	30 e0       	ldi	r19, 0x00	; 0
     16da:	45 e5       	ldi	r20, 0x55	; 85
     16dc:	50 e0       	ldi	r21, 0x00	; 0
-    16de:	60 e7       	ldi	r22, 0x70	; 112
+    16de:	6f e6       	ldi	r22, 0x6F	; 111
     16e0:	73 e0       	ldi	r23, 0x03	; 3
     16e2:	86 e5       	ldi	r24, 0x56	; 86
     16e4:	9b e0       	ldi	r25, 0x0B	; 11
@@ -2547,7 +2547,7 @@ void BLUE_REC_Init(){
 void Blue_Rec_Tick(){
 	//Actions
 	switch(blue_rec_state){
-    16f8:	80 91 cc 09 	lds	r24, 0x09CC	; 0x8009cc <blue_rec_state>
+    16f8:	80 91 ca 09 	lds	r24, 0x09CA	; 0x8009ca <blue_rec_state>
     16fc:	81 30       	cpi	r24, 0x01	; 1
     16fe:	a9 f4       	brne	.+42     	; 0x172a <Blue_Rec_Tick+0x32>
 
@@ -2557,7 +2557,7 @@ void Blue_Rec_Tick(){
 		//bluetooth_arm_disarm = USART_Receive(1);
 		bluetooth_temp = USART_Receive(1);
     1700:	0e 94 93 01 	call	0x326	; 0x326 <USART_Receive>
-    1704:	80 93 64 09 	sts	0x0964, r24	; 0x800964 <bluetooth_temp>
+    1704:	80 93 62 09 	sts	0x0962, r24	; 0x800962 <bluetooth_temp>
 		if(bluetooth_temp == 0x0F){	//received arm command
     1708:	8f 30       	cpi	r24, 0x0F	; 15
     170a:	21 f4       	brne	.+8      	; 0x1714 <Blue_Rec_Tick+0x1c>
@@ -2588,7 +2588,7 @@ void Blue_Rec_Tick(){
 	}
 	//Transitions
 	switch(blue_rec_state){
-    172a:	80 91 cc 09 	lds	r24, 0x09CC	; 0x8009cc <blue_rec_state>
+    172a:	80 91 ca 09 	lds	r24, 0x09CA	; 0x8009ca <blue_rec_state>
     172e:	88 23       	and	r24, r24
     1730:	19 f0       	breq	.+6      	; 0x1738 <Blue_Rec_Tick+0x40>
 		}
@@ -2597,7 +2597,7 @@ void Blue_Rec_Tick(){
 
 		case Blue_Receive_State:
 		blue_rec_state = Blue_Rec_Wait; //go back
-    1732:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <blue_rec_state>
+    1732:	10 92 ca 09 	sts	0x09CA, r1	; 0x8009ca <blue_rec_state>
     1736:	08 95       	ret
 //Functionality - checks if USART has recieved data
 //Parameter: usartNum specifies which USART is checked
@@ -2616,7 +2616,7 @@ unsigned char USART_HasReceived(unsigned char usartNum)
     173e:	1c f4       	brge	.+6      	; 0x1746 <Blue_Rec_Tick+0x4e>
 			blue_rec_state = Blue_Receive_State; //if ready go to next state
     1740:	81 e0       	ldi	r24, 0x01	; 1
-    1742:	80 93 cc 09 	sts	0x09CC, r24	; 0x8009cc <blue_rec_state>
+    1742:	80 93 ca 09 	sts	0x09CA, r24	; 0x8009ca <blue_rec_state>
     1746:	08 95       	ret
 
 00001748 <BlueRecSecTask>:
@@ -2626,7 +2626,7 @@ enum BLUERECState {Blue_Rec_Wait, Blue_Receive_State } blue_rec_state;
 
 void BLUE_REC_Init(){
 	blue_rec_state = Blue_Rec_Wait;
-    1748:	10 92 cc 09 	sts	0x09CC, r1	; 0x8009cc <blue_rec_state>
+    1748:	10 92 ca 09 	sts	0x09CA, r1	; 0x8009ca <blue_rec_state>
 void BlueRecSecTask()
 {
 	BLUE_REC_Init();
@@ -2665,7 +2665,7 @@ void BlueRecSecPulse(unsigned portBASE_TYPE Priority)
     1774:	30 e0       	ldi	r19, 0x00	; 0
     1776:	45 e5       	ldi	r20, 0x55	; 85
     1778:	50 e0       	ldi	r21, 0x00	; 0
-    177a:	6c e6       	ldi	r22, 0x6C	; 108
+    177a:	6b e6       	ldi	r22, 0x6B	; 107
     177c:	73 e0       	ldi	r23, 0x03	; 3
     177e:	84 ea       	ldi	r24, 0xA4	; 164
     1780:	9b e0       	ldi	r25, 0x0B	; 11
@@ -2708,17 +2708,17 @@ int main(void)
     17a6:	80 e0       	ldi	r24, 0x00	; 0
     17a8:	90 e0       	ldi	r25, 0x00	; 0
     17aa:	13 d5       	rcall	.+2598   	; 0x21d2 <eeprom_read_byte>
-    17ac:	80 93 67 09 	sts	0x0967, r24	; 0x800967 <bark_setting>
+    17ac:	80 93 65 09 	sts	0x0965, r24	; 0x800965 <bark_setting>
 	bark_delay = eeprom_read_byte(1);
     17b0:	81 e0       	ldi	r24, 0x01	; 1
     17b2:	90 e0       	ldi	r25, 0x00	; 0
     17b4:	0e d5       	rcall	.+2588   	; 0x21d2 <eeprom_read_byte>
-    17b6:	80 93 66 09 	sts	0x0966, r24	; 0x800966 <bark_delay>
+    17b6:	80 93 64 09 	sts	0x0964, r24	; 0x800964 <bark_delay>
 	peripheral_on_off = eeprom_read_byte(2);
     17ba:	82 e0       	ldi	r24, 0x02	; 2
     17bc:	90 e0       	ldi	r25, 0x00	; 0
     17be:	09 d5       	rcall	.+2578   	; 0x21d2 <eeprom_read_byte>
-    17c0:	80 93 65 09 	sts	0x0965, r24	; 0x800965 <peripheral_on_off>
+    17c0:	80 93 63 09 	sts	0x0963, r24	; 0x800963 <peripheral_on_off>
 
 
 	//LCD init
@@ -2726,7 +2726,7 @@ int main(void)
     17c4:	0e 94 cc 01 	call	0x398	; 0x398 <LCD_init>
 	
 	LCD_DisplayString(1, "TEST");
-    17c8:	6b e7       	ldi	r22, 0x7B	; 123
+    17c8:	6a e7       	ldi	r22, 0x7A	; 122
     17ca:	73 e0       	ldi	r23, 0x03	; 3
     17cc:	81 e0       	ldi	r24, 0x01	; 1
     17ce:	0e 94 e4 01 	call	0x3c8	; 0x3c8 <LCD_DisplayString>
@@ -2899,8 +2899,8 @@ void vPortEndScheduler( void )
     18ee:	80 81       	ld	r24, Z
     18f0:	82 60       	ori	r24, 0x02	; 2
     18f2:	80 83       	st	Z, r24
-    18f4:	a0 91 c9 09 	lds	r26, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    18f8:	b0 91 ca 09 	lds	r27, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    18f4:	a0 91 c7 09 	lds	r26, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    18f8:	b0 91 c8 09 	lds	r27, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     18fc:	cd 91       	ld	r28, X+
     18fe:	cd bf       	out	0x3d, r28	; 61
     1900:	dd 91       	ld	r29, X+
@@ -2986,8 +2986,8 @@ void vPortYield( void )
     1990:	df 93       	push	r29
     1992:	ef 93       	push	r30
     1994:	ff 93       	push	r31
-    1996:	a0 91 c9 09 	lds	r26, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    199a:	b0 91 ca 09 	lds	r27, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1996:	a0 91 c7 09 	lds	r26, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    199a:	b0 91 c8 09 	lds	r27, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     199e:	0d b6       	in	r0, 0x3d	; 61
     19a0:	0d 92       	st	X+, r0
     19a2:	0e b6       	in	r0, 0x3e	; 62
@@ -2995,8 +2995,8 @@ void vPortYield( void )
 	vTaskSwitchContext();
     19a6:	8a d3       	rcall	.+1812   	; 0x20bc <vTaskSwitchContext>
 	portRESTORE_CONTEXT();
-    19a8:	a0 91 c9 09 	lds	r26, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    19ac:	b0 91 ca 09 	lds	r27, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    19a8:	a0 91 c7 09 	lds	r26, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    19ac:	b0 91 c8 09 	lds	r27, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     19b0:	cd 91       	ld	r28, X+
     19b2:	cd bf       	out	0x3d, r28	; 61
     19b4:	dd 91       	ld	r29, X+
@@ -3082,8 +3082,8 @@ void vPortYieldFromTick( void )
     1a40:	df 93       	push	r29
     1a42:	ef 93       	push	r30
     1a44:	ff 93       	push	r31
-    1a46:	a0 91 c9 09 	lds	r26, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1a4a:	b0 91 ca 09 	lds	r27, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1a46:	a0 91 c7 09 	lds	r26, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1a4a:	b0 91 c8 09 	lds	r27, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     1a4e:	0d b6       	in	r0, 0x3d	; 61
     1a50:	0d 92       	st	X+, r0
     1a52:	0e b6       	in	r0, 0x3e	; 62
@@ -3092,9 +3092,9 @@ void vPortYieldFromTick( void )
     1a56:	95 d1       	rcall	.+810    	; 0x1d82 <vTaskIncrementTick>
 	vTaskSwitchContext();
     1a58:	31 d3       	rcall	.+1634   	; 0x20bc <vTaskSwitchContext>
-    1a5a:	a0 91 c9 09 	lds	r26, 0x09C9	; 0x8009c9 <pxCurrentTCB>
+    1a5a:	a0 91 c7 09 	lds	r26, 0x09C7	; 0x8009c7 <pxCurrentTCB>
 	portRESTORE_CONTEXT();
-    1a5e:	b0 91 ca 09 	lds	r27, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1a5e:	b0 91 c8 09 	lds	r27, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     1a62:	cd 91       	ld	r28, X+
     1a64:	cd bf       	out	0x3d, r28	; 61
     1a66:	dd 91       	ld	r29, X+
@@ -3157,37 +3157,37 @@ void vPortYieldFromTick( void )
     1ab4:	cf 93       	push	r28
     1ab6:	df 93       	push	r29
     1ab8:	ec 01       	movw	r28, r24
-    1aba:	e0 91 c9 09 	lds	r30, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1abe:	f0 91 ca 09 	lds	r31, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1aba:	e0 91 c7 09 	lds	r30, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1abe:	f0 91 c8 09 	lds	r31, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     1ac2:	93 83       	std	Z+3, r25	; 0x03
     1ac4:	82 83       	std	Z+2, r24	; 0x02
-    1ac6:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <xTickCount>
-    1aca:	90 91 7a 09 	lds	r25, 0x097A	; 0x80097a <xTickCount+0x1>
+    1ac6:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <xTickCount>
+    1aca:	90 91 78 09 	lds	r25, 0x0978	; 0x800978 <xTickCount+0x1>
     1ace:	c8 17       	cp	r28, r24
     1ad0:	d9 07       	cpc	r29, r25
     1ad2:	68 f4       	brcc	.+26     	; 0x1aee <prvAddCurrentTaskToDelayedList+0x3a>
-    1ad4:	60 91 c9 09 	lds	r22, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1ad8:	70 91 ca 09 	lds	r23, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
-    1adc:	80 91 8f 09 	lds	r24, 0x098F	; 0x80098f <pxOverflowDelayedTaskList>
-    1ae0:	90 91 90 09 	lds	r25, 0x0990	; 0x800990 <pxOverflowDelayedTaskList+0x1>
+    1ad4:	60 91 c7 09 	lds	r22, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1ad8:	70 91 c8 09 	lds	r23, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
+    1adc:	80 91 8d 09 	lds	r24, 0x098D	; 0x80098d <pxOverflowDelayedTaskList>
+    1ae0:	90 91 8e 09 	lds	r25, 0x098E	; 0x80098e <pxOverflowDelayedTaskList+0x1>
     1ae4:	6e 5f       	subi	r22, 0xFE	; 254
     1ae6:	7f 4f       	sbci	r23, 0xFF	; 255
     1ae8:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <vListInsert>
     1aec:	17 c0       	rjmp	.+46     	; 0x1b1c <prvAddCurrentTaskToDelayedList+0x68>
-    1aee:	60 91 c9 09 	lds	r22, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1af2:	70 91 ca 09 	lds	r23, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
-    1af6:	80 91 91 09 	lds	r24, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1afa:	90 91 92 09 	lds	r25, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
+    1aee:	60 91 c7 09 	lds	r22, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1af2:	70 91 c8 09 	lds	r23, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
+    1af6:	80 91 8f 09 	lds	r24, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1afa:	90 91 90 09 	lds	r25, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
     1afe:	6e 5f       	subi	r22, 0xFE	; 254
     1b00:	7f 4f       	sbci	r23, 0xFF	; 255
     1b02:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <vListInsert>
-    1b06:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <xNextTaskUnblockTime>
-    1b0a:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <xNextTaskUnblockTime+0x1>
+    1b06:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <xNextTaskUnblockTime>
+    1b0a:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <xNextTaskUnblockTime+0x1>
     1b0e:	c8 17       	cp	r28, r24
     1b10:	d9 07       	cpc	r29, r25
     1b12:	20 f4       	brcc	.+8      	; 0x1b1c <prvAddCurrentTaskToDelayedList+0x68>
-    1b14:	d0 93 03 01 	sts	0x0103, r29	; 0x800103 <xNextTaskUnblockTime+0x1>
-    1b18:	c0 93 02 01 	sts	0x0102, r28	; 0x800102 <xNextTaskUnblockTime>
+    1b14:	d0 93 02 01 	sts	0x0102, r29	; 0x800102 <xNextTaskUnblockTime+0x1>
+    1b18:	c0 93 01 01 	sts	0x0101, r28	; 0x800101 <xNextTaskUnblockTime>
     1b1c:	df 91       	pop	r29
     1b1e:	cf 91       	pop	r28
     1b20:	08 95       	ret
@@ -3291,73 +3291,73 @@ void vPortYieldFromTick( void )
     1bea:	0f b6       	in	r0, 0x3f	; 63
     1bec:	f8 94       	cli
     1bee:	0f 92       	push	r0
-    1bf0:	80 91 7b 09 	lds	r24, 0x097B	; 0x80097b <uxCurrentNumberOfTasks>
+    1bf0:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <uxCurrentNumberOfTasks>
     1bf4:	8f 5f       	subi	r24, 0xFF	; 255
-    1bf6:	80 93 7b 09 	sts	0x097B, r24	; 0x80097b <uxCurrentNumberOfTasks>
-    1bfa:	80 91 c9 09 	lds	r24, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1bfe:	90 91 ca 09 	lds	r25, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1bf6:	80 93 79 09 	sts	0x0979, r24	; 0x800979 <uxCurrentNumberOfTasks>
+    1bfa:	80 91 c7 09 	lds	r24, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1bfe:	90 91 c8 09 	lds	r25, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     1c02:	89 2b       	or	r24, r25
     1c04:	a9 f5       	brne	.+106    	; 0x1c70 <xTaskGenericCreate+0x14e>
-    1c06:	d0 93 ca 09 	sts	0x09CA, r29	; 0x8009ca <pxCurrentTCB+0x1>
-    1c0a:	c0 93 c9 09 	sts	0x09C9, r28	; 0x8009c9 <pxCurrentTCB>
-    1c0e:	80 91 7b 09 	lds	r24, 0x097B	; 0x80097b <uxCurrentNumberOfTasks>
+    1c06:	d0 93 c8 09 	sts	0x09C8, r29	; 0x8009c8 <pxCurrentTCB+0x1>
+    1c0a:	c0 93 c7 09 	sts	0x09C7, r28	; 0x8009c7 <pxCurrentTCB>
+    1c0e:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <uxCurrentNumberOfTasks>
     1c12:	81 30       	cpi	r24, 0x01	; 1
     1c14:	e1 f5       	brne	.+120    	; 0x1c8e <xTaskGenericCreate+0x16c>
-    1c16:	85 ea       	ldi	r24, 0xA5	; 165
+    1c16:	83 ea       	ldi	r24, 0xA3	; 163
     1c18:	99 e0       	ldi	r25, 0x09	; 9
     1c1a:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c1e:	8e ea       	ldi	r24, 0xAE	; 174
+    1c1e:	8c ea       	ldi	r24, 0xAC	; 172
     1c20:	99 e0       	ldi	r25, 0x09	; 9
     1c22:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c26:	87 eb       	ldi	r24, 0xB7	; 183
+    1c26:	85 eb       	ldi	r24, 0xB5	; 181
     1c28:	99 e0       	ldi	r25, 0x09	; 9
     1c2a:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c2e:	80 ec       	ldi	r24, 0xC0	; 192
+    1c2e:	8e eb       	ldi	r24, 0xBE	; 190
     1c30:	99 e0       	ldi	r25, 0x09	; 9
     1c32:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c36:	8c e9       	ldi	r24, 0x9C	; 156
+    1c36:	8a e9       	ldi	r24, 0x9A	; 154
     1c38:	99 e0       	ldi	r25, 0x09	; 9
     1c3a:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c3e:	83 e9       	ldi	r24, 0x93	; 147
+    1c3e:	81 e9       	ldi	r24, 0x91	; 145
     1c40:	99 e0       	ldi	r25, 0x09	; 9
     1c42:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c46:	86 e8       	ldi	r24, 0x86	; 134
+    1c46:	84 e8       	ldi	r24, 0x84	; 132
     1c48:	99 e0       	ldi	r25, 0x09	; 9
     1c4a:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c4e:	8d e7       	ldi	r24, 0x7D	; 125
+    1c4e:	8b e7       	ldi	r24, 0x7B	; 123
     1c50:	99 e0       	ldi	r25, 0x09	; 9
     1c52:	0e 94 a8 00 	call	0x150	; 0x150 <vListInitialise>
-    1c56:	8c e9       	ldi	r24, 0x9C	; 156
+    1c56:	8a e9       	ldi	r24, 0x9A	; 154
     1c58:	99 e0       	ldi	r25, 0x09	; 9
-    1c5a:	90 93 92 09 	sts	0x0992, r25	; 0x800992 <pxDelayedTaskList+0x1>
-    1c5e:	80 93 91 09 	sts	0x0991, r24	; 0x800991 <pxDelayedTaskList>
-    1c62:	83 e9       	ldi	r24, 0x93	; 147
+    1c5a:	90 93 90 09 	sts	0x0990, r25	; 0x800990 <pxDelayedTaskList+0x1>
+    1c5e:	80 93 8f 09 	sts	0x098F, r24	; 0x80098f <pxDelayedTaskList>
+    1c62:	81 e9       	ldi	r24, 0x91	; 145
     1c64:	99 e0       	ldi	r25, 0x09	; 9
-    1c66:	90 93 90 09 	sts	0x0990, r25	; 0x800990 <pxOverflowDelayedTaskList+0x1>
-    1c6a:	80 93 8f 09 	sts	0x098F, r24	; 0x80098f <pxOverflowDelayedTaskList>
+    1c66:	90 93 8e 09 	sts	0x098E, r25	; 0x80098e <pxOverflowDelayedTaskList+0x1>
+    1c6a:	80 93 8d 09 	sts	0x098D, r24	; 0x80098d <pxOverflowDelayedTaskList>
     1c6e:	0f c0       	rjmp	.+30     	; 0x1c8e <xTaskGenericCreate+0x16c>
-    1c70:	80 91 76 09 	lds	r24, 0x0976	; 0x800976 <xSchedulerRunning>
+    1c70:	80 91 74 09 	lds	r24, 0x0974	; 0x800974 <xSchedulerRunning>
     1c74:	81 11       	cpse	r24, r1
     1c76:	0b c0       	rjmp	.+22     	; 0x1c8e <xTaskGenericCreate+0x16c>
-    1c78:	e0 91 c9 09 	lds	r30, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1c7c:	f0 91 ca 09 	lds	r31, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1c78:	e0 91 c7 09 	lds	r30, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1c7c:	f0 91 c8 09 	lds	r31, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     1c80:	86 89       	ldd	r24, Z+22	; 0x16
     1c82:	08 17       	cp	r16, r24
     1c84:	20 f0       	brcs	.+8      	; 0x1c8e <xTaskGenericCreate+0x16c>
-    1c86:	d0 93 ca 09 	sts	0x09CA, r29	; 0x8009ca <pxCurrentTCB+0x1>
-    1c8a:	c0 93 c9 09 	sts	0x09C9, r28	; 0x8009c9 <pxCurrentTCB>
+    1c86:	d0 93 c8 09 	sts	0x09C8, r29	; 0x8009c8 <pxCurrentTCB+0x1>
+    1c8a:	c0 93 c7 09 	sts	0x09C7, r28	; 0x8009c7 <pxCurrentTCB>
     1c8e:	8e 89       	ldd	r24, Y+22	; 0x16
-    1c90:	90 91 78 09 	lds	r25, 0x0978	; 0x800978 <uxTopUsedPriority>
+    1c90:	90 91 76 09 	lds	r25, 0x0976	; 0x800976 <uxTopUsedPriority>
     1c94:	98 17       	cp	r25, r24
     1c96:	10 f4       	brcc	.+4      	; 0x1c9c <xTaskGenericCreate+0x17a>
-    1c98:	80 93 78 09 	sts	0x0978, r24	; 0x800978 <uxTopUsedPriority>
-    1c9c:	90 91 71 09 	lds	r25, 0x0971	; 0x800971 <uxTaskNumber>
+    1c98:	80 93 76 09 	sts	0x0976, r24	; 0x800976 <uxTopUsedPriority>
+    1c9c:	90 91 6f 09 	lds	r25, 0x096F	; 0x80096f <uxTaskNumber>
     1ca0:	9f 5f       	subi	r25, 0xFF	; 255
-    1ca2:	90 93 71 09 	sts	0x0971, r25	; 0x800971 <uxTaskNumber>
-    1ca6:	90 91 77 09 	lds	r25, 0x0977	; 0x800977 <uxTopReadyPriority>
+    1ca2:	90 93 6f 09 	sts	0x096F, r25	; 0x80096f <uxTaskNumber>
+    1ca6:	90 91 75 09 	lds	r25, 0x0975	; 0x800975 <uxTopReadyPriority>
     1caa:	98 17       	cp	r25, r24
     1cac:	10 f4       	brcc	.+4      	; 0x1cb2 <xTaskGenericCreate+0x190>
-    1cae:	80 93 77 09 	sts	0x0977, r24	; 0x800977 <uxTopReadyPriority>
+    1cae:	80 93 75 09 	sts	0x0975, r24	; 0x800975 <uxTopReadyPriority>
     1cb2:	90 e0       	ldi	r25, 0x00	; 0
     1cb4:	9c 01       	movw	r18, r24
     1cb6:	22 0f       	add	r18, r18
@@ -3369,16 +3369,16 @@ void vPortYieldFromTick( void )
     1cc2:	82 0f       	add	r24, r18
     1cc4:	93 1f       	adc	r25, r19
     1cc6:	b6 01       	movw	r22, r12
-    1cc8:	8b 55       	subi	r24, 0x5B	; 91
+    1cc8:	8d 55       	subi	r24, 0x5D	; 93
     1cca:	96 4f       	sbci	r25, 0xF6	; 246
     1ccc:	0e 94 ba 00 	call	0x174	; 0x174 <vListInsertEnd>
     1cd0:	0f 90       	pop	r0
     1cd2:	0f be       	out	0x3f, r0	; 63
-    1cd4:	80 91 76 09 	lds	r24, 0x0976	; 0x800976 <xSchedulerRunning>
+    1cd4:	80 91 74 09 	lds	r24, 0x0974	; 0x800974 <xSchedulerRunning>
     1cd8:	88 23       	and	r24, r24
     1cda:	51 f0       	breq	.+20     	; 0x1cf0 <xTaskGenericCreate+0x1ce>
-    1cdc:	e0 91 c9 09 	lds	r30, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1ce0:	f0 91 ca 09 	lds	r31, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1cdc:	e0 91 c7 09 	lds	r30, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1ce0:	f0 91 c8 09 	lds	r31, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     1ce4:	86 89       	ldd	r24, Z+22	; 0x16
     1ce6:	80 17       	cp	r24, r16
     1ce8:	28 f4       	brcc	.+10     	; 0x1cf4 <xTaskGenericCreate+0x1d2>
@@ -3431,7 +3431,7 @@ void vPortYieldFromTick( void )
     1d42:	30 e0       	ldi	r19, 0x00	; 0
     1d44:	45 e5       	ldi	r20, 0x55	; 85
     1d46:	50 e0       	ldi	r21, 0x00	; 0
-    1d48:	60 e8       	ldi	r22, 0x80	; 128
+    1d48:	6f e7       	ldi	r22, 0x7F	; 127
     1d4a:	73 e0       	ldi	r23, 0x03	; 3
     1d4c:	85 e2       	ldi	r24, 0x25	; 37
     1d4e:	90 e1       	ldi	r25, 0x10	; 16
@@ -3439,9 +3439,9 @@ void vPortYieldFromTick( void )
     1d52:	81 30       	cpi	r24, 0x01	; 1
     1d54:	41 f4       	brne	.+16     	; 0x1d66 <vTaskStartScheduler+0x42>
     1d56:	f8 94       	cli
-    1d58:	80 93 76 09 	sts	0x0976, r24	; 0x800976 <xSchedulerRunning>
-    1d5c:	10 92 7a 09 	sts	0x097A, r1	; 0x80097a <xTickCount+0x1>
-    1d60:	10 92 79 09 	sts	0x0979, r1	; 0x800979 <xTickCount>
+    1d58:	80 93 74 09 	sts	0x0974, r24	; 0x800974 <xSchedulerRunning>
+    1d5c:	10 92 78 09 	sts	0x0978, r1	; 0x800978 <xTickCount+0x1>
+    1d60:	10 92 77 09 	sts	0x0977, r1	; 0x800977 <xTickCount>
     1d64:	ba dd       	rcall	.-1164   	; 0x18da <xPortStartScheduler>
     1d66:	0f 91       	pop	r16
     1d68:	ff 90       	pop	r15
@@ -3453,9 +3453,9 @@ void vPortYieldFromTick( void )
     1d74:	08 95       	ret
 
 00001d76 <vTaskSuspendAll>:
-    1d76:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxSchedulerSuspended>
+    1d76:	80 91 73 09 	lds	r24, 0x0973	; 0x800973 <uxSchedulerSuspended>
     1d7a:	8f 5f       	subi	r24, 0xFF	; 255
-    1d7c:	80 93 75 09 	sts	0x0975, r24	; 0x800975 <uxSchedulerSuspended>
+    1d7c:	80 93 73 09 	sts	0x0973, r24	; 0x800973 <uxSchedulerSuspended>
     1d80:	08 95       	ret
 
 00001d82 <vTaskIncrementTick>:
@@ -3463,41 +3463,41 @@ void vPortYieldFromTick( void )
     1d84:	1f 93       	push	r17
     1d86:	cf 93       	push	r28
     1d88:	df 93       	push	r29
-    1d8a:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxSchedulerSuspended>
+    1d8a:	80 91 73 09 	lds	r24, 0x0973	; 0x800973 <uxSchedulerSuspended>
     1d8e:	81 11       	cpse	r24, r1
     1d90:	b2 c0       	rjmp	.+356    	; 0x1ef6 <vTaskIncrementTick+0x174>
-    1d92:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <xTickCount>
-    1d96:	90 91 7a 09 	lds	r25, 0x097A	; 0x80097a <xTickCount+0x1>
+    1d92:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <xTickCount>
+    1d96:	90 91 78 09 	lds	r25, 0x0978	; 0x800978 <xTickCount+0x1>
     1d9a:	01 96       	adiw	r24, 0x01	; 1
-    1d9c:	90 93 7a 09 	sts	0x097A, r25	; 0x80097a <xTickCount+0x1>
-    1da0:	80 93 79 09 	sts	0x0979, r24	; 0x800979 <xTickCount>
-    1da4:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <xTickCount>
-    1da8:	90 91 7a 09 	lds	r25, 0x097A	; 0x80097a <xTickCount+0x1>
+    1d9c:	90 93 78 09 	sts	0x0978, r25	; 0x800978 <xTickCount+0x1>
+    1da0:	80 93 77 09 	sts	0x0977, r24	; 0x800977 <xTickCount>
+    1da4:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <xTickCount>
+    1da8:	90 91 78 09 	lds	r25, 0x0978	; 0x800978 <xTickCount+0x1>
     1dac:	89 2b       	or	r24, r25
     1dae:	99 f5       	brne	.+102    	; 0x1e16 <vTaskIncrementTick+0x94>
-    1db0:	80 91 91 09 	lds	r24, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1db4:	90 91 92 09 	lds	r25, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
-    1db8:	20 91 8f 09 	lds	r18, 0x098F	; 0x80098f <pxOverflowDelayedTaskList>
-    1dbc:	30 91 90 09 	lds	r19, 0x0990	; 0x800990 <pxOverflowDelayedTaskList+0x1>
-    1dc0:	30 93 92 09 	sts	0x0992, r19	; 0x800992 <pxDelayedTaskList+0x1>
-    1dc4:	20 93 91 09 	sts	0x0991, r18	; 0x800991 <pxDelayedTaskList>
-    1dc8:	90 93 90 09 	sts	0x0990, r25	; 0x800990 <pxOverflowDelayedTaskList+0x1>
-    1dcc:	80 93 8f 09 	sts	0x098F, r24	; 0x80098f <pxOverflowDelayedTaskList>
-    1dd0:	80 91 72 09 	lds	r24, 0x0972	; 0x800972 <xNumOfOverflows>
+    1db0:	80 91 8f 09 	lds	r24, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1db4:	90 91 90 09 	lds	r25, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
+    1db8:	20 91 8d 09 	lds	r18, 0x098D	; 0x80098d <pxOverflowDelayedTaskList>
+    1dbc:	30 91 8e 09 	lds	r19, 0x098E	; 0x80098e <pxOverflowDelayedTaskList+0x1>
+    1dc0:	30 93 90 09 	sts	0x0990, r19	; 0x800990 <pxDelayedTaskList+0x1>
+    1dc4:	20 93 8f 09 	sts	0x098F, r18	; 0x80098f <pxDelayedTaskList>
+    1dc8:	90 93 8e 09 	sts	0x098E, r25	; 0x80098e <pxOverflowDelayedTaskList+0x1>
+    1dcc:	80 93 8d 09 	sts	0x098D, r24	; 0x80098d <pxOverflowDelayedTaskList>
+    1dd0:	80 91 70 09 	lds	r24, 0x0970	; 0x800970 <xNumOfOverflows>
     1dd4:	8f 5f       	subi	r24, 0xFF	; 255
-    1dd6:	80 93 72 09 	sts	0x0972, r24	; 0x800972 <xNumOfOverflows>
-    1dda:	e0 91 91 09 	lds	r30, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1dde:	f0 91 92 09 	lds	r31, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
+    1dd6:	80 93 70 09 	sts	0x0970, r24	; 0x800970 <xNumOfOverflows>
+    1dda:	e0 91 8f 09 	lds	r30, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1dde:	f0 91 90 09 	lds	r31, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
     1de2:	80 81       	ld	r24, Z
     1de4:	81 11       	cpse	r24, r1
     1de6:	07 c0       	rjmp	.+14     	; 0x1df6 <vTaskIncrementTick+0x74>
     1de8:	8f ef       	ldi	r24, 0xFF	; 255
     1dea:	9f ef       	ldi	r25, 0xFF	; 255
-    1dec:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <xNextTaskUnblockTime+0x1>
-    1df0:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <xNextTaskUnblockTime>
+    1dec:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <xNextTaskUnblockTime+0x1>
+    1df0:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <xNextTaskUnblockTime>
     1df4:	10 c0       	rjmp	.+32     	; 0x1e16 <vTaskIncrementTick+0x94>
-    1df6:	e0 91 91 09 	lds	r30, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1dfa:	f0 91 92 09 	lds	r31, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
+    1df6:	e0 91 8f 09 	lds	r30, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1dfa:	f0 91 90 09 	lds	r31, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
     1dfe:	05 80       	ldd	r0, Z+5	; 0x05
     1e00:	f6 81       	ldd	r31, Z+6	; 0x06
     1e02:	e0 2d       	mov	r30, r0
@@ -3506,23 +3506,23 @@ void vPortYieldFromTick( void )
     1e08:	e0 2d       	mov	r30, r0
     1e0a:	82 81       	ldd	r24, Z+2	; 0x02
     1e0c:	93 81       	ldd	r25, Z+3	; 0x03
-    1e0e:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <xNextTaskUnblockTime+0x1>
-    1e12:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <xNextTaskUnblockTime>
-    1e16:	20 91 79 09 	lds	r18, 0x0979	; 0x800979 <xTickCount>
-    1e1a:	30 91 7a 09 	lds	r19, 0x097A	; 0x80097a <xTickCount+0x1>
-    1e1e:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <xNextTaskUnblockTime>
-    1e22:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <xNextTaskUnblockTime+0x1>
+    1e0e:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <xNextTaskUnblockTime+0x1>
+    1e12:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <xNextTaskUnblockTime>
+    1e16:	20 91 77 09 	lds	r18, 0x0977	; 0x800977 <xTickCount>
+    1e1a:	30 91 78 09 	lds	r19, 0x0978	; 0x800978 <xTickCount+0x1>
+    1e1e:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <xNextTaskUnblockTime>
+    1e22:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <xNextTaskUnblockTime+0x1>
     1e26:	28 17       	cp	r18, r24
     1e28:	39 07       	cpc	r19, r25
     1e2a:	08 f4       	brcc	.+2      	; 0x1e2e <vTaskIncrementTick+0xac>
     1e2c:	69 c0       	rjmp	.+210    	; 0x1f00 <vTaskIncrementTick+0x17e>
-    1e2e:	e0 91 91 09 	lds	r30, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1e32:	f0 91 92 09 	lds	r31, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
+    1e2e:	e0 91 8f 09 	lds	r30, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1e32:	f0 91 90 09 	lds	r31, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
     1e36:	80 81       	ld	r24, Z
     1e38:	88 23       	and	r24, r24
     1e3a:	99 f0       	breq	.+38     	; 0x1e62 <vTaskIncrementTick+0xe0>
-    1e3c:	e0 91 91 09 	lds	r30, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1e40:	f0 91 92 09 	lds	r31, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
+    1e3c:	e0 91 8f 09 	lds	r30, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1e40:	f0 91 90 09 	lds	r31, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
     1e44:	05 80       	ldd	r0, Z+5	; 0x05
     1e46:	f6 81       	ldd	r31, Z+6	; 0x06
     1e48:	e0 2d       	mov	r30, r0
@@ -3530,19 +3530,19 @@ void vPortYieldFromTick( void )
     1e4c:	d7 81       	ldd	r29, Z+7	; 0x07
     1e4e:	8a 81       	ldd	r24, Y+2	; 0x02
     1e50:	9b 81       	ldd	r25, Y+3	; 0x03
-    1e52:	20 91 79 09 	lds	r18, 0x0979	; 0x800979 <xTickCount>
-    1e56:	30 91 7a 09 	lds	r19, 0x097A	; 0x80097a <xTickCount+0x1>
+    1e52:	20 91 77 09 	lds	r18, 0x0977	; 0x800977 <xTickCount>
+    1e56:	30 91 78 09 	lds	r19, 0x0978	; 0x800978 <xTickCount+0x1>
     1e5a:	28 17       	cp	r18, r24
     1e5c:	39 07       	cpc	r19, r25
     1e5e:	f8 f4       	brcc	.+62     	; 0x1e9e <vTaskIncrementTick+0x11c>
     1e60:	19 c0       	rjmp	.+50     	; 0x1e94 <vTaskIncrementTick+0x112>
     1e62:	8f ef       	ldi	r24, 0xFF	; 255
     1e64:	9f ef       	ldi	r25, 0xFF	; 255
-    1e66:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <xNextTaskUnblockTime+0x1>
-    1e6a:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <xNextTaskUnblockTime>
+    1e66:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <xNextTaskUnblockTime+0x1>
+    1e6a:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <xNextTaskUnblockTime>
     1e6e:	48 c0       	rjmp	.+144    	; 0x1f00 <vTaskIncrementTick+0x17e>
-    1e70:	e0 91 91 09 	lds	r30, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1e74:	f0 91 92 09 	lds	r31, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
+    1e70:	e0 91 8f 09 	lds	r30, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1e74:	f0 91 90 09 	lds	r31, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
     1e78:	05 80       	ldd	r0, Z+5	; 0x05
     1e7a:	f6 81       	ldd	r31, Z+6	; 0x06
     1e7c:	e0 2d       	mov	r30, r0
@@ -3550,13 +3550,13 @@ void vPortYieldFromTick( void )
     1e80:	d7 81       	ldd	r29, Z+7	; 0x07
     1e82:	8a 81       	ldd	r24, Y+2	; 0x02
     1e84:	9b 81       	ldd	r25, Y+3	; 0x03
-    1e86:	20 91 79 09 	lds	r18, 0x0979	; 0x800979 <xTickCount>
-    1e8a:	30 91 7a 09 	lds	r19, 0x097A	; 0x80097a <xTickCount+0x1>
+    1e86:	20 91 77 09 	lds	r18, 0x0977	; 0x800977 <xTickCount>
+    1e8a:	30 91 78 09 	lds	r19, 0x0978	; 0x800978 <xTickCount+0x1>
     1e8e:	28 17       	cp	r18, r24
     1e90:	39 07       	cpc	r19, r25
     1e92:	28 f4       	brcc	.+10     	; 0x1e9e <vTaskIncrementTick+0x11c>
-    1e94:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <xNextTaskUnblockTime+0x1>
-    1e98:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <xNextTaskUnblockTime>
+    1e94:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <xNextTaskUnblockTime+0x1>
+    1e98:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <xNextTaskUnblockTime>
     1e9c:	31 c0       	rjmp	.+98     	; 0x1f00 <vTaskIncrementTick+0x17e>
     1e9e:	8e 01       	movw	r16, r28
     1ea0:	0e 5f       	subi	r16, 0xFE	; 254
@@ -3571,10 +3571,10 @@ void vPortYieldFromTick( void )
     1eb4:	0c 96       	adiw	r24, 0x0c	; 12
     1eb6:	0e 94 1c 01 	call	0x238	; 0x238 <vListRemove>
     1eba:	8e 89       	ldd	r24, Y+22	; 0x16
-    1ebc:	90 91 77 09 	lds	r25, 0x0977	; 0x800977 <uxTopReadyPriority>
+    1ebc:	90 91 75 09 	lds	r25, 0x0975	; 0x800975 <uxTopReadyPriority>
     1ec0:	98 17       	cp	r25, r24
     1ec2:	10 f4       	brcc	.+4      	; 0x1ec8 <vTaskIncrementTick+0x146>
-    1ec4:	80 93 77 09 	sts	0x0977, r24	; 0x800977 <uxTopReadyPriority>
+    1ec4:	80 93 75 09 	sts	0x0975, r24	; 0x800975 <uxTopReadyPriority>
     1ec8:	90 e0       	ldi	r25, 0x00	; 0
     1eca:	9c 01       	movw	r18, r24
     1ecc:	22 0f       	add	r18, r18
@@ -3586,18 +3586,18 @@ void vPortYieldFromTick( void )
     1ed8:	82 0f       	add	r24, r18
     1eda:	93 1f       	adc	r25, r19
     1edc:	b8 01       	movw	r22, r16
-    1ede:	8b 55       	subi	r24, 0x5B	; 91
+    1ede:	8d 55       	subi	r24, 0x5D	; 93
     1ee0:	96 4f       	sbci	r25, 0xF6	; 246
     1ee2:	0e 94 ba 00 	call	0x174	; 0x174 <vListInsertEnd>
-    1ee6:	e0 91 91 09 	lds	r30, 0x0991	; 0x800991 <pxDelayedTaskList>
-    1eea:	f0 91 92 09 	lds	r31, 0x0992	; 0x800992 <pxDelayedTaskList+0x1>
+    1ee6:	e0 91 8f 09 	lds	r30, 0x098F	; 0x80098f <pxDelayedTaskList>
+    1eea:	f0 91 90 09 	lds	r31, 0x0990	; 0x800990 <pxDelayedTaskList+0x1>
     1eee:	80 81       	ld	r24, Z
     1ef0:	81 11       	cpse	r24, r1
     1ef2:	be cf       	rjmp	.-132    	; 0x1e70 <vTaskIncrementTick+0xee>
     1ef4:	b6 cf       	rjmp	.-148    	; 0x1e62 <vTaskIncrementTick+0xe0>
-    1ef6:	80 91 74 09 	lds	r24, 0x0974	; 0x800974 <uxMissedTicks>
+    1ef6:	80 91 72 09 	lds	r24, 0x0972	; 0x800972 <uxMissedTicks>
     1efa:	8f 5f       	subi	r24, 0xFF	; 255
-    1efc:	80 93 74 09 	sts	0x0974, r24	; 0x800974 <uxMissedTicks>
+    1efc:	80 93 72 09 	sts	0x0972, r24	; 0x800972 <uxMissedTicks>
     1f00:	df 91       	pop	r29
     1f02:	cf 91       	pop	r28
     1f04:	1f 91       	pop	r17
@@ -3616,13 +3616,13 @@ void vPortYieldFromTick( void )
     1f1a:	0f b6       	in	r0, 0x3f	; 63
     1f1c:	f8 94       	cli
     1f1e:	0f 92       	push	r0
-    1f20:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxSchedulerSuspended>
+    1f20:	80 91 73 09 	lds	r24, 0x0973	; 0x800973 <uxSchedulerSuspended>
     1f24:	81 50       	subi	r24, 0x01	; 1
-    1f26:	80 93 75 09 	sts	0x0975, r24	; 0x800975 <uxSchedulerSuspended>
-    1f2a:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxSchedulerSuspended>
+    1f26:	80 93 73 09 	sts	0x0973, r24	; 0x800973 <uxSchedulerSuspended>
+    1f2a:	80 91 73 09 	lds	r24, 0x0973	; 0x800973 <uxSchedulerSuspended>
     1f2e:	81 11       	cpse	r24, r1
     1f30:	62 c0       	rjmp	.+196    	; 0x1ff6 <xTaskResumeAll+0xec>
-    1f32:	80 91 7b 09 	lds	r24, 0x097B	; 0x80097b <uxCurrentNumberOfTasks>
+    1f32:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <uxCurrentNumberOfTasks>
     1f36:	81 11       	cpse	r24, r1
     1f38:	32 c0       	rjmp	.+100    	; 0x1f9e <xTaskResumeAll+0x94>
     1f3a:	60 c0       	rjmp	.+192    	; 0x1ffc <xTaskResumeAll+0xf2>
@@ -3642,10 +3642,10 @@ void vPortYieldFromTick( void )
     1f58:	c8 01       	movw	r24, r16
     1f5a:	0e 94 1c 01 	call	0x238	; 0x238 <vListRemove>
     1f5e:	8e 89       	ldd	r24, Y+22	; 0x16
-    1f60:	90 91 77 09 	lds	r25, 0x0977	; 0x800977 <uxTopReadyPriority>
+    1f60:	90 91 75 09 	lds	r25, 0x0975	; 0x800975 <uxTopReadyPriority>
     1f64:	98 17       	cp	r25, r24
     1f66:	10 f4       	brcc	.+4      	; 0x1f6c <xTaskResumeAll+0x62>
-    1f68:	80 93 77 09 	sts	0x0977, r24	; 0x800977 <uxTopReadyPriority>
+    1f68:	80 93 75 09 	sts	0x0975, r24	; 0x800975 <uxTopReadyPriority>
     1f6c:	90 e0       	ldi	r25, 0x00	; 0
     1f6e:	9c 01       	movw	r18, r24
     1f70:	22 0f       	add	r18, r18
@@ -3657,11 +3657,11 @@ void vPortYieldFromTick( void )
     1f7c:	82 0f       	add	r24, r18
     1f7e:	93 1f       	adc	r25, r19
     1f80:	b8 01       	movw	r22, r16
-    1f82:	8b 55       	subi	r24, 0x5B	; 91
+    1f82:	8d 55       	subi	r24, 0x5D	; 93
     1f84:	96 4f       	sbci	r25, 0xF6	; 246
     1f86:	0e 94 ba 00 	call	0x174	; 0x174 <vListInsertEnd>
-    1f8a:	e0 91 c9 09 	lds	r30, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    1f8e:	f0 91 ca 09 	lds	r31, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    1f8a:	e0 91 c7 09 	lds	r30, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    1f8e:	f0 91 c8 09 	lds	r31, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     1f92:	9e 89       	ldd	r25, Y+22	; 0x16
     1f94:	86 89       	ldd	r24, Z+22	; 0x16
     1f96:	98 17       	cp	r25, r24
@@ -3670,7 +3670,7 @@ void vPortYieldFromTick( void )
     1f9c:	09 c0       	rjmp	.+18     	; 0x1fb0 <xTaskResumeAll+0xa6>
     1f9e:	d1 2c       	mov	r13, r1
     1fa0:	0f 2e       	mov	r0, r31
-    1fa2:	f6 e8       	ldi	r31, 0x86	; 134
+    1fa2:	f4 e8       	ldi	r31, 0x84	; 132
     1fa4:	ef 2e       	mov	r14, r31
     1fa6:	f9 e0       	ldi	r31, 0x09	; 9
     1fa8:	ff 2e       	mov	r15, r31
@@ -3681,27 +3681,27 @@ void vPortYieldFromTick( void )
     1fb2:	80 81       	ld	r24, Z
     1fb4:	81 11       	cpse	r24, r1
     1fb6:	c2 cf       	rjmp	.-124    	; 0x1f3c <xTaskResumeAll+0x32>
-    1fb8:	80 91 74 09 	lds	r24, 0x0974	; 0x800974 <uxMissedTicks>
+    1fb8:	80 91 72 09 	lds	r24, 0x0972	; 0x800972 <uxMissedTicks>
     1fbc:	88 23       	and	r24, r24
     1fbe:	79 f0       	breq	.+30     	; 0x1fde <xTaskResumeAll+0xd4>
-    1fc0:	80 91 74 09 	lds	r24, 0x0974	; 0x800974 <uxMissedTicks>
+    1fc0:	80 91 72 09 	lds	r24, 0x0972	; 0x800972 <uxMissedTicks>
     1fc4:	88 23       	and	r24, r24
     1fc6:	91 f0       	breq	.+36     	; 0x1fec <xTaskResumeAll+0xe2>
     1fc8:	dc de       	rcall	.-584    	; 0x1d82 <vTaskIncrementTick>
-    1fca:	80 91 74 09 	lds	r24, 0x0974	; 0x800974 <uxMissedTicks>
+    1fca:	80 91 72 09 	lds	r24, 0x0972	; 0x800972 <uxMissedTicks>
     1fce:	81 50       	subi	r24, 0x01	; 1
-    1fd0:	80 93 74 09 	sts	0x0974, r24	; 0x800974 <uxMissedTicks>
-    1fd4:	80 91 74 09 	lds	r24, 0x0974	; 0x800974 <uxMissedTicks>
+    1fd0:	80 93 72 09 	sts	0x0972, r24	; 0x800972 <uxMissedTicks>
+    1fd4:	80 91 72 09 	lds	r24, 0x0972	; 0x800972 <uxMissedTicks>
     1fd8:	81 11       	cpse	r24, r1
     1fda:	f6 cf       	rjmp	.-20     	; 0x1fc8 <xTaskResumeAll+0xbe>
     1fdc:	07 c0       	rjmp	.+14     	; 0x1fec <xTaskResumeAll+0xe2>
     1fde:	f1 e0       	ldi	r31, 0x01	; 1
     1fe0:	df 16       	cp	r13, r31
     1fe2:	21 f0       	breq	.+8      	; 0x1fec <xTaskResumeAll+0xe2>
-    1fe4:	80 91 73 09 	lds	r24, 0x0973	; 0x800973 <xMissedYield>
+    1fe4:	80 91 71 09 	lds	r24, 0x0971	; 0x800971 <xMissedYield>
     1fe8:	81 30       	cpi	r24, 0x01	; 1
     1fea:	39 f4       	brne	.+14     	; 0x1ffa <xTaskResumeAll+0xf0>
-    1fec:	10 92 73 09 	sts	0x0973, r1	; 0x800973 <xMissedYield>
+    1fec:	10 92 71 09 	sts	0x0971, r1	; 0x800971 <xMissedYield>
     1ff0:	ae dc       	rcall	.-1700   	; 0x194e <vPortYield>
     1ff2:	81 e0       	ldi	r24, 0x01	; 1
     1ff4:	03 c0       	rjmp	.+6      	; 0x1ffc <xTaskResumeAll+0xf2>
@@ -3746,8 +3746,8 @@ void vPortYieldFromTick( void )
 				/* Calculate the time to wake - this may overflow but this is
 				not a problem. */
 				xTimeToWake = xTickCount + xTicksToDelay;
-    201e:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <xTickCount>
-    2022:	90 91 7a 09 	lds	r25, 0x097A	; 0x80097a <xTickCount+0x1>
+    201e:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <xTickCount>
+    2022:	90 91 78 09 	lds	r25, 0x0978	; 0x800978 <xTickCount+0x1>
     2026:	c8 0f       	add	r28, r24
     2028:	d9 1f       	adc	r29, r25
 
@@ -3755,8 +3755,8 @@ void vPortYieldFromTick( void )
 				ourselves to the blocked list as the same list item is used for
 				both lists. */
 				vListRemove( ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
-    202a:	80 91 c9 09 	lds	r24, 0x09C9	; 0x8009c9 <pxCurrentTCB>
-    202e:	90 91 ca 09 	lds	r25, 0x09CA	; 0x8009ca <pxCurrentTCB+0x1>
+    202a:	80 91 c7 09 	lds	r24, 0x09C7	; 0x8009c7 <pxCurrentTCB>
+    202e:	90 91 c8 09 	lds	r25, 0x09C8	; 0x8009c8 <pxCurrentTCB+0x1>
     2032:	02 96       	adiw	r24, 0x02	; 2
     2034:	0e 94 1c 01 	call	0x238	; 0x238 <vListRemove>
 				prvAddCurrentTaskToDelayedList( xTimeToWake );
@@ -3789,7 +3789,7 @@ void vPortYieldFromTick( void )
 			vTaskSuspendAll();
 				xListIsEmpty = listLIST_IS_EMPTY( &xTasksWaitingTermination );
     204a:	0f 2e       	mov	r0, r31
-    204c:	fd e7       	ldi	r31, 0x7D	; 125
+    204c:	fb e7       	ldi	r31, 0x7B	; 123
     204e:	ef 2e       	mov	r14, r31
     2050:	f9 e0       	ldi	r31, 0x09	; 9
     2052:	ff 2e       	mov	r15, r31
@@ -3800,7 +3800,7 @@ void vPortYieldFromTick( void )
 			the ready list at the idle priority contains more than one task
 			then a task other than the idle task is ready to execute. */
 			if( listCURRENT_LIST_LENGTH( &( pxReadyTasksLists[ tskIDLE_PRIORITY ] ) ) > ( unsigned portBASE_TYPE ) 1 )
-    2056:	c5 ea       	ldi	r28, 0xA5	; 165
+    2056:	c3 ea       	ldi	r28, 0xA3	; 163
     2058:	d9 e0       	ldi	r29, 0x09	; 9
 	{
 		portBASE_TYPE xListIsEmpty;
@@ -3808,7 +3808,7 @@ void vPortYieldFromTick( void )
 		/* ucTasksDeleted is used to prevent vTaskSuspendAll() being called
 		too often in the idle task. */
 		if( uxTasksDeleted > ( unsigned portBASE_TYPE ) 0U )
-    205a:	80 91 7c 09 	lds	r24, 0x097C	; 0x80097c <uxTasksDeleted>
+    205a:	80 91 7a 09 	lds	r24, 0x097A	; 0x80097a <uxTasksDeleted>
     205e:	88 23       	and	r24, r24
     2060:	41 f1       	breq	.+80     	; 0x20b2 <prvIdleTask+0x68>
 		{
@@ -3844,13 +3844,13 @@ void vPortYieldFromTick( void )
     2084:	02 96       	adiw	r24, 0x02	; 2
     2086:	0e 94 1c 01 	call	0x238	; 0x238 <vListRemove>
 					--uxCurrentNumberOfTasks;
-    208a:	80 91 7b 09 	lds	r24, 0x097B	; 0x80097b <uxCurrentNumberOfTasks>
+    208a:	80 91 79 09 	lds	r24, 0x0979	; 0x800979 <uxCurrentNumberOfTasks>
     208e:	81 50       	subi	r24, 0x01	; 1
-    2090:	80 93 7b 09 	sts	0x097B, r24	; 0x80097b <uxCurrentNumberOfTasks>
+    2090:	80 93 79 09 	sts	0x0979, r24	; 0x800979 <uxCurrentNumberOfTasks>
 					--uxTasksDeleted;
-    2094:	80 91 7c 09 	lds	r24, 0x097C	; 0x80097c <uxTasksDeleted>
+    2094:	80 91 7a 09 	lds	r24, 0x097A	; 0x80097a <uxTasksDeleted>
     2098:	81 50       	subi	r24, 0x01	; 1
-    209a:	80 93 7c 09 	sts	0x097C, r24	; 0x80097c <uxTasksDeleted>
+    209a:	80 93 7a 09 	sts	0x097A, r24	; 0x80097a <uxTasksDeleted>
 				}
 				taskEXIT_CRITICAL();
     209e:	0f 90       	pop	r0
@@ -3889,7 +3889,7 @@ void vPortYieldFromTick( void )
 void vTaskSwitchContext( void )
 {
 	if( uxSchedulerSuspended != ( unsigned portBASE_TYPE ) pdFALSE )
-    20bc:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxSchedulerSuspended>
+    20bc:	80 91 73 09 	lds	r24, 0x0973	; 0x800973 <uxSchedulerSuspended>
     20c0:	81 11       	cpse	r24, r1
     20c2:	13 c0       	rjmp	.+38     	; 0x20ea <vTaskSwitchContext+0x2e>
 	
@@ -3898,7 +3898,7 @@ void vTaskSwitchContext( void )
 	
 		/* Find the highest priority queue that contains ready tasks. */
 		while( listLIST_IS_EMPTY( &( pxReadyTasksLists[ uxTopReadyPriority ] ) ) )
-    20c4:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <uxTopReadyPriority>
+    20c4:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxTopReadyPriority>
     20c8:	90 e0       	ldi	r25, 0x00	; 0
     20ca:	fc 01       	movw	r30, r24
     20cc:	ee 0f       	add	r30, r30
@@ -3910,7 +3910,7 @@ void vTaskSwitchContext( void )
     20d8:	8e 0f       	add	r24, r30
     20da:	9f 1f       	adc	r25, r31
     20dc:	fc 01       	movw	r30, r24
-    20de:	eb 55       	subi	r30, 0x5B	; 91
+    20de:	ed 55       	subi	r30, 0x5D	; 93
     20e0:	f6 4f       	sbci	r31, 0xF6	; 246
     20e2:	80 81       	ld	r24, Z
     20e4:	88 23       	and	r24, r24
@@ -3923,7 +3923,7 @@ void vTaskSwitchContext( void )
 		switch. */
 		xMissedYield = pdTRUE;
     20ea:	81 e0       	ldi	r24, 0x01	; 1
-    20ec:	80 93 73 09 	sts	0x0973, r24	; 0x800973 <xMissedYield>
+    20ec:	80 93 71 09 	sts	0x0971, r24	; 0x800971 <xMissedYield>
     20f0:	08 95       	ret
 	
 		/* Find the highest priority queue that contains ready tasks. */
@@ -3931,16 +3931,16 @@ void vTaskSwitchContext( void )
 		{
 			configASSERT( uxTopReadyPriority );
 			--uxTopReadyPriority;
-    20f2:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <uxTopReadyPriority>
+    20f2:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxTopReadyPriority>
     20f6:	81 50       	subi	r24, 0x01	; 1
-    20f8:	80 93 77 09 	sts	0x0977, r24	; 0x800977 <uxTopReadyPriority>
+    20f8:	80 93 75 09 	sts	0x0975, r24	; 0x800975 <uxTopReadyPriority>
 	
 		taskFIRST_CHECK_FOR_STACK_OVERFLOW();
 		taskSECOND_CHECK_FOR_STACK_OVERFLOW();
 	
 		/* Find the highest priority queue that contains ready tasks. */
 		while( listLIST_IS_EMPTY( &( pxReadyTasksLists[ uxTopReadyPriority ] ) ) )
-    20fc:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <uxTopReadyPriority>
+    20fc:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxTopReadyPriority>
     2100:	90 e0       	ldi	r25, 0x00	; 0
     2102:	fc 01       	movw	r30, r24
     2104:	ee 0f       	add	r30, r30
@@ -3952,7 +3952,7 @@ void vTaskSwitchContext( void )
     2110:	8e 0f       	add	r24, r30
     2112:	9f 1f       	adc	r25, r31
     2114:	fc 01       	movw	r30, r24
-    2116:	eb 55       	subi	r30, 0x5B	; 91
+    2116:	ed 55       	subi	r30, 0x5D	; 93
     2118:	f6 4f       	sbci	r31, 0xF6	; 246
     211a:	80 81       	ld	r24, Z
     211c:	88 23       	and	r24, r24
@@ -3963,7 +3963,7 @@ void vTaskSwitchContext( void )
 		/* listGET_OWNER_OF_NEXT_ENTRY walks through the list, so the tasks of the
 		same priority get an equal share of the processor time. */
 		listGET_OWNER_OF_NEXT_ENTRY( pxCurrentTCB, &( pxReadyTasksLists[ uxTopReadyPriority ] ) );
-    2120:	80 91 77 09 	lds	r24, 0x0977	; 0x800977 <uxTopReadyPriority>
+    2120:	80 91 75 09 	lds	r24, 0x0975	; 0x800975 <uxTopReadyPriority>
     2124:	90 e0       	ldi	r25, 0x00	; 0
     2126:	9c 01       	movw	r18, r24
     2128:	22 0f       	add	r18, r18
@@ -3975,7 +3975,7 @@ void vTaskSwitchContext( void )
     2134:	28 0f       	add	r18, r24
     2136:	39 1f       	adc	r19, r25
     2138:	d9 01       	movw	r26, r18
-    213a:	ab 55       	subi	r26, 0x5B	; 91
+    213a:	ad 55       	subi	r26, 0x5D	; 93
     213c:	b6 4f       	sbci	r27, 0xF6	; 246
     213e:	11 96       	adiw	r26, 0x01	; 1
     2140:	ed 91       	ld	r30, X+
@@ -3988,7 +3988,7 @@ void vTaskSwitchContext( void )
     214e:	fc 93       	st	X, r31
     2150:	ee 93       	st	-X, r30
     2152:	11 97       	sbiw	r26, 0x01	; 1
-    2154:	28 55       	subi	r18, 0x58	; 88
+    2154:	2a 55       	subi	r18, 0x5A	; 90
     2156:	36 4f       	sbci	r19, 0xF6	; 246
     2158:	e2 17       	cp	r30, r18
     215a:	f3 07       	cpc	r31, r19
@@ -4008,15 +4008,15 @@ void vTaskSwitchContext( void )
     2176:	8e 0f       	add	r24, r30
     2178:	9f 1f       	adc	r25, r31
     217a:	fc 01       	movw	r30, r24
-    217c:	eb 55       	subi	r30, 0x5B	; 91
+    217c:	ed 55       	subi	r30, 0x5D	; 93
     217e:	f6 4f       	sbci	r31, 0xF6	; 246
     2180:	01 80       	ldd	r0, Z+1	; 0x01
     2182:	f2 81       	ldd	r31, Z+2	; 0x02
     2184:	e0 2d       	mov	r30, r0
     2186:	86 81       	ldd	r24, Z+6	; 0x06
     2188:	97 81       	ldd	r25, Z+7	; 0x07
-    218a:	90 93 ca 09 	sts	0x09CA, r25	; 0x8009ca <pxCurrentTCB+0x1>
-    218e:	80 93 c9 09 	sts	0x09C9, r24	; 0x8009c9 <pxCurrentTCB>
+    218a:	90 93 c8 09 	sts	0x09C8, r25	; 0x8009c8 <pxCurrentTCB+0x1>
+    218e:	80 93 c7 09 	sts	0x09C7, r24	; 0x8009c7 <pxCurrentTCB>
     2192:	08 95       	ret
 
 00002194 <__tablejump2__>:

@@ -36,7 +36,6 @@ unsigned char data_to_send = 0x00; //0x00 = tell chip 0 disarm, 0xFF tell chip 1
 unsigned short counter = 0; //if 5,000 reset to system off menu
 unsigned char bark_setting = 0; //0 = minor, 1 = major
 unsigned char bark_delay = 0; //0 = 5 sec, 1 = 10 sec, 2 = 15 sec
-unsigned char dog_head_direction = 1; //leave set to 1, functionality removed as a design choice when building servo motor housing
 unsigned char peripheral_on_off = 0; //0 = do not use outside signals to disarm dog, 1 = use outside signals to disarm system
 
 //bluetooth USART FSM
@@ -1151,7 +1150,7 @@ void Trans_Tick(){
 		//bit 0 (0 = off, 1 = on)
 		//bit 1-2 (00 = 5 sec, 01 = 10 sec, 10 = 15 sec delay)
 		//bit 3 (0 = minor bark, 1 = major bark)
-		//bit 4 (0 = right to left, 1 = left to right)
+		//bit 4 (0 = don't use peripheral, 1 = use peripheral)
 		//calculate data_to_send
 		
 		//system is disarmed
@@ -1161,9 +1160,9 @@ void Trans_Tick(){
 				//5 sec delay
 				if(bark_delay == 0){
 					
-					//dog head direction
+					//Peripheral settings
 					//0000 0000
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x00;
 					}
 					//0001 0000
@@ -1173,7 +1172,7 @@ void Trans_Tick(){
 				}
 				//10 sec delay
 				else if(bark_delay == 1){
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x02;
 					}
 					else{
@@ -1182,7 +1181,7 @@ void Trans_Tick(){
 				}
 				//15 sec delay
 				else{
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x04;
 					}
 					else{
@@ -1194,7 +1193,7 @@ void Trans_Tick(){
 			else{
 				//5 sec delay
 				if(bark_delay == 0){
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x08;
 					}
 					else{
@@ -1204,7 +1203,7 @@ void Trans_Tick(){
 				}
 				//10 sec delay
 				else if(bark_delay == 1){
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x0A;
 					}
 					else{
@@ -1213,7 +1212,7 @@ void Trans_Tick(){
 				}
 				//15 sec delay
 				else{
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x0C;
 					}
 					else{
@@ -1229,7 +1228,7 @@ void Trans_Tick(){
 			if(bark_setting == 0){
 				//5 sec delay
 				if(bark_delay == 0){
-					if(dog_head_direction == 0){
+					if(peripheral_on_off== 0){
 						data_to_send = 0x01;
 					}
 					else{
@@ -1239,7 +1238,7 @@ void Trans_Tick(){
 				}
 				//10 sec delay
 				else if(bark_delay == 1){
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x03;
 					}
 					else{
@@ -1248,7 +1247,7 @@ void Trans_Tick(){
 				}
 				//15 sec delay
 				else{
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x05;
 					}
 					else{
@@ -1260,7 +1259,7 @@ void Trans_Tick(){
 			else{
 				//5 sec delay
 				if(bark_delay == 0){
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x09;
 					}
 					else{
@@ -1270,7 +1269,7 @@ void Trans_Tick(){
 				}
 				//10 sec delay
 				else if(bark_delay == 1){
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x0B;
 					}
 					else{
@@ -1279,7 +1278,7 @@ void Trans_Tick(){
 				}
 				//15 sec delay
 				else{
-					if(dog_head_direction == 0){
+					if(peripheral_on_off == 0){
 						data_to_send = 0x0D;
 					}
 					else{

@@ -23,25 +23,26 @@
 unsigned char ARM_DISARM = 0; // when 0 system is disarmed, when 1 system is armed
 unsigned char delay_timing = 0; //0 = 5 sec, 1 = 10 sec, 2 = 15 sec
 unsigned char bark_setting = 0; //0 = minor, 1 = major
-unsigned char head_movement = 0; //0 = right to left, 1 = left to right
+unsigned char head_movement = 1; //1 = left to right LEAVE VALUE AT 1
 unsigned char systems_go = 0; //0 = do not turn on dog outputs, 1 = turn on dog outputs 
+unsigned char peripheral_setting = 0; //0 = don't use peripheral, 1 = use peripheral. 
 int random_seed_val = 0; // global random seed to be set by main controller FSM
 
 //receive FSM data
 unsigned char received_data = 0x00;
 
-//stepper motor FSM variable 
+//stepper motor FSM local variable 
 unsigned char phases[4] = {0x0A, 0x05, 0x06, 0x09};
 unsigned char p_index = 0;
 int numCounter = 0;
 int numPhases = 120; 
 
-//stepper motor controller FSM variables
+//stepper motor controller FSM local variables
 int temp_random = 0;
 unsigned char STEPPER_GO = 0;   //0 don't move, 1 = move
 unsigned char STEPPER_DONE = 0; //stepper has moved forward and back to initial position
 
-//servo motor FSM variables
+//servo motor FSM local variables
 unsigned char right = 0;	// A0
 unsigned char center = 1;
 unsigned char left = 0;		// A2
@@ -52,14 +53,14 @@ unsigned char timeline = 1;	// left 0, center = 2, right = 4
 unsigned short servo_direction = 0; //0 = center, 1 = left, 2 = right
 int temp_random2 = 0;
 
-//IR BEAM FSM variables
+//IR BEAM FSM local variables
 unsigned char beam_detected = 0; //0=no IR break detected, 1 = IR break detected
 
-//motion FSM variables
+//motion FSM local variables
 unsigned char motion_detected = 0; //0=no motion detected, 1 = motion detected
 int motion_boot_cnt = 0; //system takes approximately 15 seconds to boot so cnt to 20000 
 
-//master control fsm varibales
+//master control fsm local varibales
 int controll_counter = 0; //used for the delay in output activation
 int vishal_counter = 0; //used for 2 second delay after vishal signal ends
 int delay_sec = 5; //5, 10 or 15 seconds
@@ -804,6 +805,8 @@ void Control_Tick(){
 		
 		case Vishal:
 			//PORTB = 0xFF;
+			PORTB = PORTB & 0x0F; //set bit 7-4 low
+			PORTB = PORTB | 0x50; //set bit 4,6 high
 		break;
 		
 		case Vishal_wait:
@@ -858,7 +861,7 @@ void Control_Tick(){
 				control_state = controll_off;
 			}
 			//vishal signal
-			else if((GetBit(PINA,7) == 1)){
+			else if((GetBit(PINA,7) == 1) && peripheral_setting == 1){ //if peripheral signal set and peripheral are used
 				control_state = Vishal; 
 				vishal_counter = 0;
 			}
@@ -1006,7 +1009,7 @@ void Rec_Tick(){
 		 //ARM_DISARM  when 0 system is disarmed, when 1 system is armed
 		 //delay_timing 0 = 5 sec, 1 = 10 sec, 2 = 15 sec
 		 //bark_setting 0 = minor, 1 = major
-		 //head_movement 0 = right to left, 1 = left to right
+		 //Peripheral setting 0 = don't use peripheral, 1 = use peripheral
 		 
 		 //set arm_disarm
 		 if(GetBit(received_data,0)==1){ //system is armed
@@ -1039,12 +1042,12 @@ void Rec_Tick(){
 				 bark_setting = 0;
 			 }
 			 
-			 //set dog head movement
-			 if(GetBit(received_data,4)==1){ //Left to Right
-				 head_movement = 1;
+			 //set peripheral setting
+			 if(GetBit(received_data,4)==1){ //use peripheral
+				 peripheral_setting = 1;
 			 }
-			 else{                           //Right to left
-				 head_movement = 0;
+			 else{                           //don't use peripheral
+				 peripheral_setting = 0;
 			 }
 		 }
 		 
