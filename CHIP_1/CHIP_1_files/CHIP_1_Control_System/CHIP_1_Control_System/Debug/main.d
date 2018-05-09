@@ -20,7 +20,7 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\eeprom.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- .././usart_ATmega1284.h .././bit.h .././keypad.h .././io.c .././io.h \
+ .././usart_ATmega1284.h .././bit.h .././io.c .././io.h \
  C:\Users\dbwei\Dropbox\CS179\CODE\CS179J~1\FreeRTOS\FREERT~1\FreeRTOS\Source\include/FreeRTOS.h \
  C:\Users\dbwei\Dropbox\CS179\CODE\CS179J~1\FreeRTOS\FREERT~1\FreeRTOS\Source\include/projdefs.h \
  C:\Users\dbwei\Dropbox\CS179\CODE\CS179J-Embeded-Systems\FreeRTOS\FreeRTOS_Lab\FreeRTOS\Source/FreeRTOSConfig.h \
@@ -76,8 +76,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././usart_ATmega1284.h:
 
 .././bit.h:
-
-.././keypad.h:
 
 .././io.c:
 

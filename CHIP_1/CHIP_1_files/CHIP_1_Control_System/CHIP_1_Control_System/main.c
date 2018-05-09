@@ -11,7 +11,6 @@
 #include <avr/pgmspace.h>
 #include "usart_ATmega1284.h"
 #include "bit.h"
-#include "keypad.h"
 #include "io.c" //contains lcd.h file
 
 //FreeRTOS include files
@@ -42,8 +41,14 @@ unsigned char peripheral_on_off = 0; //0 = do not use outside signals to disarm 
 unsigned char bluetooth_arm_disarm = 2; // 0 = disarm, 1 = arm, 2 = no valid input
 unsigned char bluetooth_temp = 0x00;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//functions
+//clear button value function
+void clear_buttons_and_counter(){
+	counter = 0; //clear counter
+	Button_A = 0; //select button
+	Button_B = 0; //cancel button
+	Button_L = 0; //left button
+	Button_R = 0; //right button
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //FSM to read on/off button
@@ -71,7 +76,7 @@ void BUTTON_Tick(){
 	//Transitions
 	switch(button_state){
 		case Button_Wait:
-		//if one button is pressed, move to next state
+		//if one (and only one) button is pressed, move to next state
 		//on off button
 		if((GetBit(~PINA,0) == 1) && (GetBit(~PINA,1) == 0) && (GetBit(~PINA,2) == 0) && (GetBit(~PINA,3) == 0) && (GetBit(~PINA,4) == 0)){
 			//change device status
@@ -87,27 +92,27 @@ void BUTTON_Tick(){
 		//Button A
 		else if((GetBit(~PINA,0) == 0) && (GetBit(~PINA,1) == 1) && (GetBit(~PINA,2) == 0) && (GetBit(~PINA,3) == 0) && (GetBit(~PINA,4) == 0)){
 			//change device status
-			PORTB = PORTB | 0x02; //turn on PIN A1 for beep
+			PORTB = PORTB | 0x02; //turn on PIN B1 for beep
 			Button_A = 1;
 			button_state = Button_Press_Wait;
 		}
 		//Button B
 		else if((GetBit(~PINA,0) == 0) && (GetBit(~PINA,1) == 0) && (GetBit(~PINA,2) == 1) && (GetBit(~PINA,3) == 0) && (GetBit(~PINA,4) == 0)){
 			//change device status
-			PORTB = PORTB | 0x02; //turn on PIN A1 for beep
+			PORTB = PORTB | 0x02; //turn on PIN B1 for beep
 			Button_B = 1;
 			button_state = Button_Press_Wait;
 		}
 		//Button L
 		else if((GetBit(~PINA,0) == 0) && (GetBit(~PINA,1) == 0) && (GetBit(~PINA,2) == 0) && (GetBit(~PINA,3) == 1) && (GetBit(~PINA,4) == 0)){
 			//change device status
-			PORTB = PORTB | 0x02; //turn on PIN A1 for beep
+			PORTB = PORTB | 0x02; //turn on PIN B1 for beep
 			Button_L = 1;
 			button_state = Button_Press_Wait;
 		}
 		//Button R
 		else if((GetBit(~PINA,0) == 0) && (GetBit(~PINA,1) == 0) && (GetBit(~PINA,2) == 0) && (GetBit(~PINA,3) == 0) && (GetBit(~PINA,4) == 1)){
-			PORTB = PORTB | 0x02; //turn on PIN A1 for beep
+			PORTB = PORTB | 0x02; //turn on PIN B1 for beep
 			//change device status
 			Button_R = 1;
 			button_state = Button_Press_Wait;
@@ -119,7 +124,7 @@ void BUTTON_Tick(){
 		break;
 		
 		case Button_Press_Wait:
-		PORTB = PORTB & 0xFD; //set PIN A1 low to end beep
+		PORTB = PORTB & 0xFD; //set PIN B1 low to end beep
 		//if any button is being pressed stay here
 		if((GetBit(~PINA,0) == 1) || (GetBit(~PINA,1) == 1) || (GetBit(~PINA,2) == 1) || (GetBit(~PINA,3) == 1) || (GetBit(~PINA,4) == 1)){
 			button_state = Button_Press_Wait;
@@ -241,14 +246,21 @@ void Menu_Tick(){
 	switch( menu_state){
 		case Menu_Init:
 		if(ARM_DISARM == 0){
+			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
+			LCD_Cursor(33);
+			//clear all buttons and counter
+			clear_buttons_and_counter();
+			PORTB = 0x00;
+			menu_state = Menu_Off;
+		}
+		//if kill command given from Paul's/Bauldo's project and peripherals are enabled
+		else if(((GetBit(~PINA,5) == 1) || (~GetBit(PINA,6) == 1)) && peripheral_on_off == 1){
+			ARM_DISARM = 0; //set to 0 aka off
 			counter = 0; //clear counter
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			clear_buttons_and_counter();
 			PORTB = 0x00;
 			menu_state = Menu_Off;
 		}
@@ -256,10 +268,7 @@ void Menu_Tick(){
 			LCD_DisplayString(1, "Dog System is ONWOOF WOOF");
 			LCD_Cursor(33);
 			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			clear_buttons_and_counter();
 			PORTB = 0x01;
 			menu_state = Menu_On;
 		}
@@ -273,7 +282,7 @@ void Menu_Tick(){
 			menu_state = Menu_Init;
 		}
 		//if kill command given from Paul's/Bauldo's project and peripherals are enabled
-		else if((GetBit(PINA,5) == 1) && peripheral_on_off == 1){
+		else if(((GetBit(~PINA,5) == 1) || (GetBit(~PINA,6) == 1)) && peripheral_on_off == 1){
 			ARM_DISARM = 0; //set to 0 aka off
 			menu_state = Menu_Init;
 		}
@@ -301,14 +310,10 @@ void Menu_Tick(){
 			bluetooth_arm_disarm = 2;
 		}
 		else if(Button_R == 1){
-			counter = 0; //clear counter
 			LCD_DisplayString(1, "Dog timing      setting");
 			LCD_Cursor(33);
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			menu_state = Delay_Menu;
 		}
 		//else stay here system is on
@@ -343,35 +348,23 @@ void Menu_Tick(){
 			menu_state = Menu_Init;
 		}
 		else if(Button_R == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog bark        setting");
 			LCD_Cursor(33);
 			menu_state = Bark_Menu;
 		}
 		else if(Button_L == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			menu_state = Menu_Off;
 		}
 		else if(Button_A == 1){
 			//enter delay menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Delay activationby ->5,10,15 sec");
 			LCD_Cursor(33);
 			menu_state = Delay_5;
@@ -386,24 +379,16 @@ void Menu_Tick(){
 		case Delay_5:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
 			menu_state = Menu_Off;
 		}
 		else if(Button_R == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Delay activationby 5,->10,15 sec");
 			LCD_Cursor(33);
 			menu_state = Delay_10;
@@ -412,12 +397,8 @@ void Menu_Tick(){
 			//selected delay of 5 seconds store and go back to off
 			bark_delay = 0; //0 = 5 sec, 1 = 10 sec, 2 = 15 sec
 			eeprom_write_byte(1,0);
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -425,12 +406,8 @@ void Menu_Tick(){
 		}
 		else if(Button_B == 1){
 			//go back to previous menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog timing      setting");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -446,36 +423,24 @@ void Menu_Tick(){
 		case Delay_10:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
 			menu_state = Menu_Off;
 		}
 		else if(Button_R == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Delay activationby 5,10,->15 sec");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
 			menu_state = Delay_15;
 		}
 		else if(Button_L == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Delay activationby ->5,10,15 sec");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -485,12 +450,8 @@ void Menu_Tick(){
 			//selected delay of 10 seconds store and go back to off
 			bark_delay = 1; //0 = 5 sec, 1 = 10 sec, 2 = 15 sec
 			eeprom_write_byte(1,1);
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -498,12 +459,8 @@ void Menu_Tick(){
 		}
 		else if(Button_B == 1){
 			//go back to previous menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog timing      setting");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -519,24 +476,16 @@ void Menu_Tick(){
 		case Delay_15:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
 			menu_state = Menu_Off;
 		}
 		else if(Button_L == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Delay activationby 5,->10,15 sec");
 			LCD_Cursor(33);
 			menu_state = Delay_10;
@@ -545,12 +494,8 @@ void Menu_Tick(){
 			//selected delay of 15 seconds store and go back to off
 			bark_delay = 2; //0 = 5 sec, 1 = 10 sec, 2 = 15 sec
 			eeprom_write_byte(1,2);
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -558,12 +503,8 @@ void Menu_Tick(){
 		}
 		else if(Button_B == 1){
 			//go back to previous menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog timing      setting");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -578,12 +519,8 @@ void Menu_Tick(){
 		case Bark_Menu:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			menu_state = Menu_Off;
@@ -600,36 +537,24 @@ void Menu_Tick(){
 			menu_state = Menu_Init;
 		}
 		else if(Button_R == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Peripheral      Settings");
 			LCD_Cursor(33);
 			menu_state =  Peripheral_Menu;
 			
 		}
 		else if(Button_L == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog timing      setting");
 			LCD_Cursor(33);
 			menu_state = Delay_Menu;
 		}
 		else if(Button_A == 1){
 			//enter bark menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "->Minor Bark      Major Bark");
 			LCD_Cursor(33);
 			menu_state = Bark_Minor;
@@ -644,12 +569,8 @@ void Menu_Tick(){
 		case  Bark_Minor:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -659,12 +580,8 @@ void Menu_Tick(){
 			//selected minor bark
 			bark_setting = 0; //0 = minor, 1 = major
 			eeprom_write_byte(0,0);
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -672,12 +589,8 @@ void Menu_Tick(){
 		}
 		else if(Button_B == 1){
 			//go back to previous menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog bark        setting");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -685,12 +598,8 @@ void Menu_Tick(){
 		}
 		else if(Button_R == 1){
 			//enter bark menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "  Minor Bark    ->Major Bark");
 			LCD_Cursor(33);
 			menu_state = Bark_Major;
@@ -704,12 +613,8 @@ void Menu_Tick(){
 		case  Bark_Major:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -719,12 +624,8 @@ void Menu_Tick(){
 			//selected major bark
 			bark_setting = 1; //0 = minor, 1 = major
 			eeprom_write_byte(0,1);
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -732,12 +633,8 @@ void Menu_Tick(){
 		}
 		else if(Button_B == 1){
 			//go back to previous menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog bark        setting");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -763,12 +660,8 @@ void Menu_Tick(){
 		
 		case  System_Settings:
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -787,24 +680,16 @@ void Menu_Tick(){
 		}
 		else if(Button_L == 1){
 			//enter bark menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Peripheral      Settings");
 			LCD_Cursor(33);
 			menu_state =  Peripheral_Menu;
 		}
 		else if(Button_R == 1){
 			//enter system settings 2
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			//right to left
 			if(peripheral_on_off == 1){
 				LCD_DisplayString(1, "Peripheral      are used");
@@ -824,12 +709,8 @@ void Menu_Tick(){
 		/////////////////////////////////////////////////////////////////////////////////////////
 		case  System_Settings_2:
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -848,12 +729,8 @@ void Menu_Tick(){
 		}
 		else if(Button_L == 1){
 			//enter bark menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			/////////////////////////////////////////////////////////////////////////////////////////
 			if(bark_setting == 0){
 				if(bark_delay == 0){
@@ -894,12 +771,8 @@ void Menu_Tick(){
 		case  Peripheral_Menu:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			menu_state = Menu_Off;
@@ -916,12 +789,8 @@ void Menu_Tick(){
 			menu_state = Menu_Init;
 		}
 		else if(Button_R == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//print out delay and bark setting
 			//bark_setting 0 = minor, 1 = major
@@ -958,24 +827,16 @@ void Menu_Tick(){
 			menu_state = System_Settings;
 		}
 		else if(Button_L == 1){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog bark        setting");
 			LCD_Cursor(33);
 			menu_state = Bark_Menu;
 		}
 		else if(Button_A == 1){
 			//enter bark menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "->Peripheral On   Peripheral Off");
 			LCD_Cursor(33);
 			menu_state = Peripheral_On;
@@ -989,12 +850,8 @@ void Menu_Tick(){
 		case  Peripheral_On:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -1005,11 +862,7 @@ void Menu_Tick(){
 			peripheral_on_off = 1; 
 			eeprom_write_byte(2,1);  //address peripheral setting
 			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -1017,12 +870,8 @@ void Menu_Tick(){
 		}
 		else if(Button_B == 1){
 			//go back to previous menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Peripheral      Settings");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -1049,12 +898,8 @@ void Menu_Tick(){
 		case  Peripheral_Off:
 		//if sitting for 5 seconds go back to off menu
 		if(counter >= 500){
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -1064,12 +909,8 @@ void Menu_Tick(){
 			//selected right to left to right
 			peripheral_on_off = 0; 
 			eeprom_write_byte(2,0);  //address 2 peripheral setting
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Dog System is   OFF WOOF WOOF");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -1077,12 +918,8 @@ void Menu_Tick(){
 		}
 		else if(Button_B == 1){
 			//go back to previous menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "Peripheral      Settings");
 			LCD_Cursor(33);
 			bluetooth_arm_disarm = 2; //clear bluetooth
@@ -1090,12 +927,8 @@ void Menu_Tick(){
 		}
 		else if(Button_L == 1){
 			//enter bark menu
-			counter = 0; //clear counter
-			//clear all buttons
-			Button_A = 0; //select button
-			Button_B = 0; //cancel button
-			Button_L = 0; //left button
-			Button_R = 0; //right button
+			//clear all buttons and counter
+			clear_buttons_and_counter();
 			LCD_DisplayString(1, "->Peripheral On   Peripheral Off");
 			LCD_Cursor(33);
 			menu_state = Peripheral_On;
