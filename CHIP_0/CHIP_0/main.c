@@ -229,7 +229,7 @@ void stepper_controller_Tick(){
 		case Stepper_controller_on:
 			//finish movement
 			if((STEPPER_DONE == 0) && (systems_go == 0)){
-				//if the stepper has finished moving go back to waiting
+				//if the stepper has not finished moving continue until done
 				stepper_controller_state = Stepper_controller_on;
 			}
 			else if((STEPPER_DONE == 1) && (systems_go == 1)){ //reset stepper done to 0){
@@ -349,20 +349,13 @@ void SERVO_Tick(){
 	switch(servo_state){
 		case servo_init:
 			if(left || right){
-				servo_state = drive_high;
 				servo_counter = 0;
-				//PORTC = 0x01;
-				//PORTC = PORTC & 0xFD; //Set Pin C1 low
 				PORTC = PORTC | 0x01; //set Pin C0 high
-				//SetBit(PORTC,0,1);
+				servo_state = drive_high;
 			}
 		  
 			else{
-				//PORTC = 0x00;
-				//PORTC = PORTC | 0x20; //set PIN C1 to high
 				PORTC = PORTC & 0xFE; //set PIN C0 to low
-				
-				//SetBit(PORTC,0,0);
 				servo_state = servo_init;
 			}
 			break;
@@ -377,9 +370,7 @@ void SERVO_Tick(){
 				 left = 0;
 				 center = 0;
 				 right = 0;
-				 //PORTC = 0x00;
-				//PORTC = PORTC | 0x20; //set PIN C1 to high
-				PORTC = PORTC & 0xFE; //set PIN C0 to low
+				 PORTC = PORTC & 0xFE; //set PIN C0 to low
 				 servo_state = servo_init;
 			}
 			break;
@@ -399,15 +390,11 @@ void SERVO_Tick(){
 				left = 0;
 				center = 0;
 				right = 0;
-				//PORTC= 0x00;
 				PORTC = PORTC & 0xFE;
 				servo_state = servo_init;
 			}
 			break;
-/*
-		case drive_low:
-			break;
-		  */
+
 		default:
 			break;
 	}
@@ -541,11 +528,11 @@ void Audio_Tick(){
 		break;
 		
 		case audio_on:
-			//major bark
+			//major bark Pitbull
 			if(bark_setting == 1){
 				PORTC = PORTC & 0xF7; //set PIN C3 to low so audio will play
 			}
-			//minor bark
+			//minor bark Chihuahua
 			else{
 				PORTC = PORTC & 0xFB; //set PIN C2 to low so audio will play
 			}
@@ -801,7 +788,7 @@ void Control_Tick(){
 			if(ARM_DISARM == 0){
 				control_state = controll_off;
 			}
-			//if vishal's signal stay here
+			//if Vishal's signal stay here
 			else if((GetBit(PINA,7) == 1)){
 				control_state = Vishal; 
 			}
@@ -816,7 +803,7 @@ void Control_Tick(){
 				control_state = controll_off;
 			}
 			else if(vishal_counter < 5000){
-				//wait for 5 seconds after vishal signal 
+				//wait for 5 seconds after Vishal's signal 
 				control_state = Vishal_wait; 
 			}
 			else{
@@ -1017,7 +1004,7 @@ void RecSecPulse(unsigned portBASE_TYPE Priority)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//END FSMs
  
 int main(void) 
 { 

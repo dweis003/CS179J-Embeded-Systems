@@ -534,7 +534,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x18bc
+.text           0x00000000     0x18b6
  *(.vectors)
  .vectors       0x00000000       0x8c C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51/crtatmega1284.o
                 0x00000000                __vector_default
@@ -690,143 +690,143 @@ END GROUP
                 0x0000058e       0x3e main.o
                 0x0000058e                SERVODRIVESecPulse
  .text.SERVO_Tick
-                0x000005cc       0x9c main.o
+                0x000005cc       0x96 main.o
                 0x000005cc                SERVO_Tick
  .text.SERVOSecTask
-                0x00000668        0xe main.o
-                0x00000668                SERVOSecTask
+                0x00000662        0xe main.o
+                0x00000662                SERVOSecTask
  .text.SERVOSecPulse
-                0x00000676       0x3e main.o
-                0x00000676                SERVOSecPulse
+                0x00000670       0x3e main.o
+                0x00000670                SERVOSecPulse
  .text.servo_controller_Tick
-                0x000006b4       0xbe main.o
-                0x000006b4                servo_controller_Tick
+                0x000006ae       0xbe main.o
+                0x000006ae                servo_controller_Tick
  .text.servo_controllerSecTask
-                0x00000772        0xe main.o
-                0x00000772                servo_controllerSecTask
+                0x0000076c        0xe main.o
+                0x0000076c                servo_controllerSecTask
  .text.Start_servo_controller_Pulse
-                0x00000780       0x3e main.o
-                0x00000780                Start_servo_controller_Pulse
+                0x0000077a       0x3e main.o
+                0x0000077a                Start_servo_controller_Pulse
  .text.Audio_Tick
-                0x000007be       0x54 main.o
-                0x000007be                Audio_Tick
+                0x000007b8       0x54 main.o
+                0x000007b8                Audio_Tick
  .text.AudioSecTask
-                0x00000812        0xe main.o
-                0x00000812                AudioSecTask
+                0x0000080c        0xe main.o
+                0x0000080c                AudioSecTask
  .text.StartAudioPulse
-                0x00000820       0x3e main.o
-                0x00000820                StartAudioPulse
+                0x0000081a       0x3e main.o
+                0x0000081a                StartAudioPulse
  .text.Motion_Tick
-                0x0000085e       0x98 main.o
-                0x0000085e                Motion_Tick
+                0x00000858       0x98 main.o
+                0x00000858                Motion_Tick
  .text.MotionSecTask
-                0x000008f6        0xe main.o
-                0x000008f6                MotionSecTask
+                0x000008f0        0xe main.o
+                0x000008f0                MotionSecTask
  .text.StartMotionPulse
-                0x00000904       0x3e main.o
-                0x00000904                StartMotionPulse
+                0x000008fe       0x3e main.o
+                0x000008fe                StartMotionPulse
  .text.Control_Tick
-                0x00000942      0x2bc main.o
-                0x00000942                Control_Tick
+                0x0000093c      0x2bc main.o
+                0x0000093c                Control_Tick
  .text.ControlSecTask
-                0x00000bfe        0xe main.o
-                0x00000bfe                ControlSecTask
+                0x00000bf8        0xe main.o
+                0x00000bf8                ControlSecTask
  .text.StartControlPulse
-                0x00000c0c       0x3e main.o
-                0x00000c0c                StartControlPulse
+                0x00000c06       0x3e main.o
+                0x00000c06                StartControlPulse
  .text.Rec_Tick
-                0x00000c4a       0x7e main.o
-                0x00000c4a                Rec_Tick
+                0x00000c44       0x7e main.o
+                0x00000c44                Rec_Tick
  .text.RecSecTask
-                0x00000cc8        0xe main.o
-                0x00000cc8                RecSecTask
+                0x00000cc2        0xe main.o
+                0x00000cc2                RecSecTask
  .text.RecSecPulse
-                0x00000cd6       0x3e main.o
-                0x00000cd6                RecSecPulse
- .text.main     0x00000d14       0x42 main.o
-                0x00000d14                main
+                0x00000cd0       0x3e main.o
+                0x00000cd0                RecSecPulse
+ .text.main     0x00000d0e       0x42 main.o
+                0x00000d0e                main
  .text.pxPortInitialiseStack
-                0x00000d56       0xd8 port.o
-                0x00000d56                pxPortInitialiseStack
+                0x00000d50       0xd8 port.o
+                0x00000d50                pxPortInitialiseStack
  .text.xPortStartScheduler
-                0x00000e2e       0x74 port.o
-                0x00000e2e                xPortStartScheduler
+                0x00000e28       0x74 port.o
+                0x00000e28                xPortStartScheduler
  .text.vPortYield
-                0x00000ea2       0xb0 port.o
-                0x00000ea2                vPortYield
+                0x00000e9c       0xb0 port.o
+                0x00000e9c                vPortYield
  .text.vPortYieldFromTick
-                0x00000f52       0xb2 port.o
-                0x00000f52                vPortYieldFromTick
+                0x00000f4c       0xb2 port.o
+                0x00000f4c                vPortYieldFromTick
  .text.__vector_13
-                0x00001004        0x4 port.o
-                0x00001004                __vector_13
+                0x00000ffe        0x4 port.o
+                0x00000ffe                __vector_13
  .text.prvAddCurrentTaskToDelayedList
-                0x00001008       0x6a tasks.o
+                0x00001002       0x6a tasks.o
  .text.xTaskGenericCreate
-                0x00001072      0x1f8 tasks.o
-                0x00001072                xTaskGenericCreate
+                0x0000106c      0x1f8 tasks.o
+                0x0000106c                xTaskGenericCreate
  .text.vTaskStartScheduler
-                0x0000126a       0x52 tasks.o
-                0x0000126a                vTaskStartScheduler
+                0x00001264       0x52 tasks.o
+                0x00001264                vTaskStartScheduler
  .text.vTaskSuspendAll
-                0x000012bc        0xc tasks.o
-                0x000012bc                vTaskSuspendAll
+                0x000012b6        0xc tasks.o
+                0x000012b6                vTaskSuspendAll
  .text.vTaskIncrementTick
-                0x000012c8      0x188 tasks.o
-                0x000012c8                vTaskIncrementTick
+                0x000012c2      0x188 tasks.o
+                0x000012c2                vTaskIncrementTick
  .text.xTaskResumeAll
-                0x00001450      0x108 tasks.o
-                0x00001450                xTaskResumeAll
+                0x0000144a      0x108 tasks.o
+                0x0000144a                xTaskResumeAll
  .text.vTaskDelay
-                0x00001558       0x38 tasks.o
-                0x00001558                vTaskDelay
+                0x00001552       0x38 tasks.o
+                0x00001552                vTaskDelay
  .text.prvIdleTask
-                0x00001590       0x72 tasks.o
+                0x0000158a       0x72 tasks.o
  .text.vTaskSwitchContext
-                0x00001602       0xd8 tasks.o
-                0x00001602                vTaskSwitchContext
+                0x000015fc       0xd8 tasks.o
+                0x000015fc                vTaskSwitchContext
  .text.libgcc.div
-                0x000016da       0x26 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
-                0x000016da                _div
-                0x000016da                __divmodhi4
+                0x000016d4       0x26 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+                0x000016d4                _div
+                0x000016d4                __divmodhi4
  .text.libgcc.div
-                0x00001700       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
-                0x00001700                __udivmodhi4
+                0x000016fa       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+                0x000016fa                __udivmodhi4
  .text.avr-libc
-                0x00001728       0xaa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(rand.o)
-                0x000017b4                rand_r
-                0x000017b6                rand
-                0x000017bc                srand
+                0x00001722       0xaa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(rand.o)
+                0x000017ae                rand_r
+                0x000017b0                rand
+                0x000017b6                srand
  .text.avr-libc
-                0x000017d2        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(memset.o)
-                0x000017d2                memset
+                0x000017cc        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(memset.o)
+                0x000017cc                memset
  .text.avr-libc
-                0x000017e0       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strncpy.o)
-                0x000017e0                strncpy
+                0x000017da       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strncpy.o)
+                0x000017da                strncpy
  .text.libgcc.div
-                0x000017fe       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodsi4.o)
-                0x000017fe                __divmodsi4
+                0x000017f8       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodsi4.o)
+                0x000017f8                __divmodsi4
  .text.libgcc.div
-                0x00001826       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_negsi2.o)
-                0x00001826                __negsi2
+                0x00001820       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_negsi2.o)
+                0x00001820                __negsi2
  .text.libgcc.mul
-                0x00001836       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_muluhisi3.o)
-                0x00001836                __muluhisi3
+                0x00001830       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_muluhisi3.o)
+                0x00001830                __muluhisi3
  .text.libgcc.mul
-                0x0000184a        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_mulshisi3.o)
-                0x0000184a                __mulshisi3
-                0x0000184e                __mulohisi3
+                0x00001844        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_mulshisi3.o)
+                0x00001844                __mulshisi3
+                0x00001848                __mulohisi3
  .text.libgcc.div
-                0x00001856       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
-                0x00001856                __udivmodsi4
+                0x00001850       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
+                0x00001850                __udivmodsi4
  .text.libgcc.mul
-                0x0000189a       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_umulhisi3.o)
-                0x0000189a                __umulhisi3
-                0x000018b8                . = ALIGN (0x2)
+                0x00001894       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_umulhisi3.o)
+                0x00001894                __umulhisi3
+                0x000018b2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000018b8        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
-                0x000018b8                _exit
-                0x000018b8                exit
+ .fini9         0x000018b2        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+                0x000018b2                _exit
+                0x000018b2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -845,11 +845,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000018b8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+ .fini0         0x000018b2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000018bc                _etext = .
+                0x000018b6                _etext = .
 
-.data           0x00800100       0xaa load address 0x000018bc
+.data           0x00800100       0xaa load address 0x000018b6
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(rand.o)
@@ -1003,8 +1003,8 @@ END GROUP
                 0x00800807                stepper_controller_state
                 0x00800808                servo_controller_state
                 0x00800809                PROVIDE (__bss_end, .)
-                0x000018bc                __data_load_start = LOADADDR (.data)
-                0x00001966                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000018b6                __data_load_start = LOADADDR (.data)
+                0x00001960                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800809        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -1114,14 +1114,14 @@ END GROUP
  .debug_abbrev  0x00000c77      0x155 port.o
  .debug_abbrev  0x00000dcc      0x2b8 tasks.o
 
-.debug_line     0x00000000     0x1ee9
+.debug_line     0x00000000     0x1ee8
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x169 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega1284/avr51/crtatmega1284.o
  .debug_line    0x00000169      0x186 heap_1.o
  .debug_line    0x000002ef      0x221 list.o
- .debug_line    0x00000510      0xd95 main.o
- .debug_line    0x000012a5      0x340 port.o
- .debug_line    0x000015e5      0x904 tasks.o
+ .debug_line    0x00000510      0xd94 main.o
+ .debug_line    0x000012a4      0x340 port.o
+ .debug_line    0x000015e4      0x904 tasks.o
 
 .debug_frame    0x00000000      0x808
  *(.debug_frame)

@@ -859,7 +859,7 @@ void Menu_Tick(){
 		}
 		else if(Button_A == 1){
 			//selected right to left
-			peripheral_on_off = 1; 
+			peripheral_on_off = 1;
 			eeprom_write_byte(2,1);  //address peripheral setting
 			counter = 0; //clear counter
 			//clear all buttons and counter
@@ -907,7 +907,7 @@ void Menu_Tick(){
 		}
 		else if(Button_A == 1){
 			//selected right to left to right
-			peripheral_on_off = 0; 
+			peripheral_on_off = 0;
 			eeprom_write_byte(2,0);  //address 2 peripheral setting
 			//clear all buttons and counter
 			clear_buttons_and_counter();
